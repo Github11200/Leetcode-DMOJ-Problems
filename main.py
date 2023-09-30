@@ -1,3 +1,4 @@
+# https://dmoj.ca/problem/cheerio1j3
 def Festival():
     # Get the user input
     numberOfRowsAndColumns = int(input())
@@ -29,4 +30,55 @@ def Festival():
         print("\n")
 
 
-Festival()
+def Waiting():
+    timeGriffyArrives = [00] * 3
+    timeSchoolStarts = [00] * 3
+
+    tempArrivalTime = input()
+    tempStartTime = input()
+
+    timeGriffyArrives[0] = int(tempArrivalTime[:2])
+    timeGriffyArrives[1] = int(tempArrivalTime[3:-3])
+    timeGriffyArrives[2] = int(tempArrivalTime[6:])
+
+    timeSchoolStarts[0] = int(tempStartTime[:2])
+    timeSchoolStarts[1] = int(tempStartTime[3:-3])
+    timeSchoolStarts[2] = int(tempStartTime[6:])
+
+    numberOfHoursMinutesAndSeconds = [timeSchoolStarts[0] - timeGriffyArrives[0],
+                                      timeSchoolStarts[1] - timeGriffyArrives[1], timeSchoolStarts[2] - timeGriffyArrives[2]]
+    numberOfSeconds = (numberOfHoursMinutesAndSeconds[0] * 360) + (
+        numberOfHoursMinutesAndSeconds[1] * 60) + numberOfHoursMinutesAndSeconds[2]
+
+    print(numberOfHoursMinutesAndSeconds)
+    print(numberOfSeconds)
+
+
+# https://leetcode.com/problems/roman-to-integer/editorial/
+
+
+def RomanToInteger():
+    class RomanNumerals:
+        def __init__(self) -> None:
+            self.I = 1
+            self.V = 5
+            self.X = 10
+            self.L = 50
+            self.C = 100
+            self.D = 500
+            self.M = 1000
+
+    romanNumerals = RomanNumerals()
+    stringInput = str(input())
+    previousNumber = None
+    total = 0
+
+    for letter in stringInput:
+        number = getattr(romanNumerals, letter)
+        if previousNumber and number > previousNumber:
+            total = abs((total - previousNumber) + (number - previousNumber))
+        else:
+            total += number
+        previousNumber = number
+
+    print(total)
