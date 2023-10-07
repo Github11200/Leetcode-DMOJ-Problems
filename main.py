@@ -55,8 +55,6 @@ def Waiting():
 
 
 # https://leetcode.com/problems/roman-to-integer/editorial/
-
-
 def RomanToInteger():
     class RomanNumerals:
         def __init__(self) -> None:
@@ -82,3 +80,26 @@ def RomanToInteger():
         previousNumber = number
 
     print(total)
+
+
+def PlusOne():
+    digits = [1, 2, 3]
+    length = len(digits) - 1
+    number = 0
+
+    for digit in digits:
+        number += digit * pow(10, length)
+        length -= 1
+
+    del length
+    number += 1
+    stringNumber = str(number)
+    del number
+    outputDigits = []
+    for letter in stringNumber:
+        outputDigits.append(int(letter))
+
+    print(outputDigits)
+
+
+PlusOne()
