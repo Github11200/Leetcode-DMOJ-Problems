@@ -768,4 +768,13 @@ def simple_encryption():
             j += 1
 
 
-simple_encryption()
+# https://dmoj.ca/problem/ccc12j4
+def big_bang_secrets():
+    k = int(sys.stdin.readline())
+    message = str(sys.stdin.readline())
+
+    for i in range(len(message) - 1):
+        new_letter = ord(message[i]) - (3 * (i + 1) + k)
+        if new_letter < 65:
+            new_letter = 91 - (65 - new_letter)
+        print(chr(new_letter), end="")
