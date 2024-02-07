@@ -1,3 +1,4 @@
+import sys
 import math
 import numpy as np
 
@@ -670,6 +671,118 @@ def LemonadeChange():
 
     return True
 
+# https://leetcode.com/problems/largest-perimeter-triangle/?envType=study-plan-v2&envId=programming-skills
+
+
 def LargestPerimeterTriangle():
-    nums = [2,1,2]
-    
+    nums = [3, 4, 15, 2, 9, 4]
+    nums.sort()
+    for i in range(len(nums) - 1, 1, -1):
+        if nums[i - 1] + nums[i - 2] > nums[i]:
+            return nums[i - 1] + nums[i - 2] + nums[i]
+    return 0
+
+
+# https://leetcode.com/problems/check-if-it-is-a-straight-line/?envType=study-plan-v2&envId=programming-skills
+def CheckIfItIsAStraightLine():
+    coordinates = [[0, 0], [0, 5], [5, 5], [5, 0]]
+    for i in range(0, len(coordinates) - 2):
+        if (coordinates[i + 1][1] - coordinates[i][1]) * (coordinates[i + 2][0] - coordinates[i + 1][0]) != (coordinates[i + 2][1] - coordinates[i + 1][1]) * (coordinates[i + 1][0] - coordinates[i][0]):
+            return False
+    return True
+
+
+# https://leetcode.com/problems/add-binary/description/?envType=study-plan-v2&envId=programming-skills
+def AddBinary():
+    a = "11"
+    b = "1"
+
+    power = 0
+    aSum = 0
+    bSum = 0
+    i = len(a) - 1
+    j = len(b) - 1
+    while i > -1 or j > -1:
+        if i > -1:
+            aSum += pow(2, power) if a[i] == "1" else 0
+        if j > -1:
+            bSum += pow(2, power) if b[j] == "1" else 0
+        power += 1
+        i -= 1
+        j -= 1
+
+    c = ""
+    dividedNumber = aSum + bSum
+    if dividedNumber == 0:
+        return "0"
+    while dividedNumber >= 1:
+        binary = f"{dividedNumber % 2}"
+        c = binary + c
+        dividedNumber //= 2
+
+    return c
+
+
+def isPalindrome(string):
+    i = 0
+    j = len(string) - 1
+    while i <= j:
+        if string[i] != string[j]:
+            return False
+        i += 1
+        j -= 1
+    return True
+
+# https://dmoj.ca/problem/ccc16j3
+
+
+def HiddenPalindrome():
+    # str(sys.stdin.readline())
+    string = str(sys.stdin.readline())
+    spliceMax = len(string)
+
+    while spliceMax > 1:
+        i = 0
+        while i + spliceMax <= len(string):
+            if isPalindrome(string[i:i + spliceMax]):
+                return len(string[i:i + spliceMax])
+            i += 1
+        spliceMax -= 1
+    return 1
+
+# https://dmoj.ca/problem/ccc10j4
+
+
+def global_warming():
+    cycles = []
+    input_line = sys.stdin.readline().split(" ")
+    while int(input_line[0]) != 0:
+        if int(input_line[0]) == 1:
+            cycles.append([int(input_line[1])])
+        else:
+            cycles.append([int(input_line[i]) - int(input_line[i - 1])
+                           for i in range(2, len(input_line))])
+        input_line = sys.stdin.readline().split(" ")
+
+    for cycle in cycles:
+        min_length = 0
+
+        for i in range(len(cycle)):
+            subset = cycle[0:i + 1]
+            is_subset = True
+            min_length = len(subset)
+            for j in range(i + 1, len(cycle)):
+                if not all(x in subset for x in cycle[j:j + len(subset)]) and not all(x in cycle[j:j + len(subset)] for x in subset):
+                    is_subset = False
+                    break
+            if is_subset:
+                print(min_length)
+                break
+            else:
+                min_length = 0
+            i += 1
+        if min_length == 0:
+            print(len(cycle))
+
+
+global_warming()
