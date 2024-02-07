@@ -750,39 +750,22 @@ def HiddenPalindrome():
         spliceMax -= 1
     return 1
 
-# https://dmoj.ca/problem/ccc10j4
+
+# https://dmoj.ca/problem/ccc04j4
+def simple_encryption():
+    keyword = str(sys.stdin.readline())
+    message = str(sys.stdin.readline())
+
+    j = 0
+    for i in range(len(message)):
+        if ord(message[i]) >= 65 and ord(message[i]) <= 90:
+            index = j % (len(keyword) - 1)
+            new_letter = ord(message[i]) + ord(keyword[index]) - 65
+            if new_letter > 90:
+                new_letter = (new_letter % 90) + 64
+            new_letter = chr(new_letter)
+            print(new_letter, end="")
+            j += 1
 
 
-def global_warming():
-    cycles = []
-    input_line = sys.stdin.readline().split(" ")
-    while int(input_line[0]) != 0:
-        if int(input_line[0]) == 1:
-            cycles.append([int(input_line[1])])
-        else:
-            cycles.append([int(input_line[i]) - int(input_line[i - 1])
-                           for i in range(2, len(input_line))])
-        input_line = sys.stdin.readline().split(" ")
-
-    for cycle in cycles:
-        min_length = 0
-
-        for i in range(len(cycle)):
-            subset = cycle[0:i + 1]
-            is_subset = True
-            min_length = len(subset)
-            for j in range(i + 1, len(cycle)):
-                if not all(x in subset for x in cycle[j:j + len(subset)]) and not all(x in cycle[j:j + len(subset)] for x in subset):
-                    is_subset = False
-                    break
-            if is_subset:
-                print(min_length)
-                break
-            else:
-                min_length = 0
-            i += 1
-        if min_length == 0:
-            print(len(cycle))
-
-
-global_warming()
+simple_encryption()
