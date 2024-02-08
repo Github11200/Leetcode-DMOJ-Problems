@@ -801,3 +801,33 @@ def cyclic_shifts():
             print("yes")
             return None
     print("no")
+
+
+# https://dmoj.ca/problem/ccc07j4
+def anagram_checker():
+    phrase_one = str(sys.stdin.readline()).strip()
+    phrase_two = str(sys.stdin.readline()).strip()
+
+    phrases_dict = {}
+
+    for letter in phrase_one:
+        if letter != " ":
+            if letter in phrases_dict:
+                phrases_dict[letter] += 1
+            else:
+                phrases_dict[letter] = 1
+
+    for letter in phrase_two:
+        if letter != " ":
+            if not letter in phrases_dict:
+                print("Is not an anagram.")
+                return
+            elif phrases_dict[letter] > 1:
+                phrases_dict[letter] -= 1
+            else:
+                phrases_dict.pop(letter)
+
+    if len(phrases_dict.keys()) > 0:
+        print("Is not an anagram.")
+    else:
+        print("Is an anagram.")
