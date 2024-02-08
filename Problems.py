@@ -1,6 +1,5 @@
 import sys
 import math
-import numpy as np
 
 # https://dmoj.ca/problem/cheerio1j3
 
@@ -778,3 +777,27 @@ def big_bang_secrets():
         if new_letter < 65:
             new_letter = 91 - (65 - new_letter)
         print(chr(new_letter), end="")
+
+
+# https://dmoj.ca/problem/ccc20j4
+
+def check_shifts(shifts, text):
+    for shift in shifts:
+        if shift in text:
+            return True
+    return False
+
+
+def cyclic_shifts():
+    text = sys.stdin.readline().strip()
+    string = sys.stdin.readline().strip()
+    string_cyclic_shifts = []
+    for i in range(len(string)):
+        string_cyclic_shifts.append(string)
+        string = string[1:] + string[0]
+
+    for j in range((len(text) - len(string)) + 1):
+        if check_shifts(shifts=string_cyclic_shifts, text=text[j:j + len(string)]):
+            print("yes")
+            return None
+    print("no")
