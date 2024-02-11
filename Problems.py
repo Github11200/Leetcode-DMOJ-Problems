@@ -831,3 +831,48 @@ def anagram_checker():
         print("Is not an anagram.")
     else:
         print("Is an anagram.")
+
+
+def boring_business():
+    instructions = [["d", 2], ["r", 3], ["d", 2], ["r", 2], ["u", 2], ["r", 2], ["d", 4], ["l", 8], ["u", 2]]
+
+    user_input = ""
+
+    while user_input != "q 0":
+        user_input = str(sys.stdin.readline()).strip()
+        instructions.append([f"{user_input[0]}", int(user_input[2:])])
+
+    instructions.pop()
+
+    current_x = 0
+    current_y = -1
+
+    previous_positions = {"0-1": ""}
+
+    for i, instruction in enumerate(instructions):
+        direction = instruction[0]
+        is_danger = False
+
+        for j in range(instruction[1]):
+            if direction == "l":
+                current_x -= 1
+            elif direction == "r":
+                current_x += 1
+            elif direction == "u":
+                current_y += 1
+            else:
+                current_y -= 1
+            if f"{current_x}{current_y}" in previous_positions:
+                is_danger = True
+            else:
+                previous_positions[f"{current_x}{current_y}"] = ""
+
+        if is_danger:
+            print(f"{current_x} {current_y} DANGER")
+            return
+
+        if i > 8:
+            print(f"{current_x} {current_y} safe")
+
+
+boring_business()
