@@ -833,8 +833,10 @@ def anagram_checker():
         print("Is an anagram.")
 
 
+# https://dmoj.ca/problem/ccc11j4
 def boring_business():
-    instructions = [["d", 2], ["r", 3], ["d", 2], ["r", 2], ["u", 2], ["r", 2], ["d", 4], ["l", 8], ["u", 2]]
+    instructions = [["d", 2], ["r", 3], ["d", 2], ["r", 2],
+                    ["u", 2], ["r", 2], ["d", 4], ["l", 8], ["u", 2]]
 
     user_input = ""
 
@@ -874,5 +876,28 @@ def boring_business():
         if i > 8:
             print(f"{current_x} {current_y} safe")
 
+# https://dmoj.ca/problem/ccc13j4
 
-boring_business()
+
+def time_on_task():
+    total_number_of_minutes = int(sys.stdin.readline().strip())
+    total_number_of_chores = int(sys.stdin.readline().strip())
+
+    chore_times = []
+    for i in range(total_number_of_chores):
+        amount_of_time_to_complete_chore = int(sys.stdin.readline().strip())
+        chore_times.append(amount_of_time_to_complete_chore)
+
+    chore_times.sort()
+    number_of_chores_that_you_can_complete = 0
+    sum_of_times = 0
+    for time in chore_times:
+        sum_of_times += time
+        if sum_of_times <= total_number_of_minutes:
+            number_of_chores_that_you_can_complete += 1
+        else:
+            print(number_of_chores_that_you_can_complete)
+            return
+
+
+time_on_task()
