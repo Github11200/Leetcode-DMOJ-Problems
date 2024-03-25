@@ -1,5 +1,8 @@
+from pickle import TRUE
 import sys
 import math
+from tabnanny import check
+from xmlrpc.client import Boolean
 
 # https://dmoj.ca/problem/cheerio1j3
 
@@ -900,4 +903,128 @@ def time_on_task():
             return
 
 
-time_on_task()
+# https://dmoj.ca/problem/ccc17j4
+def favourite_times():
+    duration = int(sys.stdin.readline())
+
+    time = 1200
+    number_of_arithmetic_sequences = 0
+
+    if duration >= 720:
+        number_of_arithmetic_sequences += 31 * (duration // 720)
+        duration -= 720 * (duration // 720)
+
+    for i in range(duration + 1):
+        str_time = list(str(time))
+
+        difference = int(str_time[1]) - int(str_time[0])
+        is_sequence = True
+
+        for j in range(2, len(str_time)):
+            if int(str_time[j]) - int(str_time[j - 1]) != difference:
+                is_sequence = False
+                break
+
+        if is_sequence:
+            number_of_arithmetic_sequences += 1
+
+        time += 1
+        if time % 100 == 60:
+            time += 100
+            time -= 60
+
+        if time == 1300:
+            time = 100
+
+    print(number_of_arithmetic_sequences)
+
+
+# https://dmoj.ca/problem/ccc10j4
+def global_warming():
+    cycles = []
+    user_input = "1"
+
+    while user_input[0] != "0":
+        user_input = sys.stdin.readline().strip().split(" ")
+        if int(user_input[0]) > 1:
+            cycles.append([int(user_input[i]) - int(user_input[i - 1])
+                          for i in range(2, len(user_input))])
+        elif user_input[0] != "0":
+            cycles.append([False])
+
+    for i, cycle in enumerate(cycles):
+        if cycle[0] == False:
+            print("0")
+            continue
+        for k in range(len(cycle)):
+            subset = cycle[:k + 1]
+            if len(subset) == len(cycle):
+                print(len(subset))
+                break
+            is_subset = True
+            if len(subset) > len(cycle) // 2:
+                second_subset = cycle[k + 1:]
+                for j in range(len(second_subset)):
+                    if subset[j] != second_subset[j]:
+                        is_subset = False
+                        break
+            else:
+                j = k + 1
+                while j < len(cycle):
+                    second_subset = cycle[j:] if len(cycle[j:]) < len(
+                        subset) else cycle[j:j + len(subset)]
+                    for k in range(len(second_subset)):
+                        if subset[k] != second_subset[k]:
+                            is_subset = False
+                            break
+                    if is_subset == False:
+                        break
+                    j += len(subset)
+
+            if is_subset:
+                print(len(subset))
+                break
+
+
+def boring_business():
+    user_input = ""
+    instructions = [("d", 2), ("r", 3), ("d", 2), ("r", 2),
+                    ("u", 2), ("r", 2), ("d", 4), ("l", 8), ("u", 2)]
+    while True:
+        user_input = str(sys.stdin.readline().strip())
+        if user_input == "q 0":
+            break
+        instructions.append((user_input[0], int(user_input[2:])))
+
+    current_x = 0
+    current_y = -1
+
+    previous_positions = {}
+
+    for i, instruction in enumerate(instructions):
+        direction = instruction[0]
+        is_danger = False
+        for j in range(instruction[1]):
+            if direction == "d":
+                current_y -= 1
+            elif direction == "r":
+                current_x += 1
+            elif direction == "l":
+                current_x -= 1
+            else:
+                current_y += 1
+
+            if f"{current_x} {current_y}" in previous_positions:
+                is_danger = True
+            else:
+                previous_positions[f"{current_x} {current_y}"] = 1
+
+        if i > 8:
+            if not is_danger:
+                print(f"{current_x} {current_y} safe")
+            else:
+                print(f"{current_x} {current_y} DANGER")
+                return
+
+
+boring_business()
