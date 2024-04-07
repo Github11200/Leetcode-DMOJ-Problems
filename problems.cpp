@@ -129,14 +129,6 @@ void displayVector(vector<T> arr)
 
 int main()
 {
-    string one = "eat";
-    string two = "tea";
-
-    if (one >= two)
-        cout << "yep" << endl;
-    else
-        cout << "nope" << endl;
-
     // vector<string> inputData({"eat", "tea", "tan", "ate", "nat", "bat"});
 
     // for (auto x : groupAnagrams(inputData))

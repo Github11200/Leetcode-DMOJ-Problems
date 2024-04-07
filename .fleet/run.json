@@ -1,9 +1,0 @@
-{
-    "configurations": [
-        {
-            "type": "command",
-            "name": "Command configuration",
-            "program": "g++ problems.cpp",
-        },
-    ]
-}
