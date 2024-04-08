@@ -87,6 +87,7 @@ vector<int> twoSum(vector<int> &nums, int target)
     return vector<int>({0, 0});
 }
 
+// https://leetcode.com/problems/longest-common-prefix/description/
 string longestCommonPrefix(vector<string> &strs)
 {
     if (strs.size() == 1)
@@ -116,25 +117,133 @@ string longestCommonPrefix(vector<string> &strs)
     return longestCommonPrefix;
 }
 
-// vector<vector<string>> groupAnagrams(vector<string> &strs)
-// {
-// }
+// https://leetcode.com/problems/group-anagrams/description/
+vector<vector<string>> groupAnagrams(vector<string> &strs)
+{
+    unordered_map<string, int> anagrams;
+    vector<vector<string>> anagramsVector;
+    int i = 0;
+
+    for (auto s : strs)
+    {
+        string x = s;
+        sort(x.begin(), x.end());
+        if (anagrams.count(x) == 0)
+        {
+            anagrams[x] = i;
+            anagramsVector.push_back({s});
+            ++i;
+        }
+        else
+            anagramsVector[anagrams[x]].push_back(s);
+    }
+
+    return anagramsVector;
+}
+
+// https://leetcode.com/problems/pascals-triangle/description/
+vector<vector<int>> pascalsTriangle(int numRows)
+{
+    vector<vector<int>> pascalsTriangleVector{{1}};
+
+    if (numRows == 1)
+        return pascalsTriangleVector;
+
+    int j = 1;
+    for (int i = 1; i < numRows; ++i)
+    {
+        vector<int> row;
+        row.push_back(1);
+
+        for (int k = 0; k < j - 1; ++k)
+            row.push_back(pascalsTriangleVector[i - 1][k] + pascalsTriangleVector[i - 1][k + 1]);
+
+        row.push_back(1);
+        pascalsTriangleVector.push_back(row);
+        ++j;
+    }
+
+    return pascalsTriangleVector;
+}
+
+// https://leetcode.com/problems/remove-element/description/
+int removeElement(vector<int> &nums, int val)
+{
+    if (nums.size() == 1 && nums[0] == val)
+        return 0;
+
+    int i = 0;
+    int j = nums.size() - 1;
+    int k = j + 1;
+
+    while (i <= j)
+    {
+        if (nums[i] == val && nums[j] == val)
+        {
+            --j;
+            --k;
+            continue;
+        }
+        else if (nums[i] == val)
+        {
+            nums[i] = nums[j];
+            --j;
+            --k;
+            continue;
+        }
+
+        ++i;
+    }
+
+    return k;
+}
+
+// https://leetcode.com/problems/unique-email-addresses/description/
+int uniqueEmailAddresses(vector<string> &emails)
+{
+    unordered_map<string, int> uniqueAddresses;
+    int i = 0;
+
+    for (auto email : emails)
+    {
+        string filteredEmail = "";
+        bool ignoreLetters = false;
+
+        for (int j = 0; j < email.size(); ++j)
+        {
+            if (email[j] == '+')
+                ignoreLetters = true;
+            else if (email[j] == '@')
+                break;
+            else if (email[j] != '.' && !ignoreLetters)
+                filteredEmail += email[j];
+        }
+
+        int indexOfDomain = email.find("@");
+        filteredEmail += email.substr(indexOfDomain, email.size() - indexOfDomain + 1);
+
+        if (uniqueAddresses.count(filteredEmail) == 0)
+        {
+            uniqueAddresses[filteredEmail] = 0;
+            ++i;
+        }
+    }
+
+    return i;
+}
 
 template <typename T>
 void displayVector(vector<T> arr)
 {
     for (auto x : arr)
-        cout << x << endl;
+        cout << x << " ";
 }
 
 int main()
 {
-    // vector<string> inputData({"eat", "tea", "tan", "ate", "nat", "bat"});
+    vector<string> inputData({"test.email+alex@leetcode.com", "test.email@leetcode.com"});
 
-    // for (auto x : groupAnagrams(inputData))
-    // {
-    //     displayVector(x);
-    // }
+    cout << uniqueEmailAddresses(inputData) << endl;
 
     return 0;
 }
