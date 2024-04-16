@@ -232,6 +232,148 @@ int uniqueEmailAddresses(vector<string> &emails)
     return i;
 }
 
+// https://leetcode.com/problems/isomorphic-strings/description/
+bool isIsomorphic(string s, string t)
+{
+    unordered_map<char, char> inputToOutput;
+    unordered_map<char, char> outputToInput;
+
+    for (int i = 0; i < s.size(); ++i)
+    {
+        if (inputToOutput.count(s[i]) != 0 && inputToOutput[s[i]] != t[i])
+            return false;
+        else if (outputToInput.count(t[i]) != 0 && outputToInput[t[i]] != s[i])
+            return false;
+        else
+        {
+            inputToOutput[s[i]] = t[i];
+            outputToInput[t[i]] = s[i];
+        }
+    }
+
+    return true;
+}
+
+// https://leetcode.com/problems/can-place-flowers/description/
+bool canPlaceFlowers(vector<int> &flowerbed, int n)
+{
+    if (n == 0)
+        return true;
+    if (flowerbed.size() == 1 && flowerbed[0] == 0)
+        return n <= 1;
+
+    int previous = 0;
+
+    for (int i = 0; i < flowerbed.size() - 1 && n > 0; ++i)
+    {
+        if (previous == 0 && flowerbed[i] == 0 && flowerbed[i + 1] == 0)
+        {
+            n -= 1;
+            flowerbed[i] = 1;
+            previous = flowerbed[i];
+        }
+        else
+            previous = flowerbed[i];
+    }
+
+    if (previous == 0 && flowerbed[flowerbed.size() - 1] == 0)
+        n -= 1;
+
+    return n == 0;
+}
+
+// https://leetcode.com/problems/majority-element/description/
+int majorityElement(vector<int> &nums)
+{
+    int count = 0;
+    int maxElement = 0;
+
+    for (auto x : nums)
+    {
+        if (count == 0)
+        {
+            maxElement = x;
+        }
+
+        if (x == maxElement)
+            ++count;
+        else
+            --count;
+    }
+
+    return maxElement;
+}
+
+// https://leetcode.com/problems/valid-palindrome/description/
+bool isPalindrome(string s)
+{
+    if (s.size() == 1)
+        return true;
+
+    string newString = "";
+
+    for (auto x : s)
+    {
+        if (isalpha(x) || isdigit(x))
+            newString += tolower(x);
+    }
+
+    int middle = newString.size() / 2;
+    string secondPiece = newString.substr(newString.size() % 2 == 0 ? middle : middle + 1, newString.size());
+    reverse(secondPiece.begin(), secondPiece.end());
+    return newString.substr(0, middle) == secondPiece;
+}
+
+bool isPalindrome2(string s, int i, int j)
+{
+    while (i < j)
+    {
+        if (s[i] != s[j])
+            return false;
+        ++i;
+        --j;
+    }
+
+    return true;
+}
+
+// https://leetcode.com/problems/valid-palindrome-ii/description/
+bool validPalindrome(string s)
+{
+    int i = 0;
+    int j = s.size() - 1;
+
+    while (i < j)
+    {
+        if (s[i] != s[j])
+            return isPalindrome2(s, i, j - 1) || isPalindrome2(s, i + 1, j);
+
+        ++i;
+        --j;
+    }
+
+    return true;
+}
+
+// https://leetcode.com/problems/minimum-difference-between-highest-and-lowest-of-k-scores/description/
+int minimumDifferenceBetweenHighestAndLowestOfKScores(vector<int> &nums, int k)
+{
+    if (nums.size() == 1)
+        return 0;
+
+    sort(nums.begin(), nums.end(), greater<int>());
+    int smallestDifference = -1;
+
+    for (int i = 0; i < nums.size() - k; ++i)
+    {
+        int difference = nums[i] - nums[i + k - 1];
+        if (difference < smallestDifference || smallestDifference == -1)
+            smallestDifference = difference;
+    }
+
+    return smallestDifference;
+}
+
 template <typename T>
 void displayVector(vector<T> arr)
 {
@@ -241,9 +383,10 @@ void displayVector(vector<T> arr)
 
 int main()
 {
-    vector<string> inputData({"test.email+alex@leetcode.com", "test.email@leetcode.com"});
+    vector<int> inputData({{41900, 69441, 94407, 37498, 20299, 10856, 36221, 2231, 54526, 79072, 84309, 76765, 92282, 13401, 44698, 17586, 98455, 47895, 98889, 65298, 32271, 23801, 83153, 12186, 7453, 79460, 67209, 54576, 87785, 47738, 40750, 31265, 77990, 93502, 50364, 75098, 11712, 80013, 24193, 35209, 56300, 85735, 3590, 24858, 6780, 50086, 87549, 7413, 90444, 12284, 44970, 39274, 81201, 43353, 75808, 14508, 17389, 10313, 90055, 43102, 18659, 20802, 70315, 48843, 12273, 78876, 36638, 17051, 20478}});
+    string inputString = "acb";
 
-    cout << uniqueEmailAddresses(inputData) << endl;
+    cout << minimumDifferenceBetweenHighestAndLowestOfKScores(inputData, 5) << endl;
 
     return 0;
 }
