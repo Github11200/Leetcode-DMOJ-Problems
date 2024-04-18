@@ -374,6 +374,54 @@ int minimumDifferenceBetweenHighestAndLowestOfKScores(vector<int> &nums, int k)
     return smallestDifference;
 }
 
+// https://leetcode.com/problems/reverse-string/description/
+void reverseString(vector<char> &s)
+{
+    int i = 0;
+    int j = s.size() - 1;
+
+    while (i < j)
+    {
+        swap(s[i], s[j]);
+        ++i;
+        --j;
+    }
+}
+
+// https://leetcode.com/problems/merge-sorted-array/description/
+void mergeSortedArray(vector<int> &nums1, int m, vector<int> &nums2, int n)
+{
+    int i = m;
+    for (auto x : nums2)
+    {
+        nums1[i] = x;
+        ++i;
+    }
+
+    sort(nums1.begin(), nums1.end());
+}
+
+int removeDuplicatesFromSortedArray(vector<int> &nums)
+{
+    unordered_map<int, int> uniqueElements;
+    int k = 0;
+
+    for (int i = 0; i < nums.size(); ++i)
+    {
+        if (uniqueElements.count(nums[i]) == 0)
+        {
+            uniqueElements[nums[i]] = nums[i];
+            ++k;
+        }
+        else
+            nums[i] = 101;
+    }
+
+    sort(nums.begin(), nums.end());
+
+    return k;
+}
+
 template <typename T>
 void displayVector(vector<T> arr)
 {
@@ -383,10 +431,11 @@ void displayVector(vector<T> arr)
 
 int main()
 {
-    vector<int> inputData({{41900, 69441, 94407, 37498, 20299, 10856, 36221, 2231, 54526, 79072, 84309, 76765, 92282, 13401, 44698, 17586, 98455, 47895, 98889, 65298, 32271, 23801, 83153, 12186, 7453, 79460, 67209, 54576, 87785, 47738, 40750, 31265, 77990, 93502, 50364, 75098, 11712, 80013, 24193, 35209, 56300, 85735, 3590, 24858, 6780, 50086, 87549, 7413, 90444, 12284, 44970, 39274, 81201, 43353, 75808, 14508, 17389, 10313, 90055, 43102, 18659, 20802, 70315, 48843, 12273, 78876, 36638, 17051, 20478}});
-    string inputString = "acb";
+    vector<int> nums1({1, 2, 3, 0, 0, 0});
+    vector<int> nums2({2, 5, 6});
 
-    cout << minimumDifferenceBetweenHighestAndLowestOfKScores(inputData, 5) << endl;
+    mergeSortedArray(nums1, 3, nums2, 3);
+    displayVector(nums1);
 
     return 0;
 }
