@@ -4,6 +4,7 @@
 #include <queue>
 #include <iostream>
 #include <algorithm>
+#include <stack>
 
 using namespace std;
 
@@ -401,25 +402,25 @@ void mergeSortedArray(vector<int> &nums1, int m, vector<int> &nums2, int n)
     sort(nums1.begin(), nums1.end());
 }
 
+// https://leetcode.com/problems/remove-duplicates-from-sorted-array/description/
 int removeDuplicatesFromSortedArray(vector<int> &nums)
 {
-    unordered_map<int, int> uniqueElements;
-    int k = 0;
+    int j = 1;
 
-    for (int i = 0; i < nums.size(); ++i)
+    for (int i = 1; i < nums.size(); ++i)
     {
-        if (uniqueElements.count(nums[i]) == 0)
+        if (nums[i] != nums[i - 1])
         {
-            uniqueElements[nums[i]] = nums[i];
-            ++k;
+            nums[j] = nums[i];
+            ++j;
         }
-        else
-            nums[i] = 101;
     }
 
-    sort(nums.begin(), nums.end());
+    return j;
+}
 
-    return k;
+vector<int> nextGreaterElementOne(vector<int> &nums1, vector<int> &nums2)
+{
 }
 
 template <typename T>
@@ -431,11 +432,12 @@ void displayVector(vector<T> arr)
 
 int main()
 {
-    vector<int> nums1({1, 2, 3, 0, 0, 0});
-    vector<int> nums2({2, 5, 6});
+    vector<int> nums1({4, 1, 2});
+    vector<int> nums2({1, 2, 3, 4});
 
-    mergeSortedArray(nums1, 3, nums2, 3);
-    displayVector(nums1);
+    vector<int> result;
+    result = nextGreaterElementOne(nums1, nums2);
+    displayVector(result);
 
     return 0;
 }
