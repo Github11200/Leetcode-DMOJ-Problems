@@ -421,6 +421,34 @@ int removeDuplicatesFromSortedArray(vector<int> &nums)
 
 vector<int> nextGreaterElementOne(vector<int> &nums1, vector<int> &nums2)
 {
+    unordered_map<int, int> nums1Hash;
+
+    for (int i = 0; i < nums1.size(); ++i)
+        nums1Hash[nums1[i]] = i;
+
+    vector<int> nextGreaterElements(nums1.size(), -1);
+    stack<int> nextGreaterElementStack;
+
+    for (int i = 0; i < nums2.size(); ++i)
+    {
+        // Element exists
+        if (nums1Hash.count(nums2[i]) > 0)
+        {
+            nextGreaterElementStack.push(nums2[i]);
+            int j = i + 1;
+            for (; j < nums2.size(); ++j)
+            {
+                if (nums2[j] < nums2[i])
+                    nextGreaterElementStack.push(nums2[j]);
+                else if (nums2[j] > nums2[i])
+                    break;
+            }
+
+            i = j - 1;
+        }
+    }
+
+    return nextGreaterElements;
 }
 
 template <typename T>
@@ -432,8 +460,8 @@ void displayVector(vector<T> arr)
 
 int main()
 {
-    vector<int> nums1({4, 1, 2});
-    vector<int> nums2({1, 2, 3, 4});
+    vector<int> nums1({2, 4});
+    vector<int> nums2({4, 1, 2, 3});
 
     vector<int> result;
     result = nextGreaterElementOne(nums1, nums2);
