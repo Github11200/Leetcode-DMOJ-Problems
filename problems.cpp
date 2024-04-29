@@ -419,6 +419,7 @@ int removeDuplicatesFromSortedArray(vector<int> &nums)
     return j;
 }
 
+// https://leetcode.com/problems/next-greater-element-i/description/
 vector<int> nextGreaterElementOne(vector<int> &nums1, vector<int> &nums2)
 {
     unordered_map<int, int> nums1Hash;
@@ -426,29 +427,23 @@ vector<int> nextGreaterElementOne(vector<int> &nums1, vector<int> &nums2)
     for (int i = 0; i < nums1.size(); ++i)
         nums1Hash[nums1[i]] = i;
 
-    vector<int> nextGreaterElements(nums1.size(), -1);
-    stack<int> nextGreaterElementStack;
-
+    stack<int> numsStack;
+    vector<int> result(nums1.size(), -1);
     for (int i = 0; i < nums2.size(); ++i)
     {
-        // Element exists
-        if (nums1Hash.count(nums2[i]) > 0)
+        int currentElement = nums2[i];
+        while (!numsStack.empty() && currentElement > numsStack.top())
         {
-            nextGreaterElementStack.push(nums2[i]);
-            int j = i + 1;
-            for (; j < nums2.size(); ++j)
-            {
-                if (nums2[j] < nums2[i])
-                    nextGreaterElementStack.push(nums2[j]);
-                else if (nums2[j] > nums2[i])
-                    break;
-            }
-
-            i = j - 1;
+            int element = numsStack.top();
+            numsStack.pop();
+            int index = nums1Hash[element];
+            result[index] = currentElement;
         }
+        if (nums1Hash.count(nums2[i]) > 0)
+            numsStack.push(nums2[i]);
     }
 
-    return nextGreaterElements;
+    return result;
 }
 
 template <typename T>
@@ -460,8 +455,8 @@ void displayVector(vector<T> arr)
 
 int main()
 {
-    vector<int> nums1({2, 4});
-    vector<int> nums2({4, 1, 2, 3});
+    vector<int> nums1({4, 1, 2});
+    vector<int> nums2({2, 1, 3, 4});
 
     vector<int> result;
     result = nextGreaterElementOne(nums1, nums2);
