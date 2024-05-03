@@ -5,6 +5,8 @@
 #include <iostream>
 #include <algorithm>
 #include <stack>
+#include <numeric>
+#include <math.h>
 
 using namespace std;
 
@@ -446,6 +448,72 @@ vector<int> nextGreaterElementOne(vector<int> &nums1, vector<int> &nums2)
     return result;
 }
 
+// https://leetcode.com/problems/find-pivot-index/description/
+int pivotIndex(vector<int> &nums)
+{
+    int rightSum = 0;
+    int leftSum = 0;
+    for (int i = 1; i < nums.size(); ++i)
+        leftSum += nums[i];
+
+    for (int i = 0; i < nums.size(); ++i)
+    {
+        if (i > 0)
+            leftSum -= nums[i];
+        if (leftSum == rightSum)
+            return i;
+        rightSum += nums[i];
+    }
+
+    return -1;
+}
+
+// https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array/description/
+class NumArray
+{
+public:
+    vector<int> numsArray;
+
+    NumArray(vector<int> &nums)
+    {
+        int sum = 0;
+        for (auto x : nums)
+        {
+            sum += x;
+            this->numsArray.push_back(sum);
+        }
+    }
+
+    int sumRange(int left, int right)
+    {
+        if (left > 0)
+        {
+            return this->numsArray[right] - this->numsArray[left - 1];
+        }
+        return this->numsArray[right];
+    }
+};
+
+// https://leetcode.com/problems/maximum-number-of-balloons/description/
+int maxNumberOfBalloons(string text)
+{
+    unordered_map<char, int> balloonHashMap = {{'b', 0}, {'a', 1}, {'l', 2}, {'o', 3}, {'n', 4}};
+    vector<int> balloonWordArray({0, 0, 0, 0, 0});
+
+    for (auto x : text)
+    {
+        if (balloonHashMap.count(x) > 0)
+            balloonWordArray[balloonHashMap[x]] += 1;
+    }
+
+    balloonWordArray[2] /= 2;
+    balloonWordArray[3] /= 2;
+    auto smallestElement = min_element(balloonWordArray.begin(), balloonWordArray.end());
+    if (*smallestElement == 0)
+        return 0;
+    return *smallestElement;
+}
+
 template <typename T>
 void displayVector(vector<T> arr)
 {
@@ -455,12 +523,10 @@ void displayVector(vector<T> arr)
 
 int main()
 {
-    vector<int> nums1({4, 1, 2});
+    vector<int> nums1({2, 1, -1});
     vector<int> nums2({2, 1, 3, 4});
 
-    vector<int> result;
-    result = nextGreaterElementOne(nums1, nums2);
-    displayVector(result);
+    cout << maxNumberOfBalloons("baoollnnololgbax") << endl;
 
     return 0;
 }
