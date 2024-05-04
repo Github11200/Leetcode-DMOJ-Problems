@@ -514,6 +514,30 @@ int maxNumberOfBalloons(string text)
     return *smallestElement;
 }
 
+bool wordPattern(string pattern, string s)
+{
+    unordered_map<char, string> letterToWord;
+    unordered_map<string, char> wordToLetter;
+
+    int j = 0;
+    int k = 0;
+    for (int i = 0; i < s.size() + 1; ++i)
+    {
+        if (s[i] == ' ' || i == s.size())
+        {
+            string subString = s.substr(j, i - j);
+            if ((letterToWord.count(pattern[k]) > 0 && letterToWord[pattern[k]] != subString) || (wordToLetter.count(subString) > 0 && wordToLetter[subString] != pattern[k]))
+                return false;
+            letterToWord[pattern[k]] = subString;
+            wordToLetter[subString] = pattern[k];
+            ++k;
+            j = i + 1;
+        }
+    }
+
+    return true ? k == pattern.size() : false;
+}
+
 template <typename T>
 void displayVector(vector<T> arr)
 {
@@ -526,7 +550,11 @@ int main()
     vector<int> nums1({2, 1, -1});
     vector<int> nums2({2, 1, 3, 4});
 
-    cout << maxNumberOfBalloons("baoollnnololgbax") << endl;
+    string stringOne = "he";
+    string stringTwo = "unit";
+
+    cout
+        << wordPattern(stringOne, stringTwo) << endl;
 
     return 0;
 }
