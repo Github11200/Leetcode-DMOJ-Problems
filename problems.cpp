@@ -514,6 +514,7 @@ int maxNumberOfBalloons(string text)
     return *smallestElement;
 }
 
+// https://leetcode.com/problems/word-pattern/description/
 bool wordPattern(string pattern, string s)
 {
     unordered_map<char, string> letterToWord;
@@ -538,6 +539,41 @@ bool wordPattern(string pattern, string s)
     return true ? k == pattern.size() : false;
 }
 
+// https://leetcode.com/problems/design-hashset/description/
+class MyHashSet
+{
+public:
+    vector<bool> booleanArray;
+
+    MyHashSet()
+    {
+        booleanArray.push_back(false);
+    }
+
+    void add(int key)
+    {
+        if (key >= booleanArray.size())
+        {
+            for (int i = booleanArray.size(); i < key + 1; ++i)
+                booleanArray.push_back(false);
+        }
+        booleanArray[key] = true;
+    }
+
+    void remove(int key)
+    {
+        if (key < booleanArray.size())
+            booleanArray[key] = false;
+    }
+
+    bool contains(int key)
+    {
+        if (key < booleanArray.size())
+            return booleanArray[key];
+        return false;
+    }
+};
+
 template <typename T>
 void displayVector(vector<T> arr)
 {
@@ -553,8 +589,12 @@ int main()
     string stringOne = "he";
     string stringTwo = "unit";
 
-    cout
-        << wordPattern(stringOne, stringTwo) << endl;
+    MyHashSet *obj = new MyHashSet();
+    obj->add(1);
+    obj->add(2);
+    obj->contains(1);
+    cout << obj->contains(1) << endl;
+    cout << obj->contains(3) << endl;
 
     return 0;
 }
