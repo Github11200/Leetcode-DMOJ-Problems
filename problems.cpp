@@ -574,6 +574,80 @@ public:
     }
 };
 
+// https://leetcode.com/problems/design-hashmap/description/
+class MyHashMap
+{
+public:
+    vector<array<int, 2>> hashMap;
+
+    MyHashMap()
+    {
+        for (int i = 0; i < pow(10, 4); ++i)
+            this->hashMap.push_back({-1, -1});
+    }
+
+    void put(int key, int value)
+    {
+        if (key >= this->hashMap.size())
+        {
+            for (int i = 0; i <= key; ++i)
+                this->hashMap.push_back({-1, -1});
+        }
+        this->hashMap[key] = {key, value};
+    }
+
+    int get(int key)
+    {
+        if (key > this->hashMap.size())
+            return -1;
+        return this->hashMap[key][1];
+    }
+
+    void remove(int key)
+    {
+        if (key <= this->hashMap.size())
+            this->hashMap[key] = {-1, -1};
+    }
+};
+
+vector<int> sortArray(vector<int> &nums)
+{
+    if (nums.size() <= 2)
+    {
+        if (nums.size() == 2 && nums[1] < nums[0])
+        {
+            swap(nums[0], nums[1]);
+        }
+        return nums;
+    }
+
+    int pivot = nums.size() / 2;
+
+    vector<int> leftPartition;
+    vector<int> rightPartition;
+
+    for (int i = 0; i < nums.size(); ++i)
+    {
+        if (i != pivot)
+        {
+            if (nums[i] <= nums[pivot])
+                leftPartition.push_back(nums[i]);
+            else
+                rightPartition.push_back(nums[i]);
+        }
+    }
+
+    leftPartition = sortArray(leftPartition);
+    rightPartition = sortArray(rightPartition);
+
+    for (int i = 0; i < leftPartition.size(); ++i)
+        nums[i] = leftPartition[i];
+    for (int i = leftPartition.size() + 1; i < nums.size(); ++i)
+        nums[i] = rightPartition[i - (leftPartition.size() + 1)];
+
+    return nums;
+}
+
 template <typename T>
 void displayVector(vector<T> arr)
 {
@@ -583,18 +657,9 @@ void displayVector(vector<T> arr)
 
 int main()
 {
-    vector<int> nums1({2, 1, -1});
-    vector<int> nums2({2, 1, 3, 4});
+    vector<int> nums({5, 1, 1, 2, 0, 0});
 
-    string stringOne = "he";
-    string stringTwo = "unit";
-
-    MyHashSet *obj = new MyHashSet();
-    obj->add(1);
-    obj->add(2);
-    obj->contains(1);
-    cout << obj->contains(1) << endl;
-    cout << obj->contains(3) << endl;
+    displayVector(sortArray(nums));
 
     return 0;
 }
