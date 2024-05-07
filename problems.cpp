@@ -614,36 +614,46 @@ vector<int> sortArray(vector<int> &nums)
 {
     if (nums.size() <= 2)
     {
-        if (nums.size() == 2 && nums[1] < nums[0])
-        {
+        if (nums.size() == 2 && nums[0] > nums[1])
             swap(nums[0], nums[1]);
-        }
         return nums;
     }
 
-    int pivot = nums.size() / 2;
-
-    vector<int> leftPartition;
-    vector<int> rightPartition;
-
-    for (int i = 0; i < nums.size(); ++i)
-    {
-        if (i != pivot)
-        {
-            if (nums[i] <= nums[pivot])
-                leftPartition.push_back(nums[i]);
-            else
-                rightPartition.push_back(nums[i]);
-        }
-    }
+    vector<int> leftPartition(nums.begin(), nums.begin() + nums.size() / 2);
+    vector<int> rightPartition(nums.begin() + nums.size() / 2, nums.end());
 
     leftPartition = sortArray(leftPartition);
     rightPartition = sortArray(rightPartition);
 
-    for (int i = 0; i < leftPartition.size(); ++i)
-        nums[i] = leftPartition[i];
-    for (int i = leftPartition.size() + 1; i < nums.size(); ++i)
-        nums[i] = rightPartition[i - (leftPartition.size() + 1)];
+    int i = 0;
+    int j = 0;
+    int k = 0;
+    while (i < leftPartition.size() && j < rightPartition.size())
+    {
+        if (leftPartition[i] <= rightPartition[j])
+        {
+            nums[k] = leftPartition[i];
+            ++i;
+        }
+        else
+        {
+            nums[k] = rightPartition[j];
+            ++j;
+        }
+        ++k;
+    }
+
+    while (i < leftPartition.size() && k < nums.size())
+    {
+        nums[k] = leftPartition[i];
+        i, k += 1;
+    }
+
+    while (j < rightPartition.size() && k < nums.size())
+    {
+        nums[k] = rightPartition[j];
+        j, k += 1;
+    }
 
     return nums;
 }
