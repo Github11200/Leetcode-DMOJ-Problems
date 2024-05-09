@@ -610,6 +610,7 @@ public:
     }
 };
 
+// https://leetcode.com/problems/sort-an-array/description/
 vector<int> sortArray(vector<int> &nums)
 {
     if (nums.size() <= 2)
@@ -658,6 +659,32 @@ vector<int> sortArray(vector<int> &nums)
     return nums;
 }
 
+vector<int> topKFrequentElements(vector<int> &nums, int k)
+{
+    sort(nums.begin(), nums.end());
+    vector<int> candidates;
+    vector<int> counts;
+
+    for (int i = 0; i < nums.size(); ++i)
+    {
+        if (nums[i] != nums[i - 1] && i > 0)
+        {
+            if (counts.size() < k || i > counts[counts.size() - 1])
+            {
+                candidates.insert(upper_bound(candidates.begin(), candidates.end(), nums[i - 1]), nums[i - 1]);
+                counts.insert(upper_bound(counts.begin(), counts.end(), i), i);
+                if (counts.size() > k)
+                {
+                    candidates.pop_back();
+                    counts.pop_back();
+                }
+            }
+        }
+    }
+
+    return candidates;
+}
+
 template <typename T>
 void displayVector(vector<T> arr)
 {
@@ -667,9 +694,9 @@ void displayVector(vector<T> arr)
 
 int main()
 {
-    vector<int> nums({5, 1, 1, 2, 0, 0});
+    vector<int> nums({1, 1, 1, 2, 2, 3});
 
-    displayVector(sortArray(nums));
+    displayVector(topKFrequentElements(nums, 2));
 
     return 0;
 }
