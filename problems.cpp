@@ -661,28 +661,41 @@ vector<int> sortArray(vector<int> &nums)
 
 vector<int> topKFrequentElements(vector<int> &nums, int k)
 {
-    sort(nums.begin(), nums.end());
-    vector<int> candidates;
-    vector<int> counts;
+    if (nums.size() == 1)
+        return nums;
+
+    unordered_map<int, int> count;
+    vector<vector<int>> frequencies;
 
     for (int i = 0; i < nums.size(); ++i)
+        frequencies.push_back({0});
+
+    for (auto x : nums)
     {
-        if (nums[i] != nums[i - 1] && i > 0)
-        {
-            if (counts.size() < k || i > counts[counts.size() - 1])
-            {
-                candidates.insert(upper_bound(candidates.begin(), candidates.end(), nums[i - 1]), nums[i - 1]);
-                counts.insert(upper_bound(counts.begin(), counts.end(), i), i);
-                if (counts.size() > k)
-                {
-                    candidates.pop_back();
-                    counts.pop_back();
-                }
-            }
-        }
+        if (count.count(x) == 0)
+            count[x] = 1;
+        else
+            count[x] += 1;
     }
 
-    return candidates;
+    for (auto x : count)
+        frequencies[x.second].push_back(x.first);
+
+    vector<int> result;
+    int i = 0;
+    while (result.size() != k)
+    {
+        for (int j = 0; j < frequencies[i].size(); ++j)
+        {
+            if (result.size() != k)
+                result.push_back(frequencies[i][j]);
+            else
+                break;
+        }
+        ++i;
+    }
+
+    return result;
 }
 
 template <typename T>
