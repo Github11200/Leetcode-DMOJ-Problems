@@ -659,6 +659,7 @@ vector<int> sortArray(vector<int> &nums)
     return nums;
 }
 
+// https://leetcode.com/problems/top-k-frequent-elements/description/
 vector<int> topKFrequentElements(vector<int> &nums, int k)
 {
     if (nums.size() == 1)
@@ -666,9 +667,7 @@ vector<int> topKFrequentElements(vector<int> &nums, int k)
 
     unordered_map<int, int> count;
     vector<vector<int>> frequencies;
-
-    for (int i = 0; i < nums.size(); ++i)
-        frequencies.push_back({0});
+    frequencies.resize(nums.size());
 
     for (auto x : nums)
     {
@@ -682,7 +681,7 @@ vector<int> topKFrequentElements(vector<int> &nums, int k)
         frequencies[x.second].push_back(x.first);
 
     vector<int> result;
-    int i = 0;
+    int i = frequencies.size() - 1;
     while (result.size() != k)
     {
         for (int j = 0; j < frequencies[i].size(); ++j)
@@ -692,10 +691,14 @@ vector<int> topKFrequentElements(vector<int> &nums, int k)
             else
                 break;
         }
-        ++i;
+        --i;
     }
 
     return result;
+}
+
+vector<int> productOfArrayExceptSelf(vector<int> &nums)
+{
 }
 
 template <typename T>
@@ -707,9 +710,9 @@ void displayVector(vector<T> arr)
 
 int main()
 {
-    vector<int> nums({1, 1, 1, 2, 2, 3});
+    vector<int> nums({-1, -1});
 
-    displayVector(topKFrequentElements(nums, 2));
+    displayVector(topKFrequentElements(nums, 1));
 
     return 0;
 }
