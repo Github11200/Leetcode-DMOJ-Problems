@@ -697,8 +697,58 @@ vector<int> topKFrequentElements(vector<int> &nums, int k)
     return result;
 }
 
+// https://leetcode.com/problems/product-of-array-except-self/description/
 vector<int> productOfArrayExceptSelf(vector<int> &nums)
 {
+    vector<int> result(nums.size(), 0);
+    unordered_map<int, int> previousNumbers;
+
+    for (int i = 0; i < nums.size(); ++i)
+    {
+        if (previousNumbers.count(nums[i]) == 0)
+        {
+            int product = 1;
+            for (int j = 0; j < nums.size(); ++j)
+            {
+                if (j != i)
+                    product *= nums[j];
+            }
+            result[i] = product;
+            previousNumbers[nums[i]] = product;
+        }
+        else
+            result[i] = previousNumbers[nums[i]];
+    }
+
+    return result;
+}
+
+int getSquareIndex(int x, int y)
+{
+}
+
+bool validSudoku(vector<vector<char>> &board)
+{
+    unordered_map<char, int> currentRow;
+    vector<unordered_map<char, int>> columns;
+
+    for (int i = 0; i < board.size(); ++i)
+    {
+        for (int j = 0; j < board.size(); ++j)
+        {
+            if (board[i][j] != '.' && (currentRow.count(board[i][j]) != 0 || columns[j].count(board[i][j]) != 0))
+                return false;
+            else
+            {
+                currentRow[board[i][j]] = 0;
+                columns[j][board[i][j]] = 0;
+            }
+        }
+
+        currentRow.empty();
+    }
+
+    return true;
 }
 
 template <typename T>
@@ -710,9 +760,9 @@ void displayVector(vector<T> arr)
 
 int main()
 {
-    vector<int> nums({-1, -1});
+    vector<int> nums({1, 2, 3, 4});
 
-    displayVector(topKFrequentElements(nums, 1));
+    displayVector(productOfArrayExceptSelf(nums));
 
     return 0;
 }
