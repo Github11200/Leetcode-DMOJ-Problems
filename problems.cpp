@@ -723,29 +723,34 @@ vector<int> productOfArrayExceptSelf(vector<int> &nums)
     return result;
 }
 
-int getSquareIndex(int x, int y)
-{
-}
-
 bool validSudoku(vector<vector<char>> &board)
 {
     unordered_map<char, int> currentRow;
+    unordered_map<string, int> boxes;
     vector<unordered_map<char, int>> columns;
+    columns.resize(9);
 
     for (int i = 0; i < board.size(); ++i)
     {
         for (int j = 0; j < board.size(); ++j)
         {
-            if (board[i][j] != '.' && (currentRow.count(board[i][j]) != 0 || columns[j].count(board[i][j]) != 0))
-                return false;
-            else
+            if (board[i][j] != '.')
             {
-                currentRow[board[i][j]] = 0;
-                columns[j][board[i][j]] = 0;
+                string boxesString;
+                boxesString += (char)(i / 3);
+                boxesString += (char)(j / 3);
+                if (currentRow.count(board[i][j]) != 0 || columns[j].count(board[i][j]) != 0 || boxes.count(boxesString) != 0)
+                    return false;
+                else
+                {
+                    currentRow[board[i][j]] = 0;
+                    columns[j][board[i][j]] = 0;
+                    boxes[boxesString] = 0;
+                }
             }
         }
 
-        currentRow.empty();
+        currentRow.clear();
     }
 
     return true;
@@ -762,7 +767,18 @@ int main()
 {
     vector<int> nums({1, 2, 3, 4});
 
-    displayVector(productOfArrayExceptSelf(nums));
+    vector<vector<char>> board = {
+        {'5', '3', '.', '.', '7', '.', '.', '.', '.'},
+        {'6', '.', '.', '1', '9', '5', '.', '.', '.'},
+        {'.', '9', '8', '.', '.', '.', '.', '6', '.'},
+        {'8', '.', '.', '.', '6', '.', '.', '.', '3'},
+        {'4', '.', '.', '8', '.', '3', '.', '.', '1'},
+        {'7', '.', '.', '.', '2', '.', '.', '.', '6'},
+        {'.', '6', '.', '.', '.', '.', '2', '8', '.'},
+        {'.', '.', '.', '4', '1', '9', '.', '.', '5'},
+        {'.', '.', '.', '.', '8', '.', '.', '7', '9'}};
+
+    cout << validSudoku(board) << endl;
 
     return 0;
 }
