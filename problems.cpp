@@ -723,6 +723,7 @@ vector<int> productOfArrayExceptSelf(vector<int> &nums)
     return result;
 }
 
+// https://leetcode.com/problems/valid-sudoku/description/
 bool validSudoku(vector<vector<char>> &board)
 {
     unordered_map<char, int> currentRow;
@@ -756,6 +757,33 @@ bool validSudoku(vector<vector<char>> &board)
     return true;
 }
 
+int longestConsecutive(vector<int> &nums)
+{
+    if (nums.size() == 0)
+        return 0;
+
+    sort(nums.begin(), nums.end());
+    int longestSequence = 1;
+    int length = 1;
+
+    for (int i = 1; i < nums.size(); ++i)
+    {
+        if (nums[i] - 1 == nums[i - 1])
+            ++length;
+        else if (nums[i] != nums[i - 1])
+        {
+            if (length > longestSequence)
+                longestSequence = length;
+            length = 1;
+        }
+    }
+
+    if (length > longestSequence)
+        return length;
+
+    return longestSequence;
+}
+
 template <typename T>
 void displayVector(vector<T> arr)
 {
@@ -765,20 +793,9 @@ void displayVector(vector<T> arr)
 
 int main()
 {
-    vector<int> nums({1, 2, 3, 4});
+    vector<int> nums({9, 1, 4, 7, 3, -1, 0, 5, 8, -1, 6});
 
-    vector<vector<char>> board = {
-        {'5', '3', '.', '.', '7', '.', '.', '.', '.'},
-        {'6', '.', '.', '1', '9', '5', '.', '.', '.'},
-        {'.', '9', '8', '.', '.', '.', '.', '6', '.'},
-        {'8', '.', '.', '.', '6', '.', '.', '.', '3'},
-        {'4', '.', '.', '8', '.', '3', '.', '.', '1'},
-        {'7', '.', '.', '.', '2', '.', '.', '.', '6'},
-        {'.', '6', '.', '.', '.', '.', '2', '8', '.'},
-        {'.', '.', '.', '4', '1', '9', '.', '.', '5'},
-        {'.', '.', '.', '.', '8', '.', '.', '7', '9'}};
-
-    cout << validSudoku(board) << endl;
+    cout << longestConsecutive(nums) << endl;
 
     return 0;
 }
