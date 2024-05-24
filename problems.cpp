@@ -7,6 +7,7 @@
 #include <stack>
 #include <numeric>
 #include <math.h>
+#include <set>
 
 using namespace std;
 
@@ -757,6 +758,7 @@ bool validSudoku(vector<vector<char>> &board)
     return true;
 }
 
+// https://leetcode.com/problems/sort-colors/description/
 int longestConsecutive(vector<int> &nums)
 {
     if (nums.size() == 0)
@@ -784,6 +786,31 @@ int longestConsecutive(vector<int> &nums)
     return longestSequence;
 }
 
+void sortColors(vector<int> &nums)
+{
+    if (nums.size() == 1)
+        return;
+
+    int i = 0;
+    int j = 1;
+
+    while (j < nums.size() && i < nums.size() - 1)
+    {
+        if (nums[i] == nums[j])
+            ++j;
+        else if (nums[i] > nums[j])
+        {
+            swap(nums[i], nums[j]);
+            ++i;
+            ++j;
+        }
+        else if (j == nums.size() - 1)
+            ++i;
+        else
+            ++j;
+    }
+}
+
 template <typename T>
 void displayVector(vector<T> arr)
 {
@@ -793,9 +820,10 @@ void displayVector(vector<T> arr)
 
 int main()
 {
-    vector<int> nums({9, 1, 4, 7, 3, -1, 0, 5, 8, -1, 6});
+    vector<int> nums({2, 0, 2, 1, 1, 0});
 
-    cout << longestConsecutive(nums) << endl;
+    sortColors(nums);
+    displayVector(nums);
 
     return 0;
 }
