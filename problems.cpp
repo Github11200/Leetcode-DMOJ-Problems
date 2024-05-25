@@ -813,6 +813,41 @@ void sortColors(vector<int> &nums)
     }
 }
 
+// https://leetcode.com/problems/encode-and-decode-tinyurl/description/
+class EncodeAndDecodeTinyURL
+{
+public:
+    string encode(string longUrl)
+    {
+        string newString;
+        for (char s : longUrl)
+        {
+            int ascii = (int)s;
+            ascii += 5;
+            newString.push_back(char(ascii));
+        }
+
+        return newString;
+    }
+
+    string decode(string shortUrl)
+    {
+        string newString;
+        for (char s : shortUrl)
+        {
+            int ascii = (int)s;
+            ascii -= 5;
+            newString.push_back(char(ascii));
+        }
+
+        return newString;
+    }
+};
+
+int brickWall(vector<vector<int>> &wall)
+{
+}
+
 template <typename T>
 void displayVector(vector<T> arr)
 {
@@ -824,8 +859,9 @@ int main()
 {
     vector<int> nums({2, 0, 1});
 
-    sortColors(nums);
-    displayVector(nums);
+    EncodeAndDecodeTinyURL encodeAndDecodeTinyUrl;
+    cout << encodeAndDecodeTinyUrl.encode("https://leetcode.com/problems/design-tinyurl") << endl;
+    cout << encodeAndDecodeTinyUrl.decode("myyux?44qjjyhtij3htr4uwtgqjrx4ijxnls2yns~zwq") << endl;
 
     return 0;
 }
