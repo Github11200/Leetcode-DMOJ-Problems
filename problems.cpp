@@ -786,28 +786,30 @@ int longestConsecutive(vector<int> &nums)
     return longestSequence;
 }
 
+// https://leetcode.com/problems/sort-colors/submissions/1267140201/
 void sortColors(vector<int> &nums)
 {
     if (nums.size() == 1)
         return;
 
-    int i = 0;
-    int j = 1;
+    int left = 0;
+    int right = nums.size() - 1;
+    int mid = 0;
 
-    while (j < nums.size() && i < nums.size() - 1)
+    while (mid < nums.size() && mid <= right)
     {
-        if (nums[i] == nums[j])
-            ++j;
-        else if (nums[i] > nums[j])
+        if (nums[mid] == 0)
         {
-            swap(nums[i], nums[j]);
-            ++i;
-            ++j;
+            swap(nums[left], nums[mid]);
+            ++left;
         }
-        else if (j == nums.size() - 1)
-            ++i;
-        else
-            ++j;
+        else if (nums[mid] == 2)
+        {
+            swap(nums[mid], nums[right]);
+            --right;
+            --mid;
+        }
+        ++mid;
     }
 }
 
@@ -820,7 +822,7 @@ void displayVector(vector<T> arr)
 
 int main()
 {
-    vector<int> nums({2, 0, 2, 1, 1, 0});
+    vector<int> nums({2, 0, 1});
 
     sortColors(nums);
     displayVector(nums);
