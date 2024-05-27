@@ -844,8 +844,28 @@ public:
     }
 };
 
+// https://leetcode.com/problems/brick-wall/description/
 int brickWall(vector<vector<int>> &wall)
 {
+    vector<int> numberOfCrosses;
+    int sum = 0;
+    for (int i = 0; i < wall[0].size(); ++i)
+        sum += wall[0][i];
+    numberOfCrosses.resize(sum - 1);
+
+    for (int i = 0; i < wall.size(); ++i)
+    {
+        for (int j = 0; j < wall[i].size() - 1; ++j)
+        {
+            if (wall[i][j] > 1)
+            {
+                for (int k = j; k < wall[i][j]; ++k)
+                    ++numberOfCrosses[k];
+            }
+        }
+    }
+
+    return *min_element(numberOfCrosses.begin(), numberOfCrosses.end());
 }
 
 template <typename T>
@@ -858,10 +878,14 @@ void displayVector(vector<T> arr)
 int main()
 {
     vector<int> nums({2, 0, 1});
+    vector<vector<int>> wall({{1, 2, 2, 1},
+                              {3, 1, 2},
+                              {1, 3, 2},
+                              {2, 4},
+                              {3, 1, 2},
+                              {1, 3, 1, 1}});
 
-    EncodeAndDecodeTinyURL encodeAndDecodeTinyUrl;
-    cout << encodeAndDecodeTinyUrl.encode("https://leetcode.com/problems/design-tinyurl") << endl;
-    cout << encodeAndDecodeTinyUrl.decode("myyux?44qjjyhtij3htr4uwtgqjrx4ijxnls2yns~zwq") << endl;
+    cout << brickWall(wall) << endl;
 
     return 0;
 }
