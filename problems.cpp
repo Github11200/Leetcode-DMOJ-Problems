@@ -851,21 +851,30 @@ int brickWall(vector<vector<int>> &wall)
     int sum = 0;
     for (int i = 0; i < wall[0].size(); ++i)
         sum += wall[0][i];
-    numberOfCrosses.resize(sum - 1);
+
+    if (sum == 1)
+        return wall.size();
+
+    numberOfCrosses.resize(sum);
 
     for (int i = 0; i < wall.size(); ++i)
     {
-        for (int j = 0; j < wall[i].size() - 1; ++j)
+        int k = 0;
+        for (int j = 0; j < wall[i].size(); ++j)
         {
-            if (wall[i][j] > 1)
+            if (wall[i][j] == 1)
+                ++k;
+            else
             {
-                for (int k = j; k < wall[i][j]; ++k)
+                int l = k;
+                ++k;
+                for (; k < l + wall[i][j]; ++k)
                     ++numberOfCrosses[k];
             }
         }
     }
 
-    return *min_element(numberOfCrosses.begin(), numberOfCrosses.end());
+    return *min_element(numberOfCrosses.begin() + 1, numberOfCrosses.end());
 }
 
 template <typename T>
@@ -878,12 +887,7 @@ void displayVector(vector<T> arr)
 int main()
 {
     vector<int> nums({2, 0, 1});
-    vector<vector<int>> wall({{1, 2, 2, 1},
-                              {3, 1, 2},
-                              {1, 3, 2},
-                              {2, 4},
-                              {3, 1, 2},
-                              {1, 3, 1, 1}});
+    vector<vector<int>> wall({{1}, {1}, {1}});
 
     cout << brickWall(wall) << endl;
 
