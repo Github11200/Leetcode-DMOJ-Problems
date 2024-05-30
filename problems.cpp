@@ -847,34 +847,26 @@ public:
 // https://leetcode.com/problems/brick-wall/description/
 int brickWall(vector<vector<int>> &wall)
 {
-    vector<int> numberOfCrosses;
+    vector<int> gaps;
     int sum = 0;
+    int max = 0;
     for (int i = 0; i < wall[0].size(); ++i)
         sum += wall[0][i];
-
-    if (sum == 1)
-        return wall.size();
-
-    numberOfCrosses.resize(sum);
+    gaps.resize(sum);
 
     for (int i = 0; i < wall.size(); ++i)
     {
-        int k = 0;
-        for (int j = 0; j < wall[i].size(); ++j)
+        int rowSum = wall[i][0];
+        for (int j = 0; j < wall[i].size() - 1;)
         {
-            if (wall[i][j] == 1)
-                ++k;
-            else
-            {
-                int l = k;
-                ++k;
-                for (; k < l + wall[i][j]; ++k)
-                    ++numberOfCrosses[k];
-            }
+            ++gaps[rowSum];
+            rowSum += wall[i][++j];
+            if (wall[i][j] > max)
+                max = wall[i][j];
         }
     }
 
-    return *min_element(numberOfCrosses.begin() + 1, numberOfCrosses.end());
+    return wall.size() - max;
 }
 
 template <typename T>
@@ -887,7 +879,7 @@ void displayVector(vector<T> arr)
 int main()
 {
     vector<int> nums({2, 0, 1});
-    vector<vector<int>> wall({{1}, {1}, {1}});
+    vector<vector<int>> wall({{1, 1}, {2}, {1, 1}});
 
     cout << brickWall(wall) << endl;
 
