@@ -847,22 +847,21 @@ public:
 // https://leetcode.com/problems/brick-wall/description/
 int brickWall(vector<vector<int>> &wall)
 {
-    vector<int> gaps;
-    int sum = 0;
+    unordered_map<int, int> gaps;
     int max = 0;
-    for (int i = 0; i < wall[0].size(); ++i)
-        sum += wall[0][i];
-    gaps.resize(sum);
 
     for (int i = 0; i < wall.size(); ++i)
     {
         int rowSum = wall[i][0];
         for (int j = 0; j < wall[i].size() - 1;)
         {
-            ++gaps[rowSum];
+            if (gaps.count(rowSum) > 0)
+                ++gaps[rowSum];
+            else
+                gaps[rowSum] = 1;
+            if (gaps[rowSum] > max)
+                max = gaps[rowSum];
             rowSum += wall[i][++j];
-            if (wall[i][j] > max)
-                max = wall[i][j];
         }
     }
 
@@ -879,7 +878,12 @@ void displayVector(vector<T> arr)
 int main()
 {
     vector<int> nums({2, 0, 1});
-    vector<vector<int>> wall({{1, 1}, {2}, {1, 1}});
+    vector<vector<int>> wall({{1, 2, 2, 1},
+                              {3, 1, 2},
+                              {1, 3, 2},
+                              {2, 4},
+                              {3, 1, 2},
+                              {1, 3, 1, 1}});
 
     cout << brickWall(wall) << endl;
 
