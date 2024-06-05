@@ -1,3 +1,0 @@
-/home/user/code/Leetcode-DMOJ-Problems/cmake-build-debug/CMakeFiles/Leetcode_DMOJ_Problems.dir
-/home/user/code/Leetcode-DMOJ-Problems/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/user/code/Leetcode-DMOJ-Problems/cmake-build-debug/CMakeFiles/rebuild_cache.dir

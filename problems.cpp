@@ -504,34 +504,34 @@ public:
 };
 
 // https://leetcode.com/problems/design-hashmap/description/
-class MyHashMap {
-public:
-    vector<array<int, 2>> hashMap;
-
-    MyHashMap() {
-        for (int i = 0; i < pow(10, 4); ++i)
-            this->hashMap.push_back({-1, -1});
-    }
-
-    void put(int key, int value) {
-        if (key >= this->hashMap.size()) {
-            for (int i = 0; i <= key; ++i)
-                this->hashMap.push_back({-1, -1});
-        }
-        this->hashMap[key] = {key, value};
-    }
-
-    int get(int key) {
-        if (key > this->hashMap.size())
-            return -1;
-        return this->hashMap[key][1];
-    }
-
-    void remove(int key) {
-        if (key <= this->hashMap.size())
-            this->hashMap[key] = {-1, -1};
-    }
-};
+// class MyHashMap {
+// public:
+//     vector<array<int, 2>> hashMap;
+//
+//     MyHashMap() {
+//         for (int i = 0; i < pow(10, 4); ++i)
+//             this->hashMap.push_back({-1, -1});
+//     }
+//
+//     void put(int key, int value) {
+//         if (key >= this->hashMap.size()) {
+//             for (int i = 0; i <= key; ++i)
+//                 this->hashMap.push_back({-1, -1});
+//         }
+//         this->hashMap[key] = {key, value};
+//     }
+//
+//     int get(int key) {
+//         if (key > this->hashMap.size())
+//             return -1;
+//         return this->hashMap[key][1];
+//     }
+//
+//     void remove(int key) {
+//         if (key <= this->hashMap.size())
+//             this->hashMap[key] = {-1, -1};
+//     }
+// };
 
 // https://leetcode.com/problems/sort-an-array/description/
 vector<int> sortArray(vector<int> &nums) {
