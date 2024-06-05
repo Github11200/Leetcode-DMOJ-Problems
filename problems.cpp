@@ -12,12 +12,10 @@
 using namespace std;
 
 // https://leetcode.com/problems/contains-duplicate/
-bool containsDuplicate(vector<int> &nums)
-{
+bool containsDuplicate(vector<int> &nums) {
     unordered_map<int, int> duplicates;
 
-    for (auto x : nums)
-    {
+    for (auto x: nums) {
         if (duplicates.find(x) != duplicates.end())
             return true;
         else
@@ -28,30 +26,25 @@ bool containsDuplicate(vector<int> &nums)
 }
 
 // https://leetcode.com/problems/concatenation-of-array/description/
-vector<int> concatenationOfArray(vector<int> &nums)
-{
+vector<int> concatenationOfArray(vector<int> &nums) {
     vector<int> results;
-    results.reserve(size(nums) * 2);
+    results.reserve(nums.size() * 2);
     results.insert(results.end(), nums.begin(), nums.end());
     results.insert(results.end(), nums.begin(), nums.end());
     return results;
 }
 
 // https://leetcode.com/problems/replace-elements-with-greatest-element-on-right-side/submissions/1218706537/
-vector<int> replaceAlementsWithGreatestElementOnRightSide(vector<int> &arr)
-{
-    vector<int> outputArray(size(arr));
+vector<int> replaceAlementsWithGreatestElementOnRightSide(vector<int> &arr) {
+    vector<int> outputArray(arr.size());
     int previousValue = -1;
-    outputArray[size(arr) - 1] = -1;
+    outputArray[arr.size() - 1] = -1;
 
-    for (int i = size(arr) - 1; i > 0; --i)
-    {
-        if (arr[i] > previousValue)
-        {
+    for (int i = arr.size() - 1; i > 0; --i) {
+        if (arr[i] > previousValue) {
             outputArray[i - 1] = arr[i];
             previousValue = arr[i];
-        }
-        else
+        } else
             outputArray[i - 1] = previousValue;
     }
 
@@ -59,12 +52,9 @@ vector<int> replaceAlementsWithGreatestElementOnRightSide(vector<int> &arr)
 }
 
 // https://leetcode.com/problems/is-subsequence/description/
-bool isSubsequence(string s, string t)
-{
-    for (int i = 0; i < t.size(); ++i)
-    {
-        if (t[i] == s[0])
-        {
+bool isSubsequence(string s, string t) {
+    for (int i = 0; i < t.size(); ++i) {
+        if (t[i] == s[0]) {
             s.erase(0, 1);
         }
 
@@ -76,12 +66,10 @@ bool isSubsequence(string s, string t)
 }
 
 // https://leetcode.com/problems/two-sum/description/
-vector<int> twoSum(vector<int> &nums, int target)
-{
+vector<int> twoSum(vector<int> &nums, int target) {
     unordered_map<int, int> numberNeeded;
 
-    for (int i = 0; i < nums.size(); ++i)
-    {
+    for (int i = 0; i < nums.size(); ++i) {
         if (numberNeeded.find(nums[i]) != numberNeeded.end())
             return vector<int>({numberNeeded[nums[i]], i});
         else
@@ -92,20 +80,16 @@ vector<int> twoSum(vector<int> &nums, int target)
 }
 
 // https://leetcode.com/problems/longest-common-prefix/description/
-string longestCommonPrefix(vector<string> &strs)
-{
+string longestCommonPrefix(vector<string> &strs) {
     if (strs.size() == 1)
         return strs[0];
 
     string longestCommonPrefix = strs[0];
 
-    for (int i = 1; i < strs.size(); ++i)
-    {
+    for (int i = 1; i < strs.size(); ++i) {
         int j = 0;
-        while (j < strs[i].size() && j < longestCommonPrefix.size())
-        {
-            if (strs[i][j] != longestCommonPrefix[j])
-            {
+        while (j < strs[i].size() && j < longestCommonPrefix.size()) {
+            if (strs[i][j] != longestCommonPrefix[j]) {
                 longestCommonPrefix = longestCommonPrefix.substr(0, j);
                 if (i == 0)
                     return "";
@@ -122,23 +106,19 @@ string longestCommonPrefix(vector<string> &strs)
 }
 
 // https://leetcode.com/problems/group-anagrams/description/
-vector<vector<string>> groupAnagrams(vector<string> &strs)
-{
+vector<vector<string>> groupAnagrams(vector<string> &strs) {
     unordered_map<string, int> anagrams;
     vector<vector<string>> anagramsVector;
     int i = 0;
 
-    for (auto s : strs)
-    {
+    for (auto s: strs) {
         string x = s;
         sort(x.begin(), x.end());
-        if (anagrams.count(x) == 0)
-        {
+        if (anagrams.count(x) == 0) {
             anagrams[x] = i;
             anagramsVector.push_back({s});
             ++i;
-        }
-        else
+        } else
             anagramsVector[anagrams[x]].push_back(s);
     }
 
@@ -146,16 +126,14 @@ vector<vector<string>> groupAnagrams(vector<string> &strs)
 }
 
 // https://leetcode.com/problems/pascals-triangle/description/
-vector<vector<int>> pascalsTriangle(int numRows)
-{
+vector<vector<int>> pascalsTriangle(int numRows) {
     vector<vector<int>> pascalsTriangleVector{{1}};
 
     if (numRows == 1)
         return pascalsTriangleVector;
 
     int j = 1;
-    for (int i = 1; i < numRows; ++i)
-    {
+    for (int i = 1; i < numRows; ++i) {
         vector<int> row;
         row.push_back(1);
 
@@ -171,8 +149,7 @@ vector<vector<int>> pascalsTriangle(int numRows)
 }
 
 // https://leetcode.com/problems/remove-element/description/
-int removeElement(vector<int> &nums, int val)
-{
+int removeElement(vector<int> &nums, int val) {
     if (nums.size() == 1 && nums[0] == val)
         return 0;
 
@@ -180,16 +157,12 @@ int removeElement(vector<int> &nums, int val)
     int j = nums.size() - 1;
     int k = j + 1;
 
-    while (i <= j)
-    {
-        if (nums[i] == val && nums[j] == val)
-        {
+    while (i <= j) {
+        if (nums[i] == val && nums[j] == val) {
             --j;
             --k;
             continue;
-        }
-        else if (nums[i] == val)
-        {
+        } else if (nums[i] == val) {
             nums[i] = nums[j];
             --j;
             --k;
@@ -203,18 +176,15 @@ int removeElement(vector<int> &nums, int val)
 }
 
 // https://leetcode.com/problems/unique-email-addresses/description/
-int uniqueEmailAddresses(vector<string> &emails)
-{
+int uniqueEmailAddresses(vector<string> &emails) {
     unordered_map<string, int> uniqueAddresses;
     int i = 0;
 
-    for (auto email : emails)
-    {
+    for (auto email: emails) {
         string filteredEmail = "";
         bool ignoreLetters = false;
 
-        for (int j = 0; j < email.size(); ++j)
-        {
+        for (int j = 0; j < email.size(); ++j) {
             if (email[j] == '+')
                 ignoreLetters = true;
             else if (email[j] == '@')
@@ -226,8 +196,7 @@ int uniqueEmailAddresses(vector<string> &emails)
         int indexOfDomain = email.find("@");
         filteredEmail += email.substr(indexOfDomain, email.size() - indexOfDomain + 1);
 
-        if (uniqueAddresses.count(filteredEmail) == 0)
-        {
+        if (uniqueAddresses.count(filteredEmail) == 0) {
             uniqueAddresses[filteredEmail] = 0;
             ++i;
         }
@@ -237,19 +206,16 @@ int uniqueEmailAddresses(vector<string> &emails)
 }
 
 // https://leetcode.com/problems/isomorphic-strings/description/
-bool isIsomorphic(string s, string t)
-{
+bool isIsomorphic(string s, string t) {
     unordered_map<char, char> inputToOutput;
     unordered_map<char, char> outputToInput;
 
-    for (int i = 0; i < s.size(); ++i)
-    {
+    for (int i = 0; i < s.size(); ++i) {
         if (inputToOutput.count(s[i]) != 0 && inputToOutput[s[i]] != t[i])
             return false;
         else if (outputToInput.count(t[i]) != 0 && outputToInput[t[i]] != s[i])
             return false;
-        else
-        {
+        else {
             inputToOutput[s[i]] = t[i];
             outputToInput[t[i]] = s[i];
         }
@@ -259,8 +225,7 @@ bool isIsomorphic(string s, string t)
 }
 
 // https://leetcode.com/problems/can-place-flowers/description/
-bool canPlaceFlowers(vector<int> &flowerbed, int n)
-{
+bool canPlaceFlowers(vector<int> &flowerbed, int n) {
     if (n == 0)
         return true;
     if (flowerbed.size() == 1 && flowerbed[0] == 0)
@@ -268,15 +233,12 @@ bool canPlaceFlowers(vector<int> &flowerbed, int n)
 
     int previous = 0;
 
-    for (int i = 0; i < flowerbed.size() - 1 && n > 0; ++i)
-    {
-        if (previous == 0 && flowerbed[i] == 0 && flowerbed[i + 1] == 0)
-        {
+    for (int i = 0; i < flowerbed.size() - 1 && n > 0; ++i) {
+        if (previous == 0 && flowerbed[i] == 0 && flowerbed[i + 1] == 0) {
             n -= 1;
             flowerbed[i] = 1;
             previous = flowerbed[i];
-        }
-        else
+        } else
             previous = flowerbed[i];
     }
 
@@ -287,15 +249,12 @@ bool canPlaceFlowers(vector<int> &flowerbed, int n)
 }
 
 // https://leetcode.com/problems/majority-element/description/
-int majorityElement(vector<int> &nums)
-{
+int majorityElement(vector<int> &nums) {
     int count = 0;
     int maxElement = 0;
 
-    for (auto x : nums)
-    {
-        if (count == 0)
-        {
+    for (auto x: nums) {
+        if (count == 0) {
             maxElement = x;
         }
 
@@ -309,15 +268,13 @@ int majorityElement(vector<int> &nums)
 }
 
 // https://leetcode.com/problems/valid-palindrome/description/
-bool isPalindrome(string s)
-{
+bool isPalindrome(string s) {
     if (s.size() == 1)
         return true;
 
     string newString = "";
 
-    for (auto x : s)
-    {
+    for (auto x: s) {
         if (isalpha(x) || isdigit(x))
             newString += tolower(x);
     }
@@ -328,10 +285,8 @@ bool isPalindrome(string s)
     return newString.substr(0, middle) == secondPiece;
 }
 
-bool isPalindrome2(string s, int i, int j)
-{
-    while (i < j)
-    {
+bool isPalindrome2(string s, int i, int j) {
+    while (i < j) {
         if (s[i] != s[j])
             return false;
         ++i;
@@ -342,13 +297,11 @@ bool isPalindrome2(string s, int i, int j)
 }
 
 // https://leetcode.com/problems/valid-palindrome-ii/description/
-bool validPalindrome(string s)
-{
+bool validPalindrome(string s) {
     int i = 0;
     int j = s.size() - 1;
 
-    while (i < j)
-    {
+    while (i < j) {
         if (s[i] != s[j])
             return isPalindrome2(s, i, j - 1) || isPalindrome2(s, i + 1, j);
 
@@ -360,16 +313,14 @@ bool validPalindrome(string s)
 }
 
 // https://leetcode.com/problems/minimum-difference-between-highest-and-lowest-of-k-scores/description/
-int minimumDifferenceBetweenHighestAndLowestOfKScores(vector<int> &nums, int k)
-{
+int minimumDifferenceBetweenHighestAndLowestOfKScores(vector<int> &nums, int k) {
     if (nums.size() == 1)
         return 0;
 
     sort(nums.begin(), nums.end(), greater<int>());
     int smallestDifference = -1;
 
-    for (int i = 0; i < nums.size() - k; ++i)
-    {
+    for (int i = 0; i < nums.size() - k; ++i) {
         int difference = nums[i] - nums[i + k - 1];
         if (difference < smallestDifference || smallestDifference == -1)
             smallestDifference = difference;
@@ -379,13 +330,11 @@ int minimumDifferenceBetweenHighestAndLowestOfKScores(vector<int> &nums, int k)
 }
 
 // https://leetcode.com/problems/reverse-string/description/
-void reverseString(vector<char> &s)
-{
+void reverseString(vector<char> &s) {
     int i = 0;
     int j = s.size() - 1;
 
-    while (i < j)
-    {
+    while (i < j) {
         swap(s[i], s[j]);
         ++i;
         --j;
@@ -393,11 +342,9 @@ void reverseString(vector<char> &s)
 }
 
 // https://leetcode.com/problems/merge-sorted-array/description/
-void mergeSortedArray(vector<int> &nums1, int m, vector<int> &nums2, int n)
-{
+void mergeSortedArray(vector<int> &nums1, int m, vector<int> &nums2, int n) {
     int i = m;
-    for (auto x : nums2)
-    {
+    for (auto x: nums2) {
         nums1[i] = x;
         ++i;
     }
@@ -406,14 +353,11 @@ void mergeSortedArray(vector<int> &nums1, int m, vector<int> &nums2, int n)
 }
 
 // https://leetcode.com/problems/remove-duplicates-from-sorted-array/description/
-int removeDuplicatesFromSortedArray(vector<int> &nums)
-{
+int removeDuplicatesFromSortedArray(vector<int> &nums) {
     int j = 1;
 
-    for (int i = 1; i < nums.size(); ++i)
-    {
-        if (nums[i] != nums[i - 1])
-        {
+    for (int i = 1; i < nums.size(); ++i) {
+        if (nums[i] != nums[i - 1]) {
             nums[j] = nums[i];
             ++j;
         }
@@ -423,8 +367,7 @@ int removeDuplicatesFromSortedArray(vector<int> &nums)
 }
 
 // https://leetcode.com/problems/next-greater-element-i/description/
-vector<int> nextGreaterElementOne(vector<int> &nums1, vector<int> &nums2)
-{
+vector<int> nextGreaterElementOne(vector<int> &nums1, vector<int> &nums2) {
     unordered_map<int, int> nums1Hash;
 
     for (int i = 0; i < nums1.size(); ++i)
@@ -432,11 +375,9 @@ vector<int> nextGreaterElementOne(vector<int> &nums1, vector<int> &nums2)
 
     stack<int> numsStack;
     vector<int> result(nums1.size(), -1);
-    for (int i = 0; i < nums2.size(); ++i)
-    {
+    for (int i = 0; i < nums2.size(); ++i) {
         int currentElement = nums2[i];
-        while (!numsStack.empty() && currentElement > numsStack.top())
-        {
+        while (!numsStack.empty() && currentElement > numsStack.top()) {
             int element = numsStack.top();
             numsStack.pop();
             int index = nums1Hash[element];
@@ -450,15 +391,13 @@ vector<int> nextGreaterElementOne(vector<int> &nums1, vector<int> &nums2)
 }
 
 // https://leetcode.com/problems/find-pivot-index/description/
-int pivotIndex(vector<int> &nums)
-{
+int pivotIndex(vector<int> &nums) {
     int rightSum = 0;
     int leftSum = 0;
     for (int i = 1; i < nums.size(); ++i)
         leftSum += nums[i];
 
-    for (int i = 0; i < nums.size(); ++i)
-    {
+    for (int i = 0; i < nums.size(); ++i) {
         if (i > 0)
             leftSum -= nums[i];
         if (leftSum == rightSum)
@@ -470,25 +409,20 @@ int pivotIndex(vector<int> &nums)
 }
 
 // https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array/description/
-class NumArray
-{
+class NumArray {
 public:
     vector<int> numsArray;
 
-    NumArray(vector<int> &nums)
-    {
+    NumArray(vector<int> &nums) {
         int sum = 0;
-        for (auto x : nums)
-        {
+        for (auto x: nums) {
             sum += x;
             this->numsArray.push_back(sum);
         }
     }
 
-    int sumRange(int left, int right)
-    {
-        if (left > 0)
-        {
+    int sumRange(int left, int right) {
+        if (left > 0) {
             return this->numsArray[right] - this->numsArray[left - 1];
         }
         return this->numsArray[right];
@@ -496,13 +430,15 @@ public:
 };
 
 // https://leetcode.com/problems/maximum-number-of-balloons/description/
-int maxNumberOfBalloons(string text)
-{
-    unordered_map<char, int> balloonHashMap = {{'b', 0}, {'a', 1}, {'l', 2}, {'o', 3}, {'n', 4}};
+int maxNumberOfBalloons(string text) {
+    unordered_map<char, int> balloonHashMap = {{'b', 0},
+                                               {'a', 1},
+                                               {'l', 2},
+                                               {'o', 3},
+                                               {'n', 4}};
     vector<int> balloonWordArray({0, 0, 0, 0, 0});
 
-    for (auto x : text)
-    {
+    for (auto x: text) {
         if (balloonHashMap.count(x) > 0)
             balloonWordArray[balloonHashMap[x]] += 1;
     }
@@ -516,19 +452,17 @@ int maxNumberOfBalloons(string text)
 }
 
 // https://leetcode.com/problems/word-pattern/description/
-bool wordPattern(string pattern, string s)
-{
+bool wordPattern(string pattern, string s) {
     unordered_map<char, string> letterToWord;
     unordered_map<string, char> wordToLetter;
 
     int j = 0;
     int k = 0;
-    for (int i = 0; i < s.size() + 1; ++i)
-    {
-        if (s[i] == ' ' || i == s.size())
-        {
+    for (int i = 0; i < s.size() + 1; ++i) {
+        if (s[i] == ' ' || i == s.size()) {
             string subString = s.substr(j, i - j);
-            if ((letterToWord.count(pattern[k]) > 0 && letterToWord[pattern[k]] != subString) || (wordToLetter.count(subString) > 0 && wordToLetter[subString] != pattern[k]))
+            if ((letterToWord.count(pattern[k]) > 0 && letterToWord[pattern[k]] != subString) ||
+                (wordToLetter.count(subString) > 0 && wordToLetter[subString] != pattern[k]))
                 return false;
             letterToWord[pattern[k]] = subString;
             wordToLetter[subString] = pattern[k];
@@ -537,38 +471,32 @@ bool wordPattern(string pattern, string s)
         }
     }
 
-    return true ? k == pattern.size() : false;
+    return k == pattern.size();
 }
 
 // https://leetcode.com/problems/design-hashset/description/
-class MyHashSet
-{
+class MyHashSet {
 public:
     vector<bool> booleanArray;
 
-    MyHashSet()
-    {
+    MyHashSet() {
         booleanArray.push_back(false);
     }
 
-    void add(int key)
-    {
-        if (key >= booleanArray.size())
-        {
+    void add(int key) {
+        if (key >= booleanArray.size()) {
             for (int i = booleanArray.size(); i < key + 1; ++i)
                 booleanArray.push_back(false);
         }
         booleanArray[key] = true;
     }
 
-    void remove(int key)
-    {
+    void remove(int key) {
         if (key < booleanArray.size())
             booleanArray[key] = false;
     }
 
-    bool contains(int key)
-    {
+    bool contains(int key) {
         if (key < booleanArray.size())
             return booleanArray[key];
         return false;
@@ -576,46 +504,38 @@ public:
 };
 
 // https://leetcode.com/problems/design-hashmap/description/
-class MyHashMap
-{
+class MyHashMap {
 public:
     vector<array<int, 2>> hashMap;
 
-    MyHashMap()
-    {
+    MyHashMap() {
         for (int i = 0; i < pow(10, 4); ++i)
             this->hashMap.push_back({-1, -1});
     }
 
-    void put(int key, int value)
-    {
-        if (key >= this->hashMap.size())
-        {
+    void put(int key, int value) {
+        if (key >= this->hashMap.size()) {
             for (int i = 0; i <= key; ++i)
                 this->hashMap.push_back({-1, -1});
         }
         this->hashMap[key] = {key, value};
     }
 
-    int get(int key)
-    {
+    int get(int key) {
         if (key > this->hashMap.size())
             return -1;
         return this->hashMap[key][1];
     }
 
-    void remove(int key)
-    {
+    void remove(int key) {
         if (key <= this->hashMap.size())
             this->hashMap[key] = {-1, -1};
     }
 };
 
 // https://leetcode.com/problems/sort-an-array/description/
-vector<int> sortArray(vector<int> &nums)
-{
-    if (nums.size() <= 2)
-    {
+vector<int> sortArray(vector<int> &nums) {
+    if (nums.size() <= 2) {
         if (nums.size() == 2 && nums[0] > nums[1])
             swap(nums[0], nums[1]);
         return nums;
@@ -630,39 +550,34 @@ vector<int> sortArray(vector<int> &nums)
     int i = 0;
     int j = 0;
     int k = 0;
-    while (i < leftPartition.size() && j < rightPartition.size())
-    {
-        if (leftPartition[i] <= rightPartition[j])
-        {
+    while (i < leftPartition.size() && j < rightPartition.size()) {
+        if (leftPartition[i] <= rightPartition[j]) {
             nums[k] = leftPartition[i];
             ++i;
-        }
-        else
-        {
+        } else {
             nums[k] = rightPartition[j];
             ++j;
         }
         ++k;
     }
 
-    while (i < leftPartition.size() && k < nums.size())
-    {
+    while (i < leftPartition.size() && k < nums.size()) {
         nums[k] = leftPartition[i];
-        i, k += 1;
+        ++k;
+        ++i;
     }
 
-    while (j < rightPartition.size() && k < nums.size())
-    {
+    while (j < rightPartition.size() && k < nums.size()) {
         nums[k] = rightPartition[j];
-        j, k += 1;
+        k += 1;
+        ++j;
     }
 
     return nums;
 }
 
 // https://leetcode.com/problems/top-k-frequent-elements/description/
-vector<int> topKFrequentElements(vector<int> &nums, int k)
-{
+vector<int> topKFrequentElements(vector<int> &nums, int k) {
     if (nums.size() == 1)
         return nums;
 
@@ -670,23 +585,20 @@ vector<int> topKFrequentElements(vector<int> &nums, int k)
     vector<vector<int>> frequencies;
     frequencies.resize(nums.size());
 
-    for (auto x : nums)
-    {
+    for (auto x: nums) {
         if (count.count(x) == 0)
             count[x] = 1;
         else
             count[x] += 1;
     }
 
-    for (auto x : count)
+    for (auto x: count)
         frequencies[x.second].push_back(x.first);
 
     vector<int> result;
     int i = frequencies.size() - 1;
-    while (result.size() != k)
-    {
-        for (int j = 0; j < frequencies[i].size(); ++j)
-        {
+    while (result.size() != k) {
+        for (int j = 0; j < frequencies[i].size(); ++j) {
             if (result.size() != k)
                 result.push_back(frequencies[i][j]);
             else
@@ -699,25 +611,20 @@ vector<int> topKFrequentElements(vector<int> &nums, int k)
 }
 
 // https://leetcode.com/problems/product-of-array-except-self/description/
-vector<int> productOfArrayExceptSelf(vector<int> &nums)
-{
+vector<int> productOfArrayExceptSelf(vector<int> &nums) {
     vector<int> result(nums.size(), 0);
     unordered_map<int, int> previousNumbers;
 
-    for (int i = 0; i < nums.size(); ++i)
-    {
-        if (previousNumbers.count(nums[i]) == 0)
-        {
+    for (int i = 0; i < nums.size(); ++i) {
+        if (previousNumbers.count(nums[i]) == 0) {
             int product = 1;
-            for (int j = 0; j < nums.size(); ++j)
-            {
+            for (int j = 0; j < nums.size(); ++j) {
                 if (j != i)
                     product *= nums[j];
             }
             result[i] = product;
             previousNumbers[nums[i]] = product;
-        }
-        else
+        } else
             result[i] = previousNumbers[nums[i]];
     }
 
@@ -725,26 +632,22 @@ vector<int> productOfArrayExceptSelf(vector<int> &nums)
 }
 
 // https://leetcode.com/problems/valid-sudoku/description/
-bool validSudoku(vector<vector<char>> &board)
-{
+bool validSudoku(vector<vector<char>> &board) {
     unordered_map<char, int> currentRow;
     unordered_map<string, int> boxes;
     vector<unordered_map<char, int>> columns;
     columns.resize(9);
 
-    for (int i = 0; i < board.size(); ++i)
-    {
-        for (int j = 0; j < board.size(); ++j)
-        {
-            if (board[i][j] != '.')
-            {
+    for (int i = 0; i < board.size(); ++i) {
+        for (int j = 0; j < board.size(); ++j) {
+            if (board[i][j] != '.') {
                 string boxesString;
-                boxesString += (char)(i / 3);
-                boxesString += (char)(j / 3);
-                if (currentRow.count(board[i][j]) != 0 || columns[j].count(board[i][j]) != 0 || boxes.count(boxesString) != 0)
+                boxesString += (char) (i / 3);
+                boxesString += (char) (j / 3);
+                if (currentRow.count(board[i][j]) != 0 || columns[j].count(board[i][j]) != 0 ||
+                    boxes.count(boxesString) != 0)
                     return false;
-                else
-                {
+                else {
                     currentRow[board[i][j]] = 0;
                     columns[j][board[i][j]] = 0;
                     boxes[boxesString] = 0;
@@ -759,8 +662,7 @@ bool validSudoku(vector<vector<char>> &board)
 }
 
 // https://leetcode.com/problems/sort-colors/description/
-int longestConsecutive(vector<int> &nums)
-{
+int longestConsecutive(vector<int> &nums) {
     if (nums.size() == 0)
         return 0;
 
@@ -768,12 +670,10 @@ int longestConsecutive(vector<int> &nums)
     int longestSequence = 1;
     int length = 1;
 
-    for (int i = 1; i < nums.size(); ++i)
-    {
+    for (int i = 1; i < nums.size(); ++i) {
         if (nums[i] - 1 == nums[i - 1])
             ++length;
-        else if (nums[i] != nums[i - 1])
-        {
+        else if (nums[i] != nums[i - 1]) {
             if (length > longestSequence)
                 longestSequence = length;
             length = 1;
@@ -786,9 +686,8 @@ int longestConsecutive(vector<int> &nums)
     return longestSequence;
 }
 
-// https://leetcode.com/problems/sort-colors/submissions/1267140201/
-void sortColors(vector<int> &nums)
-{
+// https://leetcode.com/problems/sort-colors/description/
+void sortColors(vector<int> &nums) {
     if (nums.size() == 1)
         return;
 
@@ -796,15 +695,11 @@ void sortColors(vector<int> &nums)
     int right = nums.size() - 1;
     int mid = 0;
 
-    while (mid < nums.size() && mid <= right)
-    {
-        if (nums[mid] == 0)
-        {
+    while (mid < nums.size() && mid <= right) {
+        if (nums[mid] == 0) {
             swap(nums[left], nums[mid]);
             ++left;
-        }
-        else if (nums[mid] == 2)
-        {
+        } else if (nums[mid] == 2) {
             swap(nums[mid], nums[right]);
             --right;
             --mid;
@@ -814,15 +709,12 @@ void sortColors(vector<int> &nums)
 }
 
 // https://leetcode.com/problems/encode-and-decode-tinyurl/description/
-class EncodeAndDecodeTinyURL
-{
+class EncodeAndDecodeTinyURL {
 public:
-    string encode(string longUrl)
-    {
+    string encode(string longUrl) {
         string newString;
-        for (char s : longUrl)
-        {
-            int ascii = (int)s;
+        for (char s: longUrl) {
+            int ascii = (int) s;
             ascii += 5;
             newString.push_back(char(ascii));
         }
@@ -830,12 +722,10 @@ public:
         return newString;
     }
 
-    string decode(string shortUrl)
-    {
+    string decode(string shortUrl) {
         string newString;
-        for (char s : shortUrl)
-        {
-            int ascii = (int)s;
+        for (char s: shortUrl) {
+            int ascii = (int) s;
             ascii -= 5;
             newString.push_back(char(ascii));
         }
@@ -845,16 +735,13 @@ public:
 };
 
 // https://leetcode.com/problems/brick-wall/description/
-int brickWall(vector<vector<int>> &wall)
-{
+int brickWall(vector<vector<int>> &wall) {
     unordered_map<int, int> gaps;
     int max = 0;
 
-    for (int i = 0; i < wall.size(); ++i)
-    {
+    for (int i = 0; i < wall.size(); ++i) {
         int rowSum = wall[i][0];
-        for (int j = 0; j < wall[i].size() - 1;)
-        {
+        for (int j = 0; j < wall[i].size() - 1;) {
             if (gaps.count(rowSum) > 0)
                 ++gaps[rowSum];
             else
@@ -868,24 +755,14 @@ int brickWall(vector<vector<int>> &wall)
     return wall.size() - max;
 }
 
-template <typename T>
-void displayVector(vector<T> arr)
-{
-    for (auto x : arr)
+template<typename T>
+void displayVector(vector<T> arr) {
+    for (auto x: arr)
         cout << x << " ";
 }
 
-int main()
-{
+int main() {
     vector<int> nums({2, 0, 1});
-    vector<vector<int>> wall({{1, 2, 2, 1},
-                              {3, 1, 2},
-                              {1, 3, 2},
-                              {2, 4},
-                              {3, 1, 2},
-                              {1, 3, 1, 1}});
-
-    cout << brickWall(wall) << endl;
 
     return 0;
 }
