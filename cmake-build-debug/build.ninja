@@ -65,6 +65,14 @@ build CMakeFiles/Leetcode_DMOJ_Problems.dir/problems.cpp.o: CXX_COMPILER__Leetco
   TARGET_COMPILE_PDB = CMakeFiles/Leetcode_DMOJ_Problems.dir/
   TARGET_PDB = Leetcode_DMOJ_Problems.pdb
 
+build CMakeFiles/Leetcode_DMOJ_Problems.dir/anki.cpp.o: CXX_COMPILER__Leetcode_DMOJ_Problems_unscanned_Debug /home/user/code/Leetcode-DMOJ-Problems/anki.cpp || cmake_object_order_depends_target_Leetcode_DMOJ_Problems
+  DEP_FILE = CMakeFiles/Leetcode_DMOJ_Problems.dir/anki.cpp.o.d
+  FLAGS = -g -std=gnu++14 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles/Leetcode_DMOJ_Problems.dir
+  OBJECT_FILE_DIR = CMakeFiles/Leetcode_DMOJ_Problems.dir
+  TARGET_COMPILE_PDB = CMakeFiles/Leetcode_DMOJ_Problems.dir/
+  TARGET_PDB = Leetcode_DMOJ_Problems.pdb
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target Leetcode_DMOJ_Problems
@@ -73,7 +81,7 @@ build CMakeFiles/Leetcode_DMOJ_Problems.dir/problems.cpp.o: CXX_COMPILER__Leetco
 #############################################
 # Link the executable Leetcode_DMOJ_Problems
 
-build Leetcode_DMOJ_Problems: CXX_EXECUTABLE_LINKER__Leetcode_DMOJ_Problems_Debug CMakeFiles/Leetcode_DMOJ_Problems.dir/LeetcodeContests/Weekly-Contest-391.cpp.o CMakeFiles/Leetcode_DMOJ_Problems.dir/problems.cpp.o
+build Leetcode_DMOJ_Problems: CXX_EXECUTABLE_LINKER__Leetcode_DMOJ_Problems_Debug CMakeFiles/Leetcode_DMOJ_Problems.dir/LeetcodeContests/Weekly-Contest-391.cpp.o CMakeFiles/Leetcode_DMOJ_Problems.dir/problems.cpp.o CMakeFiles/Leetcode_DMOJ_Problems.dir/anki.cpp.o
   FLAGS = -g
   OBJECT_DIR = CMakeFiles/Leetcode_DMOJ_Problems.dir
   POST_BUILD = :
