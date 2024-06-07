@@ -18,7 +18,7 @@ void displayVector(vector<T> arr) {
 }
 
 template<typename T>
-void display2DVector(vector<vector<T>> arr) {
+void display2DVector(vector<vector<T> > arr) {
     for (int i = 0; i < arr.size(); ++i) {
         for (int j = 0; j < arr[i].size(); ++j)
             cout << arr[i][j] << " ";
@@ -26,40 +26,40 @@ void display2DVector(vector<vector<T>> arr) {
     }
 }
 
-void setNumbersInOneDirection(vector<vector<int>> &coords, bool rowOrColumn, int index, int size) {
-    // rowOrColumn == true -----> Row
-    for (int i = 0; i < size; ++i) {
-        if (rowOrColumn)
-            coords.push_back({index, i});
-        else
-            coords.push_back({i, index});
-    }
-}
+vector<int> nextGreaterElement(vector<int> &nums1, vector<int> &nums2) {
+    unordered_map<int, int> nums1Hash;
+    for (int i = 0; i < nums1.size(); ++i)
+        nums1Hash[nums1[i]] = i;
 
-// https://leetcode.com/problems/set-matrix-zeroes/description/
-void setMatrixZeroes(vector<vector<int>> &matrix) {
-    vector<vector<int>> coords;
+    for (int i = 0; i < nums2.size(); ++i) {
+        if (nums1Hash.count(nums2[i]) > 0) {
+            stack<int> largerNums;
+            largerNums.push(nums2[i]);
 
-    for (int i = 0; i < matrix.size(); ++i) {
-        for (int j = 0; j < matrix[i].size(); ++j) {
-            if (matrix[i][j] == 0) {
-                setNumbersInOneDirection(coords, true, i, matrix[i].size());
-                setNumbersInOneDirection(coords, false, j, matrix.size());
+            int j = i + 1;
+            for (; j < nums2.size(); ++j) {
+                if (nums2[j] > nums2[i])
+                    break;
+                if (nums1Hash.count(nums2[j]) > 0)
+                    largerNums.push(nums2[j]);
+            }
+
+            while (!largerNums.empty()) {
+                int item = largerNums.top();
+                largerNums.pop();
+                nums1[nums1Hash[item]] = j < nums2.size() ? nums2[j] : -1;
             }
         }
     }
 
-    for (auto x: coords)
-        matrix[x[0]][x[1]] = 0;
+    return nums1;
 }
 
 int main() {
-    vector<vector<int>> matrix = {{1, 1, 1},
-                                  {1, 0, 1},
-                                  {1, 1, 1}};
+    vector<int> nums1 = {2, 4};
+    vector<int> nums2 = {1, 2, 3, 4};
 
-
-    display2DVector(matrix);
+    displayVector(nextGreaterElement(nums1, nums2));
 
     return 0;
 }
