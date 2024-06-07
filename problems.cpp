@@ -757,6 +757,96 @@ int brickWall(vector<vector<int>> &wall) {
     return wall.size() - max;
 }
 
+// https://leetcode.com/problems/sort-colors/description/
+int ContainerWithMostWater(vector<int> &height) {
+    int maxArea = 0;
+    int i = 0;
+    int j = height.size() - 1;
+
+    while (i < j) {
+        int area = (j - i) * (min(height[i], height[j]));
+        if (area > maxArea)
+            maxArea = area;
+
+        height[i] > height[j] ? --j : ++i;
+    }
+
+    return maxArea;
+}
+
+// https://leetcode.com/problems/set-matrix-zeroes/description/
+vector<int> spiralMatrix(vector<vector<int>> &matrix) {
+    vector<int> spiraled;
+
+    int leftPointer = 0;
+    int rightPointer = matrix[0].size() - 1;
+    int topPointer = 1;
+    int bottomPointer = matrix.size() - 1;
+
+    int k = 0;
+    int i = 0;
+    int j = 0;
+    int direction = 0; // 0 -> right, 1 -> down, 2 -> left, 3 -> up
+
+    while (k < (matrix.size() * matrix[0].size())) {
+        spiraled.push_back(matrix[i][j]);
+
+        if (direction == 0 && j == rightPointer) {
+            direction = 1;
+            --rightPointer;
+        } else if (direction == 1 && i == bottomPointer) {
+            direction = 2;
+            --bottomPointer;
+        } else if (direction == 2 && j == leftPointer) {
+            direction = 3;
+            ++leftPointer;
+        } else if (direction == 3 && i == topPointer) {
+            direction = 0;
+            ++topPointer;
+        }
+
+        if (direction == 0)
+            ++j;
+        else if (direction == 1)
+            ++i;
+        else if (direction == 2)
+            --j;
+        else if (direction == 3)
+            --i;
+
+        ++k;
+    }
+
+    return spiraled;
+}
+
+void setNumbersInOneDirection(vector<vector<int>> &coords, bool rowOrColumn, int index, int size) {
+    // rowOrColumn == true -----> Row
+    for (int i = 0; i < size; ++i) {
+        if (rowOrColumn)
+            coords.push_back({index, i});
+        else
+            coords.push_back({i, index});
+    }
+}
+
+// https://leetcode.com/problems/set-matrix-zeroes/description/
+void setMatrixZeroes(vector<vector<int>> &matrix) {
+    vector<vector<int>> coords;
+
+    for (int i = 0; i < matrix.size(); ++i) {
+        for (int j = 0; j < matrix[i].size(); ++j) {
+            if (matrix[i][j] == 0) {
+                setNumbersInOneDirection(coords, true, i, matrix[i].size());
+                setNumbersInOneDirection(coords, false, j, matrix.size());
+            }
+        }
+    }
+
+    for (auto x: coords)
+        matrix[x[0]][x[1]] = 0;
+}
+
 template<typename T>
 void displayVector(vector<T> arr) {
     for (auto x: arr)

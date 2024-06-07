@@ -35,7 +35,10 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "-g -std=gnu++14 -fdiagnostics-color=always"
+					"fragment" : "-g"
+				},
+				{
+					"fragment" : "-std=gnu++14"
 				}
 			],
 			"language" : "CXX",

@@ -1,4 +1,4 @@
-/home/user/.cache/JetBrains/RemoteDev/dist/c41015da584c8_CLion-242.14146.22/bin/cmake/linux/x64/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/home/user/.cache/JetBrains/RemoteDev/dist/c41015da584c8_CLion-242.14146.22/bin/ninja/linux/x64/ninja -G Ninja -S /home/user/code/Leetcode-DMOJ-Problems -B /home/user/code/Leetcode-DMOJ-Problems/cmake-build-debug
+C:\Windows\system32\wsl.exe --distribution Ubuntu --exec /mnt/c/Users/patel/AppData/Local/Programs/CLion/bin/ttyfix /usr/bin/zsh -c "export CLION_IDE=TRUE && export CMAKE_COLOR_DIAGNOSTICS=ON && export JETBRAINS_IDE=TRUE && cd /home/user/code/Leetcode-DMOJ-Problems/cmake-build-debug && /usr/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G 'CodeBlocks - Unix Makefiles' -S /home/user/code/Leetcode-DMOJ-Problems -B /home/user/code/Leetcode-DMOJ-Problems/cmake-build-debug"
 -- The C compiler identification is GNU 11.4.0
 -- The CXX compiler identification is GNU 11.4.0
 -- Detecting C compiler ABI info
@@ -11,6 +11,6 @@
 -- Check for working CXX compiler: /usr/bin/c++ - skipped
 -- Detecting CXX compile features
 -- Detecting CXX compile features - done
--- Configuring done (7.3s)
--- Generating done (0.0s)
+-- Configuring done
+-- Generating done
 -- Build files have been written to: /home/user/code/Leetcode-DMOJ-Problems/cmake-build-debug

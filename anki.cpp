@@ -13,33 +13,53 @@ using namespace std;
 
 template<typename T>
 void displayVector(vector<T> arr) {
-    for (auto x : arr)
+    for (auto x: arr)
         cout << x << endl;
 }
 
-int main() {
-    vector nums = {1, 2, 0};
-    int i = 0;
-    int j = nums.size() - 1;
-    int k = 0;
+template<typename T>
+void display2DVector(vector<vector<T>> arr) {
+    for (int i = 0; i < arr.size(); ++i) {
+        for (int j = 0; j < arr[i].size(); ++j)
+            cout << arr[i][j] << " ";
+        cout << endl;
+    }
+}
 
-    while (i < j && k <= j) {
-        if (nums[k] == 0) {
-            swap(nums[i], nums[k]);
-            ++i;
-        } else if (nums[k] == 2) {
-            swap(nums[j], nums[k]);
-            if (nums[j] == 1)
-                --k;
-            if (nums[i] == 0)
-                ++i;
-            --j;
+void setNumbersInOneDirection(vector<vector<int>> &coords, bool rowOrColumn, int index, int size) {
+    // rowOrColumn == true -----> Row
+    for (int i = 0; i < size; ++i) {
+        if (rowOrColumn)
+            coords.push_back({index, i});
+        else
+            coords.push_back({i, index});
+    }
+}
+
+// https://leetcode.com/problems/set-matrix-zeroes/description/
+void setMatrixZeroes(vector<vector<int>> &matrix) {
+    vector<vector<int>> coords;
+
+    for (int i = 0; i < matrix.size(); ++i) {
+        for (int j = 0; j < matrix[i].size(); ++j) {
+            if (matrix[i][j] == 0) {
+                setNumbersInOneDirection(coords, true, i, matrix[i].size());
+                setNumbersInOneDirection(coords, false, j, matrix.size());
+            }
         }
-
-        ++k;
     }
 
-    displayVector(nums);
+    for (auto x: coords)
+        matrix[x[0]][x[1]] = 0;
+}
+
+int main() {
+    vector<vector<int>> matrix = {{1, 1, 1},
+                                  {1, 0, 1},
+                                  {1, 1, 1}};
+
+
+    display2DVector(matrix);
 
     return 0;
 }
