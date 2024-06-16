@@ -126,8 +126,8 @@ vector<vector<string> > groupAnagrams(vector<string> &strs) {
 }
 
 // https://leetcode.com/problems/pascals-triangle/description/
-vector<vector<int> > pascalsTriangle(int numRows) {
-    vector<vector<int> > pascalsTriangleVector{{1}};
+vector<vector<int>> pascalsTriangle(int numRows) {
+    vector<vector<int>> pascalsTriangleVector{{1}};
 
     if (numRows == 1)
         return pascalsTriangleVector;
@@ -432,11 +432,11 @@ public:
 // https://leetcode.com/problems/maximum-number-of-balloons/description/
 int maxNumberOfBalloons(string text) {
     unordered_map<char, int> balloonHashMap = {
-        {'b', 0},
-        {'a', 1},
-        {'l', 2},
-        {'o', 3},
-        {'n', 4}
+            {'b', 0},
+            {'a', 1},
+            {'l', 2},
+            {'o', 3},
+            {'n', 4}
     };
     vector<int> balloonWordArray({0, 0, 0, 0, 0});
 
@@ -636,10 +636,10 @@ vector<int> productOfArrayExceptSelf(vector<int> &nums) {
 }
 
 // https://leetcode.com/problems/valid-sudoku/description/
-bool validSudoku(vector<vector<char> > &board) {
+bool validSudoku(vector<vector<char>> &board) {
     unordered_map<char, int> currentRow;
     unordered_map<string, int> boxes;
-    vector<unordered_map<char, int> > columns;
+    vector<unordered_map<char, int>> columns;
     columns.resize(9);
 
     for (int i = 0; i < board.size(); ++i) {
@@ -822,31 +822,38 @@ vector<int> spiralMatrix(vector<vector<int> > &matrix) {
     return spiraled;
 }
 
-void setNumbersInOneDirection(vector<vector<int> > &coords, bool rowOrColumn, int index, int size) {
-    // rowOrColumn == true -----> Row
-    for (int i = 0; i < size; ++i) {
-        if (rowOrColumn)
-            coords.push_back({index, i});
-        else
-            coords.push_back({i, index});
-    }
-}
-
 // https://leetcode.com/problems/set-matrix-zeroes/description/
-void setMatrixZeroes(vector<vector<int> > &matrix) {
-    vector<vector<int> > coords;
+void setMatrixZeroes(vector<vector<int>> &matrix) {
+    bool rowZero = false;
 
     for (int i = 0; i < matrix.size(); ++i) {
         for (int j = 0; j < matrix[i].size(); ++j) {
             if (matrix[i][j] == 0) {
-                setNumbersInOneDirection(coords, true, i, matrix[i].size());
-                setNumbersInOneDirection(coords, false, j, matrix.size());
+                matrix[0][j] = 0;
+                if (i > 0)
+                    matrix[i][0] = 0;
+                else
+                    rowZero = true;
             }
         }
     }
 
-    for (auto x: coords)
-        matrix[x[0]][x[1]] = 0;
+    for (int i = 1; i < matrix.size(); ++i) {
+        for (int j = 1; j < matrix[i].size(); ++j) {
+            if (matrix[i][0] == 0 || matrix[0][j] == 0)
+                matrix[i][j] = 0;
+        }
+    }
+
+    if (rowZero) {
+        for (int i = 0; i < matrix[0].size(); ++i)
+            matrix[0][i] = 0;
+    }
+
+    if (matrix[0][0] == 0) {
+        for (int i = 0; i < matrix.size(); ++i)
+            matrix[i][0] = 0;
+    }
 }
 
 // https://leetcode.com/problems/monotonic-array/description/
@@ -866,33 +873,19 @@ bool isMonotic(vector<int> &nums) {
     return true;
 }
 
-int factorial(int n) {
-    int result = 1;
-    for (int i = 2; i <= n; ++i)
-        result *= i;
-    return result;
-}
-
-int nCr(int n, int r) {
-    return factorial(n) / (factorial(r) * factorial(n - r));
-}
-
+// https://leetcode.com/problems/number-of-good-pairs/description/
 int numberOfGoodPairs(vector<int> &nums) {
     unordered_map<int, int> counts;
+    int result = 0;
     for (auto x: nums) {
-        if (counts.count(x))
-            ++counts[x];
-        else
+        if (counts.count(x)) {
+            result += counts[x];
+            counts[x] += 1;
+        } else
             counts[x] = 1;
     }
 
-    int numberOfPairs = 0;
-    for (auto x: counts) {
-        if (x.second > 1)
-            numberOfPairs += x.second > 2 ? nCr(x.second, x.second / 2) : 1;
-    }
-
-    return numberOfPairs;
+    return result;
 }
 
 template<typename T>
@@ -902,7 +895,8 @@ void displayVector(vector<T> arr) {
 }
 
 int main() {
-    vector<int> nums({1, 2, 3, 1, 1, 3});
+    vector<int> nums(
+            {1, 2, 3, 1, 1, 3});
 
     cout << numberOfGoodPairs(nums) << endl;
 

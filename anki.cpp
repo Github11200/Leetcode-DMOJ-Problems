@@ -26,12 +26,32 @@ void display2DVector(vector<vector<T> > arr) {
     }
 }
 
+vector<int> nextGreaterElement(vector<int> &nums1, vector<int> &nums2) {
+    unordered_map<int, int> nums1Hash;
+    for (int i = 0; i < nums1.size(); ++i)
+        nums1Hash[nums1[i]] = i;
+
+    stack<int> greaterElementsStack;
+    vector<int> result(nums1.size(), -1);
+    for (int i = 0; i < nums2.size(); ++i) {
+        int currentElement = nums2[i];
+        while (!greaterElementsStack.empty() && currentElement > greaterElementsStack.top()) {
+            int element = greaterElementsStack.top();
+            greaterElementsStack.pop();
+            result[nums1Hash[element]] = currentElement;
+        }
+        if (nums1Hash.count(currentElement))
+            greaterElementsStack.push(currentElement);
+    }
+
+    return result;
+}
 
 int main() {
-    vector<int> nums1 = {1, 8, 6, 2, 5, 4, 8, 3, 7};
-    vector<int> nums2 = {3, 2, 3};
+    vector<int> nums1 = {4, 1, 2};
+    vector<int> nums2 = {1, 3, 4, 2};
 
-    cout << containerWithMostWater(nums1) << endl;
+    displayVector(nextGreaterElement(nums1, nums2));
 
     return 0;
 }
