@@ -26,32 +26,47 @@ void display2DVector(vector<vector<T> > arr) {
     }
 }
 
-vector<int> nextGreaterElement(vector<int> &nums1, vector<int> &nums2) {
-    unordered_map<int, int> nums1Hash;
-    for (int i = 0; i < nums1.size(); ++i)
-        nums1Hash[nums1[i]] = i;
-
-    stack<int> greaterElementsStack;
-    vector<int> result(nums1.size(), -1);
-    for (int i = 0; i < nums2.size(); ++i) {
-        int currentElement = nums2[i];
-        while (!greaterElementsStack.empty() && currentElement > greaterElementsStack.top()) {
-            int element = greaterElementsStack.top();
-            greaterElementsStack.pop();
-            result[nums1Hash[element]] = currentElement;
+void setMatrixZeroes(vector<vector<int> > &matrix) {
+    bool rowZero = false;
+    for (int i = 0; i < matrix.size(); ++i) {
+        for (int j = 0; j < matrix[i].size(); ++j) {
+            if (matrix[i][j] == 0) {
+                if (i > 0) {
+                    matrix[i][0] = 0;
+                    matrix[0][j] = 0;
+                } else {
+                    matrix[i][0] = 0;
+                    rowZero = true;
+                }
+            }
         }
-        if (nums1Hash.count(currentElement))
-            greaterElementsStack.push(currentElement);
     }
 
-    return result;
+    for (int i = 1; i < matrix.size(); ++i) {
+        for (int j = 1; j < matrix[i].size(); ++j) {
+            if (matrix[i][0] == 0 || matrix[0][j] == 0)
+                matrix[i][j] = 0;
+        }
+    }
+
+    if (rowZero) {
+        for (int i = 0; i < matrix[0].size(); ++i)
+            matrix[0][i] = 0;
+    }
+
+    if (matrix[0][0] == 0) {
+        for (int i = 0; i < matrix.size(); ++i)
+            matrix[i][0] = 0;
+    }
 }
 
 int main() {
     vector<int> nums1 = {4, 1, 2};
     vector<int> nums2 = {1, 3, 4, 2};
 
-    displayVector(nextGreaterElement(nums1, nums2));
+    vector<vector<int> > matrix = {{0, 1, 2, 0}, {3, 4, 5, 2}, {1, 3, 1, 5}};
+    setMatrixZeroes(matrix);
+    display2DVector(matrix);
 
     return 0;
 }
