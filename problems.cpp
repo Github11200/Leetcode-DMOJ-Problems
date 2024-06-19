@@ -126,8 +126,8 @@ vector<vector<string> > groupAnagrams(vector<string> &strs) {
 }
 
 // https://leetcode.com/problems/pascals-triangle/description/
-vector<vector<int>> pascalsTriangle(int numRows) {
-    vector<vector<int>> pascalsTriangleVector{{1}};
+vector<vector<int> > pascalsTriangle(int numRows) {
+    vector<vector<int> > pascalsTriangleVector{{1}};
 
     if (numRows == 1)
         return pascalsTriangleVector;
@@ -432,11 +432,11 @@ public:
 // https://leetcode.com/problems/maximum-number-of-balloons/description/
 int maxNumberOfBalloons(string text) {
     unordered_map<char, int> balloonHashMap = {
-            {'b', 0},
-            {'a', 1},
-            {'l', 2},
-            {'o', 3},
-            {'n', 4}
+        {'b', 0},
+        {'a', 1},
+        {'l', 2},
+        {'o', 3},
+        {'n', 4}
     };
     vector<int> balloonWordArray({0, 0, 0, 0, 0});
 
@@ -636,10 +636,10 @@ vector<int> productOfArrayExceptSelf(vector<int> &nums) {
 }
 
 // https://leetcode.com/problems/valid-sudoku/description/
-bool validSudoku(vector<vector<char>> &board) {
+bool validSudoku(vector<vector<char> > &board) {
     unordered_map<char, int> currentRow;
     unordered_map<string, int> boxes;
-    vector<unordered_map<char, int>> columns;
+    vector<unordered_map<char, int> > columns;
     columns.resize(9);
 
     for (int i = 0; i < board.size(); ++i) {
@@ -823,7 +823,7 @@ vector<int> spiralMatrix(vector<vector<int> > &matrix) {
 }
 
 // https://leetcode.com/problems/set-matrix-zeroes/description/
-void setMatrixZeroes(vector<vector<int>> &matrix) {
+void setMatrixZeroes(vector<vector<int> > &matrix) {
     bool rowZero = false;
 
     for (int i = 0; i < matrix.size(); ++i) {
@@ -888,6 +888,9 @@ int numberOfGoodPairs(vector<int> &nums) {
     return result;
 }
 
+vector<int> pascalsTriangle2(int rowIndex) {
+}
+
 template<typename T>
 void displayVector(vector<T> arr) {
     for (auto x: arr)
@@ -896,7 +899,7 @@ void displayVector(vector<T> arr) {
 
 int main() {
     vector<int> nums(
-            {1, 2, 3, 1, 1, 3});
+        {1, 2, 3, 1, 1, 3});
 
     cout << numberOfGoodPairs(nums) << endl;
 
