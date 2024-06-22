@@ -993,6 +993,44 @@ int maximumScoreAfterSplittingAString(string s) {
     return maxScore;
 }
 
+// https://leetcode.com/problems/path-crossing/description/
+bool pathCrossing(string path) {
+    int x = 0;
+    int y = 0;
+    set<vector<int>> previousPoints;
+    previousPoints.insert({0, 0});
+    for (auto direction: path) {
+        if (direction == 'N')
+            ++y;
+        else if (direction == 'S')
+            --y;
+        else if (direction == 'E')
+            ++x;
+        else
+            --x;
+
+        if (previousPoints.count({x, y}))
+            return true;
+
+        previousPoints.insert({x, y});
+    }
+
+    return false;
+}
+
+// https://leetcode.com/problems/minimum-changes-to-make-alternating-binary-string/description/
+int minimumChangesToMakeAlternatingBinaryString(string s) {
+    int count = 0;
+    for (int i = 0; i < s.size(); ++i) {
+        if (i % 2) // Odd
+            count += s[i] == '0' ? 1 : 0;
+        else
+            count += s[i] == '1' ? 1 : 0;
+    }
+
+    return count < (s.size() - count) ? count : s.size() - count;
+}
+
 template<typename T>
 void displayVector(vector<T> arr) {
     for (auto x: arr)
@@ -1006,7 +1044,7 @@ int main() {
                                    {"D", "B"},
                                    {"C", "A"}});
 
-    cout << maximumScoreAfterSplittingAString("00111") << endl;
+    cout << minimumChangesToMakeAlternatingBinaryString("110010") << endl;
 
     return 0;
 }
