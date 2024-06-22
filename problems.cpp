@@ -432,11 +432,11 @@ public:
 // https://leetcode.com/problems/maximum-number-of-balloons/description/
 int maxNumberOfBalloons(string text) {
     unordered_map<char, int> balloonHashMap = {
-        {'b', 0},
-        {'a', 1},
-        {'l', 2},
-        {'o', 3},
-        {'n', 4}
+            {'b', 0},
+            {'a', 1},
+            {'l', 2},
+            {'o', 3},
+            {'n', 4}
     };
     vector<int> balloonWordArray({0, 0, 0, 0, 0});
 
@@ -888,7 +888,109 @@ int numberOfGoodPairs(vector<int> &nums) {
     return result;
 }
 
+// https://leetcode.com/problems/pascals-triangle-ii/description/
 vector<int> pascalsTriangle2(int rowIndex) {
+    vector<int> previous(rowIndex + 1, 1);
+    vector<int> current(rowIndex + 1, 1);
+
+    bool previousOrCurrent = true; // true -> current, false -> previous
+
+    for (int i = 0; i < rowIndex + 1; ++i) {
+        for (int j = 1; j < i; ++j) {
+            if (previousOrCurrent)
+                current[j] = previous[j - 1] + previous[j];
+            else
+                previous[j] = current[j - 1] + current[j];
+        }
+        previousOrCurrent = !previousOrCurrent;
+    }
+
+    return !previousOrCurrent ? current : previous;
+}
+
+// https://leetcode.com/problems/find-words-that-can-be-formed-by-characters/description/
+int findWordsThatCanBeFormedByCharacters(vector<string> &words, string chars) {
+    unordered_map<char, int> charsHashMap;
+    for (auto x: chars) {
+        if (charsHashMap.count(x))
+            ++charsHashMap[x];
+        else
+            charsHashMap[x] = 1;
+    }
+
+    int totalLength = 0;
+    for (auto x: words) {
+        unordered_map<char, int> lettersUsed;
+        bool isGood = true;
+        for (auto letter: x) {
+            if (lettersUsed.count(letter))
+                ++lettersUsed[letter];
+            else
+                lettersUsed[letter] = 1;
+
+            if (charsHashMap.count(letter) == 0 || lettersUsed[letter] > charsHashMap[letter]) {
+                isGood = false;
+                break;
+            }
+        }
+        if (isGood)
+            totalLength += x.size();
+    }
+
+    return totalLength;
+}
+
+// https://leetcode.com/problems/largest-3-same-digit-number-in-string/description/
+string largestGoodInteger(string num) {
+    string largestNum = "";
+
+    int startIndex = 0;
+    for (int i = 1; i < num.size(); ++i) {
+        if (num[i] != num[i - 1])
+            startIndex = i;
+        else if (i - startIndex == 2 && (largestNum == "" || (int) largestNum[0] < (int) num[i]))
+            largestNum = string(3, num[i]);
+    }
+
+    return largestNum;
+}
+
+// https://leetcode.com/problems/destination-city/description/
+string destinationCity(vector<vector<string>> &paths) {
+    unordered_map<string, string> startAndEndCities;
+    for (auto x: paths)
+        startAndEndCities[x[1]] = "";
+    for (auto x: paths)
+        startAndEndCities.erase(x[0]);
+
+    return startAndEndCities.begin()->first;
+}
+
+// https://leetcode.com/problems/maximum-product-difference-between-two-pairs/description/
+int maximumProductDifferenceBetweenTwoPairs(vector<int> &nums) {
+    sort(nums.begin(), nums.end(), greater<int>());
+    return (nums[0] * nums[1]) - (nums[nums.size() - 1] * nums[nums.size() - 2]);
+}
+
+// https://leetcode.com/problems/maximum-score-after-splitting-a-string/description/
+int maximumScoreAfterSplittingAString(string s) {
+    int numberOfOnes = 0;
+    for (int i = 1; i < s.size(); ++i)
+        numberOfOnes += s[i] == '1' ? 1 : 0;
+
+    int numberOfZeroes = 0;
+
+    int maxScore = -1;
+    for (int i = 1; i < s.size(); ++i) {
+        if (s[i - 1] == '0')
+            ++numberOfZeroes;
+        if (numberOfZeroes + numberOfOnes > maxScore || maxScore == -1)
+            maxScore = numberOfZeroes + numberOfOnes;
+        if (s[i] == '1')
+            --numberOfOnes;
+    }
+
+    return maxScore;
 }
 
 template<typename T>
@@ -899,9 +1001,12 @@ void displayVector(vector<T> arr) {
 
 int main() {
     vector<int> nums(
-        {1, 2, 3, 1, 1, 3});
+            {4, 2, 5, 9, 7, 4, 8});
+    vector<vector<string>> cities({{"B", "C"},
+                                   {"D", "B"},
+                                   {"C", "A"}});
 
-    cout << numberOfGoodPairs(nums) << endl;
+    cout << maximumScoreAfterSplittingAString("00111") << endl;
 
     return 0;
 }
