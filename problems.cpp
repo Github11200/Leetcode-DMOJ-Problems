@@ -1031,6 +1031,40 @@ int minimumChangesToMakeAlternatingBinaryString(string s) {
     return count < (s.size() - count) ? count : s.size() - count;
 }
 
+// https://leetcode.com/problems/redistribute-characters-to-make-all-strings-equal/description/
+bool redistributeChractersToMakeAllStringsEqual(vector<string> &words) {
+    unordered_map<char, int> frequencies;
+    for (auto word: words) {
+        for (auto letter: word) {
+            if (frequencies.count(letter))
+                ++frequencies[letter];
+            else
+                frequencies[letter] = 1;
+        }
+    }
+
+    for (auto x: frequencies) {
+        if (x.second % words.size() != 0)
+            return false;
+    }
+
+    return true;
+}
+
+// https://leetcode.com/problems/largest-substring-between-two-equal-characters/description/
+int largestSubstringBetweenTwoEqualCharacters(string s) {
+    unordered_map<char, int> letterPositions;
+    int largestLength = -1;
+    for (int i = 0; i < s.size(); ++i) {
+        if (letterPositions.count(s[i]) && (i - letterPositions[s[i]] - 1) > largestLength)
+            largestLength = (i - letterPositions[s[i]] - 1);
+        else if (letterPositions.count(s[i]) == 0)
+            letterPositions[s[i]] = i;
+    }
+
+    return largestLength;
+}
+
 template<typename T>
 void displayVector(vector<T> arr) {
     for (auto x: arr)
@@ -1044,7 +1078,10 @@ int main() {
                                    {"D", "B"},
                                    {"C", "A"}});
 
-    cout << minimumChangesToMakeAlternatingBinaryString("110010") << endl;
+    vector<string> words = {"caaaaa", "aaaaaaaaa", "a", "bbb", "bbbbbbbbb", "bbb", "cc", "cccccccccccc", "ccccccc",
+                            "ccccccc", "cc", "cccc", "c", "cccccccc", "c"};
+
+    cout << largestSubstringBetweenTwoEqualCharacters("mgntdygtxrvxjnwksqhxuxtrv") << endl;
 
     return 0;
 }
