@@ -1065,6 +1065,28 @@ int largestSubstringBetweenTwoEqualCharacters(string s) {
     return largestLength;
 }
 
+// https://leetcode.com/problems/set-mismatch/description/
+vector<int> setMismatch(vector<int> &nums) {
+    int actualSum = (nums.size() * (nums.size() + 1)) / 2;
+    int currentSum = 0;
+    int duplicatedNumber = -1;
+    unordered_map<int, int> previousNumbers;
+    for (auto x: nums) {
+        if (previousNumbers.count(x) && duplicatedNumber == -1)
+            duplicatedNumber = x;
+        else
+            previousNumbers[x] = 0;
+        currentSum += x;
+    }
+
+    return vector<int>({duplicatedNumber, actualSum - (currentSum - duplicatedNumber)});
+}
+
+// https://leetcode.com/problems/first-unique-character-in-a-string/description/
+int firstUniqueCharacterInAString(string s) {
+
+}
+
 template<typename T>
 void displayVector(vector<T> arr) {
     for (auto x: arr)
@@ -1073,15 +1095,9 @@ void displayVector(vector<T> arr) {
 
 int main() {
     vector<int> nums(
-            {4, 2, 5, 9, 7, 4, 8});
-    vector<vector<string>> cities({{"B", "C"},
-                                   {"D", "B"},
-                                   {"C", "A"}});
+            {1, 2, 2, 4});
 
-    vector<string> words = {"caaaaa", "aaaaaaaaa", "a", "bbb", "bbbbbbbbb", "bbb", "cc", "cccccccccccc", "ccccccc",
-                            "ccccccc", "cc", "cccc", "c", "cccccccc", "c"};
-
-    cout << largestSubstringBetweenTwoEqualCharacters("mgntdygtxrvxjnwksqhxuxtrv") << endl;
+    cout << firstUniqueCharacterInAString("dbddaadbb") << endl;
 
     return 0;
 }
