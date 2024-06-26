@@ -1100,6 +1100,54 @@ int firstUniqueCharacterInAString(string s) {
     return -1;
 }
 
+// https://leetcode.com/problems/intersection-of-two-arrays/description/
+vector<int> intersectionOfTwoArrays(vector<int> &nums1, vector<int> &nums2) {
+    vector<int> intersection;
+    unordered_map<int, int> nums1Hash;
+
+    for (auto x: nums1)
+        nums1Hash[x] = 0;
+
+    for (auto x: nums2) {
+        if (nums1Hash.count(x)) {
+            intersection.push_back(x);
+            nums1Hash.erase(x);
+        }
+    }
+
+    return intersection;
+}
+
+// https://leetcode.com/problems/number-of-students-unable-to-eat-lunch/description/
+int numberOfStudentsUnableToEatLunch(vector<int> &students, vector<int> &sandwiches) {
+    queue<int> studentsQueue;
+    queue<int> sandwichesQueue;
+    for (auto x: students)
+        studentsQueue.push(x);
+    for (auto x: sandwiches)
+        sandwichesQueue.push(x);
+
+    int queueStartLength = studentsQueue.size();
+    int i = 0;
+    while (!studentsQueue.empty()) {
+        if (studentsQueue.front() == sandwichesQueue.front()) {
+            studentsQueue.pop();
+            sandwichesQueue.pop();
+            i = 0;
+        } else {
+            int temp = studentsQueue.front();
+            studentsQueue.pop();
+            studentsQueue.push(temp);
+            ++i;
+        }
+
+        if (i == studentsQueue.size())
+            return studentsQueue.size();
+    }
+
+    return 0;
+}
+
 template<typename T>
 void displayVector(vector<T> arr) {
     for (auto x: arr)
@@ -1110,7 +1158,10 @@ int main() {
     vector<int> nums(
             {1, 2, 2, 4});
 
-    cout << firstUniqueCharacterInAString("leetcode") << endl;
+    vector<int> nums1({1, 1, 1, 0, 0, 1});
+    vector<int> nums2({1, 0, 0, 0, 1, 1});
+
+    cout << numberOfStudentsUnableToEatLunch(nums1, nums2);
 
     return 0;
 }
