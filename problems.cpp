@@ -1084,7 +1084,20 @@ vector<int> setMismatch(vector<int> &nums) {
 
 // https://leetcode.com/problems/first-unique-character-in-a-string/description/
 int firstUniqueCharacterInAString(string s) {
+    unordered_map<char, int> letterCounts;
+    for (auto x: s) {
+        if (letterCounts.count(x))
+            ++letterCounts[x];
+        else
+            letterCounts[x] = 1;
+    }
 
+    for (int i = 0; i < s.size(); ++i) {
+        if (letterCounts[s[i]] == 1)
+            return i;
+    }
+
+    return -1;
 }
 
 template<typename T>
@@ -1097,7 +1110,7 @@ int main() {
     vector<int> nums(
             {1, 2, 2, 4});
 
-    cout << firstUniqueCharacterInAString("dbddaadbb") << endl;
+    cout << firstUniqueCharacterInAString("leetcode") << endl;
 
     return 0;
 }
