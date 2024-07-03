@@ -1184,6 +1184,17 @@ int specialArrayWithXElementsGreaterThanOrEqualToX(vector<int> &nums) {
     return -1;
 }
 
+// https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/description/
+int bestTimeToBuyAndSellStock2(vector<int> &prices) {
+    int total = 0;
+    for (int i = 0; i < prices.size() - 1; ++i) {
+        if (prices[i + 1] > prices[i])
+            total += prices[i + 1] - prices[i];
+    }
+
+    return total;
+}
+
 template<typename T>
 void displayVector(vector<T> arr) {
     for (auto x: arr)
@@ -1192,9 +1203,9 @@ void displayVector(vector<T> arr) {
 
 int main() {
     vector<int> nums(
-            {3, 6, 7, 7, 0});
+            {7, 1, 5, 3, 6, 4});
 
-    cout << specialArrayWithXElementsGreaterThanOrEqualToX(nums) << endl;
+    cout << bestTimeToBuyAndSellStock2(nums) << endl;
 
     return 0;
 }
