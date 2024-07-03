@@ -1148,6 +1148,42 @@ int numberOfStudentsUnableToEatLunch(vector<int> &students, vector<int> &sandwic
     return 0;
 }
 
+// https://leetcode.com/problems/time-needed-to-buy-tickets/description/
+int timeNeededToBuyTickets(vector<int> &tickets, int k) {
+    int seconds = 0;
+
+    while (tickets[k] != 0) {
+        for (int i = 0; i < tickets.size(); ++i) {
+            if (tickets[i] != 0) {
+                --tickets[i];
+                ++seconds;
+            }
+
+            if (tickets[i] == 0 && i == k)
+                return seconds;
+        }
+    }
+
+    return seconds;
+}
+
+// https://leetcode.com/problems/special-array-with-x-elements-greater-than-or-equal-x/description/
+int specialArrayWithXElementsGreaterThanOrEqualToX(vector<int> &nums) {
+    unordered_map<int, int> previousNumbers;
+    int maxElement = 0;
+    sort(nums.begin(), nums.end());
+    for (int i = 0; i < nums.size(); ++i) {
+        if (nums[i] != 0 && nums[i] >= nums.size() - i && previousNumbers.count(nums.size() - i) == 0 &&
+            nums.size() - i > maxElement)
+            return nums.size() - i;
+        previousNumbers[nums[i]] = i;
+        if (nums[i] > maxElement)
+            maxElement = nums[i];
+    }
+
+    return -1;
+}
+
 template<typename T>
 void displayVector(vector<T> arr) {
     for (auto x: arr)
@@ -1156,12 +1192,9 @@ void displayVector(vector<T> arr) {
 
 int main() {
     vector<int> nums(
-            {1, 2, 2, 4});
+            {3, 6, 7, 7, 0});
 
-    vector<int> nums1({1, 1, 1, 0, 0, 1});
-    vector<int> nums2({1, 0, 0, 0, 1, 1});
-
-    cout << numberOfStudentsUnableToEatLunch(nums1, nums2);
+    cout << specialArrayWithXElementsGreaterThanOrEqualToX(nums) << endl;
 
     return 0;
 }
