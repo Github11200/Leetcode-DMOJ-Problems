@@ -1195,6 +1195,46 @@ int bestTimeToBuyAndSellStock2(vector<int> &prices) {
     return total;
 }
 
+// https://leetcode.com/problems/subarray-sum-equals-k/description/
+int subarraySumEqualsK(vector<int> &nums, int k) {
+    int numberOfSubArrays = 0;
+    unordered_map<int, int> sumPrefixes;
+    sumPrefixes[0] = 1;
+    int total = 0;
+
+    for (int i = 0; i < nums.size(); ++i) {
+        total += nums[i];
+        int diff = total - k;
+
+        if (sumPrefixes.count(diff))
+            numberOfSubArrays += sumPrefixes[diff];
+        if (sumPrefixes.count(total))
+            ++sumPrefixes[total];
+        else
+            sumPrefixes[total] = 1;
+    }
+
+    return numberOfSubArrays;
+}
+
+// https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/description/
+vector<int> twoSum2InputArrayIsSorted(vector<int> &numbers, int target) {
+    int i = 0;
+    int j = numbers.size() - 1;
+
+    while (i < j) {
+        int total = numbers[i] + numbers[j];
+        if (total == target)
+            return vector<int>({i + 1, j + 1});
+        else if (total > target)
+            numbers[j] > numbers[i] ? --j : ++i;
+        else if (total < target)
+            numbers[j] < numbers[i] ? --j : ++i;
+    }
+
+    return vector<int>({i + 1, j + 1});
+}
+
 template<typename T>
 void displayVector(vector<T> arr) {
     for (auto x: arr)
@@ -1203,9 +1243,9 @@ void displayVector(vector<T> arr) {
 
 int main() {
     vector<int> nums(
-            {7, 1, 5, 3, 6, 4});
+            {2, 3, 4});
 
-    cout << bestTimeToBuyAndSellStock2(nums) << endl;
+    displayVector(twoSum2InputArrayIsSorted(nums, 6));
 
     return 0;
 }
