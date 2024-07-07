@@ -1235,17 +1235,106 @@ vector<int> twoSum2InputArrayIsSorted(vector<int> &numbers, int target) {
     return vector<int>({i + 1, j + 1});
 }
 
+// https://leetcode.com/problems/min-stack/description/
+class MinStack {
+public:
+    vector<int> vals;
+    vector<int> smallestValues;
+
+    MinStack() {
+    }
+
+    void push(int val) {
+        vals.push_back(val);
+        if (this->smallestValues.empty() || this->smallestValues[smallestValues.size() - 1] >= val)
+            this->smallestValues.push_back(val);
+    }
+
+    void pop() {
+        if (this->smallestValues[smallestValues.size() - 1] == vals[vals.size() - 1])
+            this->smallestValues.pop_back();
+        vals.pop_back();
+    }
+
+    int top() {
+        return vals[vals.size() - 1];
+    }
+
+    int getMin() {
+        return this->smallestValues[smallestValues.size() - 1];
+    }
+};
+
+vector<vector<int>> threeSum(vector<int> &nums) {
+    vector<vector<int>> triplets;
+    sort(nums.begin(), nums.end());
+
+    for (int i = 0; i < nums.size() - 1; ++i) {
+        int j = i + 1;
+        int k = nums.size() - 1;
+        int target = -nums[i];
+        while (j < k && (j == i + 1 || nums[j] != nums[j - 1]) ||
+               (k == nums.size() - 1 || nums[k] != nums[k + 1])) {
+            if (nums[j] + nums[k] == target) {
+                triplets.push_back({nums[i], nums[j], nums[k]});
+                break;
+            } else if (nums[j] + nums[k] > target)
+                --k;
+            else
+                ++j;
+        }
+    }
+
+    return triplets;
+}
+
+int evaluateReversePolishNotation(vector<string> &tokens) {
+    stack<int> numsStack;
+
+    for (int i = 0; i < tokens.size(); ++i) {
+        if (tokens[i] == "+" || tokens[i] == "-" || tokens[i] == "*" || tokens[i] == "/") {
+            int first = numsStack.top();
+            numsStack.pop();
+            int second = numsStack.top();
+            numsStack.pop();
+            if (tokens[i] == "+")
+                numsStack.push(first + second);
+            else if (tokens[i] == "-")
+                numsStack.push(second - first);
+            else if (tokens[i] == "*")
+                numsStack.push(first * second);
+            else
+                numsStack.push(second / first);
+        } else
+            numsStack.push(stoi(tokens[i]));
+    }
+
+    return numsStack.top();
+}
+
 template<typename T>
 void displayVector(vector<T> arr) {
     for (auto x: arr)
         cout << x << " ";
 }
 
+template<typename T>
+void display2DVector(vector<vector<T> > arr) {
+    for (int i = 0; i < arr.size(); ++i) {
+        for (int j = 0; j < arr[i].size(); ++j)
+            cout << arr[i][j] << " ";
+        cout << endl;
+    }
+}
+
 int main() {
     vector<int> nums(
-            {2, 3, 4});
+            {-1, 0, 1, 2, -1, -4});
 
-    displayVector(twoSum2InputArrayIsSorted(nums, 6));
+    vector<string> operations({"2", "1", "+", "3", "*"});
+
+
+    cout << evaluateReversePolishNotation(operations) << endl;
 
     return 0;
 }
