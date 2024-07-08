@@ -1288,6 +1288,7 @@ vector<vector<int>> threeSum(vector<int> &nums) {
     return triplets;
 }
 
+// https://leetcode.com/problems/evaluate-reverse-polish-notation/description/
 int evaluateReversePolishNotation(vector<string> &tokens) {
     stack<int> numsStack;
 
@@ -1312,6 +1313,36 @@ int evaluateReversePolishNotation(vector<string> &tokens) {
     return numsStack.top();
 }
 
+vector<string> generateParentheses(int n) {
+    if (n == 1)
+        return vector<string>({"()"});
+    vector <string> combinations;
+    int closingIndex = (n * 2) - 1;
+    for (int i = 0; i < n; ++i) {
+        vector <string> leftSmallerNParentheses = generateParentheses((closingIndex - i) / 2);
+        vector <string> rightSmallerNParentheses = generateParentheses(((n * 2 - 1) - closingIndex) / 2);
+
+        int j = 0;
+        int k = 0;
+        string newComb = "(";
+        while (j < leftSmallerNParentheses.size() || k < rightSmallerNParentheses.size()) {
+            if (j < leftSmallerNParentheses.size())
+                newComb += leftSmallerNParentheses[j];
+            newComb += ")";
+            if (k < rightSmallerNParentheses.size())
+                newComb += rightSmallerNParentheses[k];
+            combinations.push_back(newComb);
+            newComb = "(";
+            ++j;
+            ++k;
+        }
+
+        closingIndex -= 2;
+    }
+
+    return combinations;
+}
+
 template<typename T>
 void displayVector(vector<T> arr) {
     for (auto x: arr)
@@ -1333,8 +1364,7 @@ int main() {
 
     vector<string> operations({"2", "1", "+", "3", "*"});
 
-
-    cout << evaluateReversePolishNotation(operations) << endl;
+    displayVector(generateParentheses(4));
 
     return 0;
 }
