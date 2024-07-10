@@ -1265,29 +1265,6 @@ public:
     }
 };
 
-vector<vector<int>> threeSum(vector<int> &nums) {
-    vector<vector<int>> triplets;
-    sort(nums.begin(), nums.end());
-
-    for (int i = 0; i < nums.size() - 1; ++i) {
-        int j = i + 1;
-        int k = nums.size() - 1;
-        int target = -nums[i];
-        while (j < k && (j == i + 1 || nums[j] != nums[j - 1]) ||
-               (k == nums.size() - 1 || nums[k] != nums[k + 1])) {
-            if (nums[j] + nums[k] == target) {
-                triplets.push_back({nums[i], nums[j], nums[k]});
-                break;
-            } else if (nums[j] + nums[k] > target)
-                --k;
-            else
-                ++j;
-        }
-    }
-
-    return triplets;
-}
-
 // https://leetcode.com/problems/evaluate-reverse-polish-notation/description/
 int evaluateReversePolishNotation(vector<string> &tokens) {
     stack<int> numsStack;
@@ -1313,28 +1290,60 @@ int evaluateReversePolishNotation(vector<string> &tokens) {
     return numsStack.top();
 }
 
+vector<vector<int>> threeSum(vector<int> &nums) {
+    vector<vector<int>> triplets;
+    set<vector<int>> previousTriplets;
+    unordered_map<int, int> elements;
+    for (int i = 0; i < nums.size(); ++i)
+        elements[nums[i]] = i;
+
+    for (int i = 0; i < nums.size(); ++i) {
+        int target = 0 - nums[i];
+        for (int j = 0; j < nums.size(); ++j) {
+            if (j != i) {
+                int diff = target - nums[j];
+                if (elements.count(diff) && elements[diff] != j && elements[diff] != i) {
+                    vector<int> triplet({nums[i], nums[j], nums[elements[diff]]});
+                    sort(triplet.begin(), triplet.end());
+                    if (previousTriplets.count(triplet) == 0) {
+                        triplets.push_back(triplet);
+                        previousTriplets.insert(triplet);
+                    }
+                }
+            }
+        }
+    }
+
+    sort(triplets.begin(), triplets.end());
+
+    return triplets;
+}
+
 vector<string> generateParentheses(int n) {
     if (n == 1)
         return vector<string>({"()"});
-    vector <string> combinations;
+    vector<string> combinations;
     int closingIndex = (n * 2) - 1;
     for (int i = 0; i < n; ++i) {
-        vector <string> leftSmallerNParentheses = generateParentheses((closingIndex - i) / 2);
-        vector <string> rightSmallerNParentheses = generateParentheses(((n * 2 - 1) - closingIndex) / 2);
+        vector<string> leftParentheses = generateParentheses(closingIndex / 2);
+        vector<string> rightParentheses = generateParentheses(((n * 2) - closingIndex) / 2);
 
-        int j = 0;
-        int k = 0;
-        string newComb = "(";
-        while (j < leftSmallerNParentheses.size() || k < rightSmallerNParentheses.size()) {
-            if (j < leftSmallerNParentheses.size())
-                newComb += leftSmallerNParentheses[j];
+        for (int j = 0; j < leftParentheses.size(); ++j) {
+            string newComb = "(";
+            newComb += leftParentheses[j];
             newComb += ")";
-            if (k < rightSmallerNParentheses.size())
-                newComb += rightSmallerNParentheses[k];
+            for (int k = 0; k < rightParentheses.size(); ++k)
+                newComb += rightParentheses[k];
             combinations.push_back(newComb);
-            newComb = "(";
-            ++j;
-            ++k;
+        }
+
+        if (leftParentheses.size() == 0) {
+            string newComb = "()";
+            for (int k = 0; k < rightParentheses.size(); ++k) {
+                newComb = "()";
+                newComb += rightParentheses[k];
+                combinations.push_back(newComb);
+            }
         }
 
         closingIndex -= 2;
@@ -1364,7 +1373,7 @@ int main() {
 
     vector<string> operations({"2", "1", "+", "3", "*"});
 
-    displayVector(generateParentheses(4));
+    display2DVector(threeSum(nums));
 
     return 0;
 }
