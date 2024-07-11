@@ -1290,66 +1290,24 @@ int evaluateReversePolishNotation(vector<string> &tokens) {
     return numsStack.top();
 }
 
-vector<vector<int>> threeSum(vector<int> &nums) {
-    vector<vector<int>> triplets;
-    set<vector<int>> previousTriplets;
-    unordered_map<int, int> elements;
-    for (int i = 0; i < nums.size(); ++i)
-        elements[nums[i]] = i;
+void backtrack(int numberOfOpening, int numberOfClosing, string combination, vector<string> &res, int n) {
+    if (numberOfOpening == numberOfClosing && numberOfOpening == n)
+        res.push_back(combination);
 
-    for (int i = 0; i < nums.size(); ++i) {
-        int target = 0 - nums[i];
-        for (int j = 0; j < nums.size(); ++j) {
-            if (j != i) {
-                int diff = target - nums[j];
-                if (elements.count(diff) && elements[diff] != j && elements[diff] != i) {
-                    vector<int> triplet({nums[i], nums[j], nums[elements[diff]]});
-                    sort(triplet.begin(), triplet.end());
-                    if (previousTriplets.count(triplet) == 0) {
-                        triplets.push_back(triplet);
-                        previousTriplets.insert(triplet);
-                    }
-                }
-            }
-        }
-    }
-
-    sort(triplets.begin(), triplets.end());
-
-    return triplets;
+    if (numberOfOpening < n)
+        backtrack(numberOfOpening + 1, numberOfClosing, combination + "(", res, n);
+    if (numberOfClosing < numberOfOpening)
+        backtrack(numberOfOpening, numberOfClosing + 1, combination + ")", res, n);
 }
 
+// https://leetcode.com/problems/generate-parentheses/description/
 vector<string> generateParentheses(int n) {
-    if (n == 1)
-        return vector<string>({"()"});
-    vector<string> combinations;
-    int closingIndex = (n * 2) - 1;
-    for (int i = 0; i < n; ++i) {
-        vector<string> leftParentheses = generateParentheses(closingIndex / 2);
-        vector<string> rightParentheses = generateParentheses(((n * 2) - closingIndex) / 2);
+    vector<string> result;
+    backtrack(0, 0, "", result, n);
+    return result;
+}
 
-        for (int j = 0; j < leftParentheses.size(); ++j) {
-            string newComb = "(";
-            newComb += leftParentheses[j];
-            newComb += ")";
-            for (int k = 0; k < rightParentheses.size(); ++k)
-                newComb += rightParentheses[k];
-            combinations.push_back(newComb);
-        }
-
-        if (leftParentheses.size() == 0) {
-            string newComb = "()";
-            for (int k = 0; k < rightParentheses.size(); ++k) {
-                newComb = "()";
-                newComb += rightParentheses[k];
-                combinations.push_back(newComb);
-            }
-        }
-
-        closingIndex -= 2;
-    }
-
-    return combinations;
+vector<vector<int>> threeSum(vector<int> &nums) {
 }
 
 template<typename T>
@@ -1370,8 +1328,6 @@ void display2DVector(vector<vector<T> > arr) {
 int main() {
     vector<int> nums(
             {-1, 0, 1, 2, -1, -4});
-
-    vector<string> operations({"2", "1", "+", "3", "*"});
 
     display2DVector(threeSum(nums));
 
