@@ -11,24 +11,19 @@
 
 using namespace std;
 
-int subarraySumEqualsK(vector<int> &nums, int k) {
-    unordered_map<int, int> previousSums;
-    previousSums[0] = 1;
+void backtrack(int numberOfOpening, int numberOfClosing, string comb, int n, vector<string> &results) {
+    if (numberOfOpening == n && numberOfClosing == n)
+        results.push_back(comb);
+    if (numberOfOpening < n)
+        backtrack(numberOfOpening + 1, numberOfClosing, comb + "(", n, results);
+    if (numberOfClosing < numberOfOpening)
+        backtrack(numberOfOpening, numberOfClosing + 1, comb + ")", n, results);
+}
 
-    int sum = 0;
-    int numberOfSubarrays = 0;
-    for (int i = 0; i < nums.size(); ++i) {
-        sum += nums[i];
-        int diff = sum - k;
-        if (previousSums.count(diff))
-            numberOfSubarrays += previousSums[diff];
-        if (previousSums.count(sum))
-            ++previousSums[sum];
-        else
-            previousSums[sum] = 1;
-    }
-
-    return numberOfSubarrays;
+vector<string> generateParentheses(int n) {
+    vector<string> results;
+    backtrack(0, 0, "", n, results);
+    return results;
 }
 
 template<typename T>
@@ -47,12 +42,12 @@ void display2DVector(vector<vector<T> > arr) {
 }
 
 int main() {
-    vector<int> nums1 = {1, 1, 1};
+    vector<int> nums1 = {1, -1, 0};
     vector<int> nums2 = {1, 3, 4, 2};
 
     vector<vector<int> > matrix = {{1, 0}};
 
-    cout << subarraySumEqualsK(nums1, 2) << endl;
+    displayVector(generateParentheses(3));
 
     return 0;
 }
