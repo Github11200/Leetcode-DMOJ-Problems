@@ -1307,7 +1307,31 @@ vector<string> generateParentheses(int n) {
     return result;
 }
 
+// https://leetcode.com/problems/3sum/description/
 vector<vector<int>> threeSum(vector<int> &nums) {
+    vector<vector<int>> result;
+    sort(nums.begin(), nums.end());
+
+    for (int i = 0; i < nums.size(); ++i) {
+        if (i > 0 && nums[i] == nums[i - 1])
+            continue;
+        int left = i + 1, right = nums.size() - 1;
+        while (left < right) {
+            int total = nums[i] + nums[left] + nums[right];
+            if (total > 0)
+                --right;
+            else if (total < 0)
+                ++left;
+            else {
+                result.push_back(vector<int>({nums[i], nums[left], nums[right]}));
+                ++left;
+                while (nums[left] == nums[left - 1] && left < right)
+                    ++left;
+            }
+        }
+    }
+
+    return result;
 }
 
 template<typename T>
@@ -1328,6 +1352,8 @@ void display2DVector(vector<vector<T> > arr) {
 int main() {
     vector<int> nums(
             {-1, 0, 1, 2, -1, -4});
+
+    // -4, -1, -1, 0, 1, 2
 
     display2DVector(threeSum(nums));
 
