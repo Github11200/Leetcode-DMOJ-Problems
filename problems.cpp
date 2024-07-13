@@ -759,8 +759,8 @@ int brickWall(vector<vector<int> > &wall) {
     return wall.size() - max;
 }
 
-// https://leetcode.com/problems/sort-colors/description/
-int ContainerWithMostWater(vector<int> &height) {
+// https://leetcode.com/problems/container-with-most-water/description/
+int containerWithMostWater(vector<int> &height) {
     int maxArea = 0;
     int i = 0;
     int j = height.size() - 1;
@@ -1334,6 +1334,22 @@ vector<vector<int>> threeSum(vector<int> &nums) {
     return result;
 }
 
+// https://leetcode.com/problems/daily-temperatures/description/
+vector<int> dailyTemperatures(vector<int> &temperatures) {
+    vector<int> offsets(temperatures.size(), 0);
+    stack<int> smallerTemps;
+    for (int i = 0; i < temperatures.size(); ++i) {
+        while (!smallerTemps.empty() && temperatures[i] > temperatures[smallerTemps.top()]) {
+            offsets[smallerTemps.top()] = i - smallerTemps.top();
+            smallerTemps.pop();
+        }
+
+        smallerTemps.push(i);
+    }
+
+    return offsets;
+}
+
 template<typename T>
 void displayVector(vector<T> arr) {
     for (auto x: arr)
@@ -1351,11 +1367,9 @@ void display2DVector(vector<vector<T> > arr) {
 
 int main() {
     vector<int> nums(
-            {-1, 0, 1, 2, -1, -4});
+            {73, 74, 75, 71, 69, 72, 76, 73});
 
-    // -4, -1, -1, 0, 1, 2
-
-    display2DVector(threeSum(nums));
+    displayVector(dailyTemperatures(nums));
 
     return 0;
 }
