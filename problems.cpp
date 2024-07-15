@@ -1350,6 +1350,14 @@ vector<int> dailyTemperatures(vector<int> &temperatures) {
     return offsets;
 }
 
+int carFleet(int target, vector<int> &position, vector<int> &speed) {
+    int numberOfFleets = 0;
+    stack<int> fleets;
+
+
+    return numberOfFleets;
+}
+
 template<typename T>
 void displayVector(vector<T> arr) {
     for (auto x: arr)
@@ -1366,10 +1374,11 @@ void display2DVector(vector<vector<T> > arr) {
 }
 
 int main() {
-    vector<int> nums(
-            {73, 74, 75, 71, 69, 72, 76, 73});
+    vector<int> position(
+            {10, 8, 0, 5, 3});
+    vector<int> speed({2, 4, 1, 1, 3});
 
-    displayVector(dailyTemperatures(nums));
+    cout << carFleet(12, position, speed) << endl;
 
     return 0;
 }
