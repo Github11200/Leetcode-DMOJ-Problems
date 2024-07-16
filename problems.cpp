@@ -1350,10 +1350,35 @@ vector<int> dailyTemperatures(vector<int> &temperatures) {
     return offsets;
 }
 
+bool cmp(pair<int, int> a, pair<int, int> b) { return a.first > b.first; }
+
 int carFleet(int target, vector<int> &position, vector<int> &speed) {
     int numberOfFleets = 0;
-    stack<int> fleets;
+    vector<pair<int, int>> positionAndSpeed(position.size());
+    for (int i = 0; i < position.size(); ++i) {
+        positionAndSpeed[i].first = position[i];
+        positionAndSpeed[i].second = speed[i];
+    }
+    sort(positionAndSpeed.begin(), positionAndSpeed.end(), cmp);
 
+    int i = 0;
+    int startPos = 0;
+    while (startPos < positionAndSpeed.size()) {
+        if (positionAndSpeed[i].first == target) {
+            ++numberOfFleets;
+            ++startPos;
+        } else {
+            positionAndSpeed[i].first += positionAndSpeed[i].second;
+            if (i > startPos && positionAndSpeed[i].first > positionAndSpeed[i - 1].first) {
+                positionAndSpeed[i].first = positionAndSpeed[i - 1].first;
+                if (positionAndSpeed[i - 1].second < positionAndSpeed[i].second)
+                    positionAndSpeed[i].second = positionAndSpeed[i - 1].second;
+                ++startPos;
+            }
+        }
+
+        i = i == positionAndSpeed.size() - 1 ? startPos : i + 1;
+    }
 
     return numberOfFleets;
 }
