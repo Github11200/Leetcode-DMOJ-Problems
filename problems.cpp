@@ -1352,32 +1352,28 @@ vector<int> dailyTemperatures(vector<int> &temperatures) {
 
 bool cmp(pair<int, int> a, pair<int, int> b) { return a.first > b.first; }
 
+// https://leetcode.com/problems/car-fleet/description/
 int carFleet(int target, vector<int> &position, vector<int> &speed) {
-    int numberOfFleets = 0;
-    vector<pair<int, int>> positionAndSpeed(position.size());
+    int numberOfFleets = position.size();
+
+    pair<int, int> positionAndSpeed[position.size()];
     for (int i = 0; i < position.size(); ++i) {
         positionAndSpeed[i].first = position[i];
         positionAndSpeed[i].second = speed[i];
     }
-    sort(positionAndSpeed.begin(), positionAndSpeed.end(), cmp);
+    sort(positionAndSpeed, positionAndSpeed + position.size(), cmp);
+    unordered_map<float, int> previousTimes;
+    float maxTime = -1;
 
-    int i = 0;
-    int startPos = 0;
-    while (startPos < positionAndSpeed.size()) {
-        if (positionAndSpeed[i].first == target) {
-            ++numberOfFleets;
-            ++startPos;
-        } else {
-            positionAndSpeed[i].first += positionAndSpeed[i].second;
-            if (i > startPos && positionAndSpeed[i].first > positionAndSpeed[i - 1].first) {
-                positionAndSpeed[i].first = positionAndSpeed[i - 1].first;
-                if (positionAndSpeed[i - 1].second < positionAndSpeed[i].second)
-                    positionAndSpeed[i].second = positionAndSpeed[i - 1].second;
-                ++startPos;
-            }
+    for (int i = 0; i < position.size(); ++i) {
+        float timeToReach = float(target - positionAndSpeed[i].first) / positionAndSpeed[i].second;
+        if (previousTimes.count(timeToReach) || (maxTime != -1 && timeToReach <= maxTime))
+            --numberOfFleets;
+        else {
+            previousTimes[timeToReach] = 1;
+            if (timeToReach > maxTime)
+                maxTime = timeToReach;
         }
-
-        i = i == positionAndSpeed.size() - 1 ? startPos : i + 1;
     }
 
     return numberOfFleets;
@@ -1400,10 +1396,10 @@ void display2DVector(vector<vector<T> > arr) {
 
 int main() {
     vector<int> position(
-            {10, 8, 0, 5, 3});
-    vector<int> speed({2, 4, 1, 1, 3});
+            {6, 8});
+    vector<int> speed({3, 2});
 
-    cout << carFleet(12, position, speed) << endl;
+    cout << carFleet(10, position, speed) << endl;
 
     return 0;
 }
