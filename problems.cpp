@@ -1379,6 +1379,26 @@ int carFleet(int target, vector<int> &position, vector<int> &speed) {
     return numberOfFleets;
 }
 
+// https://leetcode.com/problems/assign-cookies/description/
+int assignCookies(vector<int> &g, vector<int> &s) {
+    sort(g.begin(), g.end());
+    sort(s.begin(), s.end());
+
+    int contentChildren = 0;
+    int i = 0;
+    int j = 0;
+    while (i < g.size() && j < s.size()) {
+        if (s[j] >= g[i]) {
+            ++contentChildren;
+            ++i;
+        }
+
+        ++j;
+    }
+
+    return contentChildren;
+}
+
 template<typename T>
 void displayVector(vector<T> arr) {
     for (auto x: arr)
@@ -1395,11 +1415,10 @@ void display2DVector(vector<vector<T> > arr) {
 }
 
 int main() {
-    vector<int> position(
-            {6, 8});
-    vector<int> speed({3, 2});
+    vector<int> nums1({10, 9, 8, 7});
+    vector<int> nums2({5, 6, 7, 8});
 
-    cout << carFleet(10, position, speed) << endl;
+    cout << assignCookies(nums1, nums2) << endl;
 
     return 0;
 }
