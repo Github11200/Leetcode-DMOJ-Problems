@@ -8,6 +8,7 @@
 #include <numeric>
 #include <math.h>
 #include <set>
+#include <bits/stdc++.h>
 
 using namespace std;
 
@@ -1399,6 +1400,31 @@ int assignCookies(vector<int> &g, vector<int> &s) {
     return contentChildren;
 }
 
+int uniqueLength3PalindromicSubsequences(string s) {
+    vector<int> first(26, -1);
+    vector<int> last(26, -1);
+
+    for (int i = 0; i < s.size(); ++i) {
+        int letterIndex = s[i] - 'a';
+        if (first[letterIndex] == -1)
+            first[letterIndex] = i;
+        last[letterIndex] = i;
+    }
+
+    int subsequences = 0;
+    for (int i = 0; i < 26; ++i) {
+        if (first[i] == -1)
+            continue;
+        unordered_map<char, int> combs;
+        for (int j = first[i] + 1; j < last[i]; ++j) {
+            combs[s[j]] = 1;
+        }
+        subsequences += combs.size();
+    }
+
+    return subsequences;
+}
+
 template<typename T>
 void displayVector(vector<T> arr) {
     for (auto x: arr)
@@ -1418,7 +1444,7 @@ int main() {
     vector<int> nums1({10, 9, 8, 7});
     vector<int> nums2({5, 6, 7, 8});
 
-    cout << assignCookies(nums1, nums2) << endl;
+    cout << uniqueLength3PalindromicSubsequences("bbcbaba") << endl;
 
     return 0;
 }
