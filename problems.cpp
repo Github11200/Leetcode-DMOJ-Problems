@@ -1425,6 +1425,48 @@ int uniqueLength3PalindromicSubsequences(string s) {
     return subsequences;
 }
 
+// https://leetcode.com/problems/binary-search/description/
+int binarySearch(vector<int> &nums, int target) {
+    int l = 0;
+    int r = nums.size() - 1;
+    int m = 1;
+
+    while (l <= r) {
+        m = (l + r) / 2;
+        if (nums[m] < target)
+            l = m + 1;
+        else if (nums[m] > target)
+            r = m - 1;
+        else
+            return m;
+    }
+
+    return -1;
+}
+
+// https://leetcode.com/problems/search-a-2d-matrix/description/
+bool search2dMatrix(vector<vector<int>> &matrix, int target) {
+    for (int i = 0; i < matrix.size(); ++i) {
+        if (target >= matrix[i][0] && target <= matrix[i][matrix[i].size() - 1]) {
+            int l = 0;
+            int h = matrix[i].size() - 1;
+            int m = 0;
+            while (l <= h) {
+                m = (l + h) / 2;
+                if (target < matrix[i][m])
+                    l = m + 1;
+                else if (target > matrix[i][m])
+                    h = m - 1;
+                else
+                    return true;
+            }
+            return false;
+        }
+    }
+
+    return false;
+}
+
 template<typename T>
 void displayVector(vector<T> arr) {
     for (auto x: arr)
@@ -1441,10 +1483,13 @@ void display2DVector(vector<vector<T> > arr) {
 }
 
 int main() {
-    vector<int> nums1({10, 9, 8, 7});
+    vector<int> nums1({-1, 0, 3, 5, 9, 12});
     vector<int> nums2({5, 6, 7, 8});
+    vector<vector<int>> nums3({{1,  3,  5,  7},
+                               {10, 11, 16, 20},
+                               {23, 30, 34, 60}});
 
-    cout << uniqueLength3PalindromicSubsequences("bbcbaba") << endl;
+    cout << search2dMatrix(nums3, 3) << endl;
 
     return 0;
 }

@@ -8,9 +8,9 @@
 #include <numeric>
 #include <math.h>
 #include <set>
+#include <bits/stdc++.h>
 
 using namespace std;
-
 
 template<typename T>
 void displayVector(vector<T> arr) {
@@ -32,7 +32,6 @@ int main() {
     vector<int> nums2 = {1, 3, 4, 2};
 
     vector<vector<int> > matrix = {{1, 0}};
-
 
     return 0;
 }
