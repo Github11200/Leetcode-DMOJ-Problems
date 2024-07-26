@@ -1469,24 +1469,24 @@ bool search2dMatrix(vector<vector<int>> &matrix, int target) {
 
 int kokoEatingBananas(vector<int> &piles, int h) {
     sort(piles.begin(), piles.end());
-    int min = 1;
-    int numberOfHours = 0;
-    bool shouldContinue = true;
+    int m = 0;
+    int l = 1;
+    int r = piles[piles.size() - 1];
 
-    while (shouldContinue) {
-        shouldContinue = false;
-        for (int i = 0; i < piles.size(); ++i) {
-            numberOfHours += piles[i] % min != 0 ? (piles[i] / min) + 1 : piles[i] / min;
-            if (numberOfHours > h) {
-                shouldContinue = true;
-                ++min;
-                break;
-            }
-        }
-        numberOfHours = 0;
+    while (l <= r) {
+        m = (piles[0] + piles[piles.size() - 1]) / 2;
+        int numberOfHours = 0;
+        for (int i = 0; i < piles.size(); ++i)
+            numberOfHours += piles[i] % m == 0 ? piles[i] / m : (piles[i] / m) + 1;
+        if (numberOfHours > h)
+            r = m - 1;
+        else if (numberOfHours < h)
+            l = m + 1;
+        else
+            return m;
     }
 
-    return min;
+    return m;
 }
 
 template<typename T>
@@ -1505,10 +1505,10 @@ void display2DVector(vector<vector<T> > arr) {
 }
 
 int main() {
-    vector<int> nums1({312884470});
+    vector<int> nums1({3, 6, 7, 11});
     vector<int> nums2({5, 6, 7, 8});
 
-    cout << kokoEatingBananas(nums1, 312884469) << endl;
+    cout << kokoEatingBananas(nums1, 8) << endl;
 
     return 0;
 }
