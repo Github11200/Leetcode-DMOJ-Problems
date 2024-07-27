@@ -1467,25 +1467,30 @@ bool search2dMatrix(vector<vector<int>> &matrix, int target) {
     return false;
 }
 
+// https://leetcode.com/problems/koko-eating-bananas/description/
 int kokoEatingBananas(vector<int> &piles, int h) {
     sort(piles.begin(), piles.end());
     int m = 0;
     int l = 1;
     int r = piles[piles.size() - 1];
+    int previousInput = 0;
+    long long int numberOfHours = 0;
 
     while (l <= r) {
-        m = (piles[0] + piles[piles.size() - 1]) / 2;
-        int numberOfHours = 0;
+        numberOfHours = 0;
+        m = (l + r) / 2;
         for (int i = 0; i < piles.size(); ++i)
             numberOfHours += piles[i] % m == 0 ? piles[i] / m : (piles[i] / m) + 1;
         if (numberOfHours > h)
-            r = m - 1;
-        else if (numberOfHours < h)
             l = m + 1;
-        else
-            return m;
+        else if (numberOfHours <= h) {
+            r = m - 1;
+            previousInput = m;
+        }
     }
 
+    if (numberOfHours > h)
+        return previousInput;
     return m;
 }
 
@@ -1505,10 +1510,10 @@ void display2DVector(vector<vector<T> > arr) {
 }
 
 int main() {
-    vector<int> nums1({3, 6, 7, 11});
+    vector<int> nums1({1, 1, 1, 999999999});
     vector<int> nums2({5, 6, 7, 8});
 
-    cout << kokoEatingBananas(nums1, 8) << endl;
+    cout << kokoEatingBananas(nums1, 10) << endl;
 
     return 0;
 }
