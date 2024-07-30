@@ -1494,6 +1494,152 @@ int kokoEatingBananas(vector<int> &piles, int h) {
     return m;
 }
 
+// https://dmoj.ca/problem/ccc00s1
+void slotMachines() {
+    int numberOfQuarters = 0;
+    vector<int> numberOfTimesMachinesPlayed({0, 0, 0});
+    cin >> numberOfQuarters;
+    cin >> numberOfTimesMachinesPlayed[0];
+    cin >> numberOfTimesMachinesPlayed[1];
+    cin >> numberOfTimesMachinesPlayed[2];
+
+    int numberOfTimesPlayed = 0;
+    int i = 0;
+    while (numberOfQuarters > 0) {
+        --numberOfQuarters;
+        ++numberOfTimesMachinesPlayed[i];
+        ++numberOfTimesPlayed;
+        if (i == 0 && numberOfTimesMachinesPlayed[i] % 35 == 0)
+            numberOfQuarters += 30;
+        else if (i == 1 && numberOfTimesMachinesPlayed[i] % 100 == 0)
+            numberOfQuarters += 60;
+        else if (i == 2 && numberOfTimesMachinesPlayed[i] % 10 == 0)
+            numberOfQuarters += 9;
+        i += i == 2 ? -2 : 1;
+    }
+
+    cout << "Martha plays " << numberOfTimesPlayed << " times before going broke.";
+}
+
+// https://dmoj.ca/problem/ccc01s1
+void keepingScore() {
+    string cardsAtHand;
+    cin >> cardsAtHand;
+
+    cout << "Cards Dealt " << "Points" << endl;
+
+    int points = 0;
+    int individualCardsPoints = 0;
+    int numberOfCards = 0;
+    for (auto card: cardsAtHand) {
+        if (card == 'C' || card == 'D' || card == 'H' || card == 'S') {
+            if (card != 'C') {
+                if (numberOfCards == 0)
+                    individualCardsPoints += 3;
+                else if (numberOfCards == 1)
+                    individualCardsPoints += 2;
+                else if (numberOfCards == 2)
+                    ++individualCardsPoints;
+                cout << individualCardsPoints << endl;
+            }
+
+            if (card == 'C')
+                cout << "Clubs ";
+            else if (card == 'D')
+                cout << "Diamonds ";
+            else if (card == 'H')
+                cout << "Hearts ";
+            else if (card == 'S')
+                cout << "Spades ";
+            points += individualCardsPoints;
+            individualCardsPoints = 0;
+            numberOfCards = 0;
+            continue;
+        } else
+            cout << card << " ";
+
+        switch (card) {
+            case 'A':
+                individualCardsPoints += 4;
+                break;
+            case 'K':
+                individualCardsPoints += 3;
+                break;
+            case 'Q':
+                individualCardsPoints += 2;
+                break;
+            case 'J':
+                individualCardsPoints += 1;
+                break;
+            default:
+                break;
+        }
+        ++numberOfCards;
+    }
+
+    if (numberOfCards == 0)
+        individualCardsPoints += 3;
+    else if (numberOfCards == 1)
+        individualCardsPoints += 2;
+    else if (numberOfCards == 2)
+        ++individualCardsPoints;
+    cout << individualCardsPoints << endl;
+    points += individualCardsPoints;
+
+    cout << "Total " << points;
+}
+
+int ticketPrices[4] = {0, 0, 0, 0};
+int numberOfTicketsBought[4] = {0, 0, 0, 0};
+int amountNeeded = 0;
+int combinations = 0;
+int minTickets = -1;
+
+int computeMoneyRaised() {
+    int money = 0;
+    for (int i = 0; i < 4; ++i)
+        money += (ticketPrices[i] * numberOfTicketsBought[i]);
+    return money;
+}
+
+void backtrack(int amountRaised, int currentLevel) {
+    int money = computeMoneyRaised();
+    if (money == amountNeeded) {
+        ++combinations;
+        cout << "# of PINK is " << numberOfTicketsBought[0];
+        cout << " # of GREEN is " << numberOfTicketsBought[1];
+        cout << " # of RED is " << numberOfTicketsBought[2];
+        cout << " # of ORANGE is " << numberOfTicketsBought[3] << endl;
+        int numberOfTicketsUsed = 0;
+        for (int i = 0; i < 4; ++i)
+            numberOfTicketsUsed += numberOfTicketsBought[i];
+        if (minTickets == -1 || numberOfTicketsUsed < minTickets)
+            minTickets = numberOfTicketsUsed;
+        amountRaised = 0;
+        return;
+    } else if (currentLevel == 4)
+        return;
+
+    while (money <= amountNeeded) {
+        backtrack(amountRaised, currentLevel + 1);
+        ++numberOfTicketsBought[currentLevel];
+        money = computeMoneyRaised();
+    }
+
+    numberOfTicketsBought[currentLevel] = 0;
+}
+
+// https://dmoj.ca/problem/ccc02s1
+void theStudentsCouncilBreakfast() {
+    for (int i = 0; i < 4; ++i)
+        cin >> ticketPrices[i];
+    cin >> amountNeeded;
+
+    backtrack(0, 0);
+    cout << "Total combinations is " << combinations << "." << endl;
+    cout << "Minimum number of tickets to print is " << minTickets << "." << endl;
+}
+
 template<typename T>
 void displayVector(vector<T> arr) {
     for (auto x: arr)
@@ -1513,7 +1659,7 @@ int main() {
     vector<int> nums1({1, 1, 1, 999999999});
     vector<int> nums2({5, 6, 7, 8});
 
-    cout << kokoEatingBananas(nums1, 10) << endl;
+    theStudentsCouncilBreakfast();
 
     return 0;
 }

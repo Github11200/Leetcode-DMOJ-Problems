@@ -7,4 +7,5 @@ add_executable(Leetcode_DMOJ_Problems
         LeetcodeContests/Weekly-Contest-391.cpp
         problems.cpp
         anki.cpp
-        anki.cpp)
+        anki.cpp
+)
