@@ -1640,6 +1640,35 @@ void theStudentsCouncilBreakfast() {
     cout << "Minimum number of tickets to print is " << minTickets << "." << endl;
 }
 
+// https://dmoj.ca/problem/ccc03s1
+void snakesAndLadders() {
+    int input = 1;
+    int currentSquare = 1;
+
+    unordered_map<int, int> ladders({{9,  34},
+                                     {40, 64},
+                                     {67, 86}});
+    unordered_map<int, int> snakes({{54, 19},
+                                    {90, 48},
+                                    {99, 77}});
+
+    while (input != 0 && currentSquare != 100) {
+        cin >> input;
+        if (input == 0) {
+            cout << "You Quit!" << endl;
+            return;
+        } else if (currentSquare + input <= 100)
+            currentSquare += input;
+        if (ladders.count(currentSquare))
+            currentSquare = ladders[currentSquare];
+        else if (snakes.count(currentSquare))
+            currentSquare = snakes[currentSquare];
+        cout << "You are now on square " << currentSquare << endl;
+    }
+
+    cout << "You Win!" << endl;
+}
+
 template<typename T>
 void displayVector(vector<T> arr) {
     for (auto x: arr)
@@ -1659,7 +1688,7 @@ int main() {
     vector<int> nums1({1, 1, 1, 999999999});
     vector<int> nums2({5, 6, 7, 8});
 
-    theStudentsCouncilBreakfast();
+    snakesAndLadders();
 
     return 0;
 }
