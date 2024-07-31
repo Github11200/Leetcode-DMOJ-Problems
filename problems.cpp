@@ -1676,25 +1676,36 @@ void snowCalls() {
     unordered_map<char, int> letterToNumber({{'S', 7},
                                              {'Z', 9}});
     int l = 2;
-    string letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    string letters = "ABCDEFGHIJKLMNOPQRTUVWXY";
+
+    for (long unsigned int i = 1; i <= letters.size(); ++i) {
+        letterToNumber[letters[i - 1]] = l;
+        if (i % 3 == 0)
+            ++l;
+    }
 
     for (int i = 0; i < n; ++i) {
         string phoneNumber = "";
         cin >> phoneNumber;
 
         int k = 0;
-        for (int j = 0; j < phoneNumber.size(); ++j) {
-            if (k == 3 || k == 7)
+        for (long unsigned int j = 0; j < 11; ++j) {
+            if (k == 3 || k == 7) {
                 results[i].push_back('-');
+                ++k;
+            }
             if (int(phoneNumber[j]) >= 48 && int(phoneNumber[j]) <= 57) {
                 results[i].push_back(phoneNumber[j]);
                 ++k;
-            } else
-                results[i].push_back(letterToNumber[phoneNumber[j]]);
+            } else if (phoneNumber[j] != '-') {
+                char s = letterToNumber[phoneNumber[j]] + '0';
+                results[i].push_back(s);
+                ++k;
+            }
         }
     }
 
-    for (int i = 0; i < results.size(); ++i)
+    for (long unsigned int i = 0; i < results.size(); ++i)
         cout << results[i] << endl;
 }
 
