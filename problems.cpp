@@ -1669,44 +1669,42 @@ void snakesAndLadders() {
     cout << "You Win!" << endl;
 }
 
-void snowCalls() {
-    int n = 0;
-    cin >> n;
-    vector<string> results(n, "");
-    unordered_map<char, int> letterToNumber({{'S', 7},
-                                             {'Z', 9}});
-    int l = 2;
-    string letters = "ABCDEFGHIJKLMNOPQRTUVWXY";
+void maternity() {
+    string parent1, parent2 = "";
+    cin >> parent1 >> parent2;
 
-    for (long unsigned int i = 1; i <= letters.size(); ++i) {
-        letterToNumber[letters[i - 1]] = l;
-        if (i % 3 == 0)
-            ++l;
+    vector<string> punnettSquareAnswers;
+    for (int i = 1; i < parent1.size(); i += 2) {
+        int parent1Sum = parent1[i] + parent1[i - 1], parent2Sum = parent2[i] + parent2[i - 1];
+        if ((parent1Sum >= 130 && parent1Sum <= 138) || (parent2Sum >= 130 && parent2Sum <= 138))
+            punnettSquareAnswers.push_back("D");
+        else if ((parent1Sum >= 194 && parent1Sum <= 202) && (parent2Sum >= 194 && parent2Sum <= 202))
+            punnettSquareAnswers.push_back("R");
+        else
+            punnettSquareAnswers.push_back("H");
     }
 
-    for (int i = 0; i < n; ++i) {
-        string phoneNumber = "";
-        cin >> phoneNumber;
+    vector<string> results;
+    int x = 0;
+    cin >> x;
 
-        int k = 0;
-        for (long unsigned int j = 0; j < 11; ++j) {
-            if (k == 3 || k == 7) {
-                results[i].push_back('-');
-                ++k;
-            }
-            if (int(phoneNumber[j]) >= 48 && int(phoneNumber[j]) <= 57) {
-                results[i].push_back(phoneNumber[j]);
-                ++k;
-            } else if (phoneNumber[j] != '-') {
-                char s = letterToNumber[phoneNumber[j]] + '0';
-                results[i].push_back(s);
-                ++k;
+    for (int i = 0; i < x; ++i) {
+        string kid = "";
+        cin >> kid;
+        bool possiblyBaby = true;
+        for (int j = 0; j < kid.size(); ++j) {
+            if ((kid[j] < 90 && punnettSquareAnswers[j] != "D" && punnettSquareAnswers[j] != "H") ||
+                (kid[j] >= 97 && punnettSquareAnswers[j] != "R" && punnettSquareAnswers[j] != "H")) {
+                possiblyBaby = false;
+                break;
             }
         }
+
+        results.push_back(possiblyBaby ? "Possible baby." : "Not their baby!");
     }
 
-    for (long unsigned int i = 0; i < results.size(); ++i)
-        cout << results[i] << endl;
+    for (auto result: results)
+        cout << result << endl;
 }
 
 template<typename T>
@@ -1728,7 +1726,7 @@ int main() {
     vector<int> nums1({1, 1, 1, 999999999});
     vector<int> nums2({5, 6, 7, 8});
 
-    snowCalls();
+    maternity();
 
     return 0;
 }
