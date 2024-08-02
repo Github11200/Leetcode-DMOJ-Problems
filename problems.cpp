@@ -1669,6 +1669,7 @@ void snakesAndLadders() {
     cout << "You Win!" << endl;
 }
 
+// https://dmoj.ca/problem/ccc06s1
 void maternity() {
     string parent1, parent2 = "";
     cin >> parent1 >> parent2;
@@ -1707,6 +1708,38 @@ void maternity() {
         cout << result << endl;
 }
 
+// https://dmoj.ca/problem/ccc08s1
+void itsColdHere() {
+    string city = "";
+    int temperature = 0;
+    string coldestCity = "";
+    int coldestTemperature = 200;
+    while (city != "Waterloo") {
+        cin >> city >> temperature;
+        if (temperature <= coldestTemperature) {
+            coldestCity = city;
+            coldestTemperature = temperature;
+        }
+    }
+    cout << coldestCity;
+}
+
+void coolNumbers() {
+    int num1, num2 = 0;
+    scanf("%d", &num1);
+    scanf("%d", &num2);
+    int numberOfCoolNumbers = 0;
+
+    for (long double i = num1; i <= num2; ++i) {
+        long long int s = sqrt(i);
+        long long int c = cbrt(i);
+        if ((s * s) == i && (c * c * c) == i)
+            ++numberOfCoolNumbers;
+    }
+
+    printf("%d", numberOfCoolNumbers);
+}
+
 template<typename T>
 void displayVector(vector<T> arr) {
     for (auto x: arr)
@@ -1726,7 +1759,7 @@ int main() {
     vector<int> nums1({1, 1, 1, 999999999});
     vector<int> nums2({5, 6, 7, 8});
 
-    maternity();
+    coolNumbers();
 
     return 0;
 }
