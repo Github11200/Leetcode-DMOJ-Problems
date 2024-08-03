@@ -1724,6 +1724,7 @@ void itsColdHere() {
     cout << coldestCity;
 }
 
+// https://dmoj.ca/problem/ccc09s1
 void coolNumbers() {
     int num1, num2 = 0;
     scanf("%d", &num1);
@@ -1738,6 +1739,55 @@ void coolNumbers() {
     }
 
     printf("%d", numberOfCoolNumbers);
+}
+
+bool compareLexicographically(string a, string b) {
+    int i = 0;
+    int j = 0;
+    while (i < a.size() && j < b.size()) {
+        if (a[i] != b[j])
+            return int(a[i]) < int(b[j]);
+        ++i;
+        ++j;
+    }
+
+    return false;
+}
+
+void computerPurchase() {
+    int n = 0;
+    scanf("%d", &n);
+
+    int bestComputer1, bestComputer2, value, ram, cpu, disk = -1;
+    string bestComputer1Name, bestComputer2Name, name = "";
+    for (int i = 0; i < n; ++i) {
+        cin >> name;
+        scanf("%d %d %d", &ram, &cpu, &disk);
+        value = (2 * ram) + (3 * cpu) + disk;
+        if (value >= bestComputer1) {
+            if ((value == bestComputer1 && compareLexicographically(name, bestComputer1Name)) ||
+                value != bestComputer1) {
+                if (bestComputer1 > 0) {
+                    bestComputer2 = bestComputer1;
+                    bestComputer2Name = bestComputer1Name;
+                }
+                bestComputer1 = value;
+                bestComputer1Name = name;
+            }
+        } else if (value >= bestComputer2) {
+            if ((value == bestComputer2 && compareLexicographically(name, bestComputer2Name)) ||
+                value != bestComputer2) {
+                bestComputer2 = value;
+                bestComputer2Name = name;
+            }
+        }
+    }
+
+    cout.flush();
+    cout << bestComputer1Name << endl;
+    cout.flush();
+    if (n != 1)
+        cout << bestComputer2Name;
 }
 
 template<typename T>
@@ -1759,7 +1809,8 @@ int main() {
     vector<int> nums1({1, 1, 1, 999999999});
     vector<int> nums2({5, 6, 7, 8});
 
-    coolNumbers();
+    computerPurchase();
+
 
     return 0;
 }
