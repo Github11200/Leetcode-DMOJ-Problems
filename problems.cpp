@@ -1741,53 +1741,38 @@ void coolNumbers() {
     printf("%d", numberOfCoolNumbers);
 }
 
-bool compareLexicographically(string a, string b) {
-    int i = 0;
-    int j = 0;
-    while (i < a.size() && j < b.size()) {
-        if (a[i] != b[j])
-            return int(a[i]) < int(b[j]);
-        ++i;
-        ++j;
-    }
+struct Computer {
+    string name;
+    int value;
+};
 
-    return false;
-}
-
+// https://dmoj.ca/problem/ccc10s1
 void computerPurchase() {
     int n = 0;
-    scanf("%d", &n);
+    cin >> n;
 
-    int bestComputer1, bestComputer2, value, ram, cpu, disk = -1;
-    string bestComputer1Name, bestComputer2Name, name = "";
+    vector<Computer> computers;
+    string name = "";
+    int ram, cpu, disk = 0;
     for (int i = 0; i < n; ++i) {
-        cin >> name;
-        scanf("%d %d %d", &ram, &cpu, &disk);
-        value = (2 * ram) + (3 * cpu) + disk;
-        if (value >= bestComputer1) {
-            if ((value == bestComputer1 && compareLexicographically(name, bestComputer1Name)) ||
-                value != bestComputer1) {
-                if (bestComputer1 > 0) {
-                    bestComputer2 = bestComputer1;
-                    bestComputer2Name = bestComputer1Name;
-                }
-                bestComputer1 = value;
-                bestComputer1Name = name;
-            }
-        } else if (value >= bestComputer2) {
-            if ((value == bestComputer2 && compareLexicographically(name, bestComputer2Name)) ||
-                value != bestComputer2) {
-                bestComputer2 = value;
-                bestComputer2Name = name;
-            }
-        }
+        cin >> name >> ram >> cpu >> disk;
+        computers.push_back({name, ((2 * ram) + (3 * cpu) + disk)});
     }
 
-    cout.flush();
-    cout << bestComputer1Name << endl;
-    cout.flush();
-    if (n != 1)
-        cout << bestComputer2Name;
+    if (computers.size() == 0)
+        return;
+
+    sort(computers.begin(), computers.end(), [](const Computer &a, const Computer &b) {
+        if (a.value == b.value)
+            return a.name > b.name;
+        return a.value > b.value;
+    });
+
+    cout << computers[0].name;
+    if (computers.size() >= 2) {
+        cout << endl;
+        cout << computers[1].name;
+    }
 }
 
 template<typename T>
@@ -1810,7 +1795,6 @@ int main() {
     vector<int> nums2({5, 6, 7, 8});
 
     computerPurchase();
-
 
     return 0;
 }
