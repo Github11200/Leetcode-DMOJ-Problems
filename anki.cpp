@@ -9,47 +9,75 @@
 #include <math.h>
 #include <set>
 #include <bits/stdc++.h>
+#include <bitset>
 
 using namespace std;
 
-int binarySearch(vector<int> &nums, int target) {
-    int l = 0;
-    int r = nums.size() - 1;
-    int m = 0;
+template <typename T>
+void displayVector(vector<T> arr)
+{
+  for (auto x : arr)
+    cout << x << endl;
+}
 
-    while (l <= r) {
-        m = (l + r) / 2;
-        if (nums[m] < target)
-            l = m + 1;
-        else if (nums[m] > target)
-            r = m - 1;
-        else
-            return m;
+template <typename T>
+void display2DVector(vector<vector<T>> arr)
+{
+  for (int i = 0; i < arr.size(); ++i)
+  {
+    for (int j = 0; j < arr[i].size(); ++j)
+      cout << arr[i][j] << " ";
+    cout << endl;
+  }
+}
+
+int N = 5;
+vector<vector<int>> adj(N + 1);
+vector<int> visited(N + 1);
+
+void bfs(int startingNode)
+{
+  queue<int> nextNodes;
+  vector<int> distances(N + 1);
+
+  nextNodes.push(startingNode);
+  distances[startingNode] = 0;
+  while (!nextNodes.empty())
+  {
+    int currentNode = nextNodes.front();
+    nextNodes.pop();
+    cout << "Node: " << currentNode;
+
+    for (auto u : adj[currentNode])
+    {
+      if (visited[u])
+        continue;
+      visited[u] = true;
+      distances[u] = distances[currentNode] + 1;
+      nextNodes.push(u);
     }
-
-    return -1;
+  }
 }
 
-template<typename T>
-void displayVector(vector<T> arr) {
-    for (auto x: arr)
-        cout << x << endl;
+void dfs(int startingNode)
+{
+  if (visited[startingNode])
+    return;
+  visited[startingNode] = true;
+  cout << "Node: " << startingNode;
+  for (auto u : adj[startingNode])
+    dfs(u);
 }
 
-template<typename T>
-void display2DVector(vector<vector<T> > arr) {
-    for (int i = 0; i < arr.size(); ++i) {
-        for (int j = 0; j < arr[i].size(); ++j)
-            cout << arr[i][j] << " ";
-        cout << endl;
-    }
-}
+int main()
+{
+  adj[1].push_back(2);
+  adj[1].push_back(4);
+  adj[2].push_back(3);
+  adj[2].push_back(5);
+  adj[3].push_back(5);
 
-int main() {
-    vector<int> nums1 = {3, 3, -2, -1};
-    vector<int> nums2 = {1, 3, 4, 2};
+  dfs(1);
 
-    vector<vector<int> > matrix = {{1, 0}};
-
-    return 0;
+  return 0;
 }

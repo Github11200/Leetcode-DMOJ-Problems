@@ -1,1 +1,0 @@
-/usr/bin/c++ -g CMakeFiles/Leetcode_DMOJ_Problems.dir/LeetcodeContests/Weekly-Contest-391.cpp.o CMakeFiles/Leetcode_DMOJ_Problems.dir/problems.cpp.o CMakeFiles/Leetcode_DMOJ_Problems.dir/anki.cpp.o -o Leetcode_DMOJ_Problems 

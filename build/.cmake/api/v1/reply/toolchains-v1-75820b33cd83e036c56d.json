@@ -1,0 +1,111 @@
+{
+	"kind" : "toolchains",
+	"toolchains" : 
+	[
+		{
+			"compiler" : 
+			{
+				"id" : "GNU",
+				"implicit" : 
+				{
+					"includeDirectories" : 
+					[
+						"/home/user/miniconda3/include",
+						"/home/user/miniconda3/lib/gcc/x86_64-conda-linux-gnu/12.3.0/include",
+						"/home/user/miniconda3/lib/gcc/x86_64-conda-linux-gnu/12.3.0/include-fixed",
+						"/home/user/miniconda3/x86_64-conda-linux-gnu/include",
+						"/home/user/miniconda3/x86_64-conda-linux-gnu/sysroot/usr/include"
+					],
+					"linkDirectories" : 
+					[
+						"/home/user/miniconda3/lib",
+						"/home/user/miniconda3/lib/gcc/x86_64-conda-linux-gnu/12.3.0",
+						"/home/user/miniconda3/lib/gcc",
+						"/home/user/miniconda3/x86_64-conda-linux-gnu/lib",
+						"/home/user/miniconda3/x86_64-conda-linux-gnu/sysroot/lib",
+						"/home/user/miniconda3/x86_64-conda-linux-gnu/sysroot/usr/lib"
+					],
+					"linkFrameworkDirectories" : [],
+					"linkLibraries" : 
+					[
+						"gcc",
+						"gcc_s",
+						"c",
+						"gcc",
+						"gcc_s"
+					]
+				},
+				"path" : "/home/user/miniconda3/bin/x86_64-conda-linux-gnu-gcc",
+				"version" : "12.3.0"
+			},
+			"language" : "C",
+			"sourceFileExtensions" : 
+			[
+				"c",
+				"m"
+			]
+		},
+		{
+			"compiler" : 
+			{
+				"id" : "GNU",
+				"implicit" : 
+				{
+					"includeDirectories" : 
+					[
+						"/home/user/miniconda3/include",
+						"/home/user/miniconda3/lib/gcc/x86_64-conda-linux-gnu/12.3.0/include",
+						"/home/user/miniconda3/lib/gcc/x86_64-conda-linux-gnu/12.3.0/include-fixed",
+						"/home/user/miniconda3/x86_64-conda-linux-gnu/include",
+						"/home/user/miniconda3/x86_64-conda-linux-gnu/include/c++/12.3.0",
+						"/home/user/miniconda3/x86_64-conda-linux-gnu/include/c++/12.3.0/x86_64-conda-linux-gnu",
+						"/home/user/miniconda3/x86_64-conda-linux-gnu/include/c++/12.3.0/backward",
+						"/home/user/miniconda3/x86_64-conda-linux-gnu/sysroot/usr/include"
+					],
+					"linkDirectories" : 
+					[
+						"/home/user/miniconda3/lib",
+						"/home/user/miniconda3/lib/gcc/x86_64-conda-linux-gnu/12.3.0",
+						"/home/user/miniconda3/lib/gcc",
+						"/home/user/miniconda3/x86_64-conda-linux-gnu/lib",
+						"/home/user/miniconda3/x86_64-conda-linux-gnu/sysroot/lib",
+						"/home/user/miniconda3/x86_64-conda-linux-gnu/sysroot/usr/lib"
+					],
+					"linkFrameworkDirectories" : [],
+					"linkLibraries" : 
+					[
+						"stdc++",
+						"m",
+						"gcc_s",
+						"gcc",
+						"c",
+						"gcc_s",
+						"gcc"
+					]
+				},
+				"path" : "/home/user/miniconda3/bin/x86_64-conda-linux-gnu-g++",
+				"version" : "12.3.0"
+			},
+			"language" : "CXX",
+			"sourceFileExtensions" : 
+			[
+				"C",
+				"M",
+				"c++",
+				"cc",
+				"cpp",
+				"cxx",
+				"mm",
+				"mpp",
+				"CPP",
+				"ixx",
+				"cppm"
+			]
+		}
+	],
+	"version" : 
+	{
+		"major" : 1,
+		"minor" : 0
+	}
+}
