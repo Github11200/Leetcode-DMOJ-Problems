@@ -31,53 +31,65 @@ void display2DVector(vector<vector<T>> arr)
   }
 }
 
-int N = 5;
-vector<vector<int>> adj(N + 1);
+int N = 9;
+vector<vector<pair<int, int>>> adj(N + 1);
 vector<int> visited(N + 1);
 
-void bfs(int startingNode)
-{
-  queue<int> nextNodes;
-  vector<int> distances(N + 1);
+vector<tuple<int, int, int>> edgeListRepresentation(N + 1);
+vector<vector<int>> adjacencymatrixRepresentation;
 
-  nextNodes.push(startingNode);
-  distances[startingNode] = 0;
+void dijkstras(int x)
+{
+  vector<int> distances(N + 1);
+  vector<int> processed(N + 1);
+  priority_queue<pair<int, int>> nextNodes;
+
+  distances[x] = 0;
+  nextNodes.push({0, x});
+
   while (!nextNodes.empty())
   {
-    int currentNode = nextNodes.front();
+    int currentNode = nextNodes.top().second;
     nextNodes.pop();
-    cout << "Node: " << currentNode;
+    if (processed[currentNode])
+      continue;
+    processed[currentNode] = true;
 
     for (auto u : adj[currentNode])
     {
-      if (visited[u])
-        continue;
-      visited[u] = true;
-      distances[u] = distances[currentNode] + 1;
-      nextNodes.push(u);
+      int b = u.first;
+      int w = u.second;
+      if (distances[currentNode] + w < distances[b])
+      {
+        distances[b] = distances[currentNode] + w;
+        nextNodes.push({-distances[b], b});
+      }
     }
   }
 }
 
-void dfs(int startingNode)
-{
-  if (visited[startingNode])
-    return;
-  visited[startingNode] = true;
-  cout << "Node: " << startingNode;
-  for (auto u : adj[startingNode])
-    dfs(u);
-}
-
 int main()
 {
-  adj[1].push_back(2);
-  adj[1].push_back(4);
-  adj[2].push_back(3);
-  adj[2].push_back(5);
-  adj[3].push_back(5);
+  // .first = b, and .second = w
+  adj[9] = {{7, 3}, {1, 8}};
+  adj[7] = {{1, 6}, {3, 1}};
+  adj[3] = {{5, 4}};
+  adj[1] = {{5, 2}};
 
-  dfs(1);
+  edgeListRepresentation.push_back(tuple(9, 7, 3));
+  edgeListRepresentation.push_back(tuple(9, 1, 8));
+  edgeListRepresentation.push_back(tuple(7, 1, -6));
+  edgeListRepresentation.push_back(tuple(7, 3, -1));
+  edgeListRepresentation.push_back(tuple(1, 5, 2));
+  edgeListRepresentation.push_back(tuple(3, 5, 4));
+
+  adjacencymatrixRepresentation = {
+      {},
+      {0, 0, 8, 3, 0, 0},
+      {0, 0, 0, 0, 0, 2},
+      {0, 0, 6, 0, 1, 0},
+      {0, 0, 0, 0, 0, 4},
+      {}};
 
   return 0;
 }
