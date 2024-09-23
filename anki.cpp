@@ -38,34 +38,82 @@ vector<int> visited(N + 1);
 vector<tuple<int, int, int>> edgeListRepresentation(N + 1);
 vector<vector<int>> adjacencymatrixRepresentation;
 
-void dijkstras(int x)
+void floydWarshall()
 {
-  vector<int> distances(N + 1);
-  vector<int> processed(N + 1);
-  priority_queue<pair<int, int>> nextNodes;
+  vector<vector<int>> distances;
 
-  distances[x] = 0;
-  nextNodes.push({0, x});
-
-  while (!nextNodes.empty())
+  for (int i = 0; i < N; ++i)
   {
-    int currentNode = nextNodes.top().second;
-    nextNodes.pop();
-    if (processed[currentNode])
-      continue;
-    processed[currentNode] = true;
-
-    for (auto u : adj[currentNode])
+    for (int j = 0; j < N; ++j)
     {
-      int b = u.first;
-      int w = u.second;
-      if (distances[currentNode] + w < distances[b])
+      if (i == j)
+        distances[i][j] = 0;
+      else if (adjacencymatrixRepresentation[i][j])
+        distances[i][j] = adjacencymatrixRepresentation[i][j];
+    }
+  }
+
+  for (int k = 0; k < N; ++k)
+  {
+    for (int i = 0; i < N; ++i)
+    {
+      for (int j = 0; j < N; ++j)
       {
-        distances[b] = distances[currentNode] + w;
-        nextNodes.push({-distances[b], b});
+        distances[i][j] = min(distances[i][j], distances[i][k] + distances[k][j]);
       }
     }
   }
+}
+
+void bellmanFord()
+{
+  vector<int> distances(N + 1);
+
+  for (int i = 0; i < N; ++i)
+  {
+    for (auto e : edgeListRepresentation)
+    {
+      int a, b, w;
+      tie(a, b, w) = e;
+      distances[b] = min(distances[b], distances[a] + w);
+    }
+  }
+}
+
+vector<int> getFactors(int x)
+{
+  vector<int> factors;
+  for (int i = 2; i * i < x; ++i)
+  {
+    while (x % i == 0)
+    {
+      factors.push_back(i);
+      x /= i;
+    }
+  }
+
+  if (x > 2)
+    factors.push_back(x);
+  return factors;
+}
+
+bool isPrime(int x)
+{
+  if (x < 2)
+    return false;
+  for (int i = 2; i * i < x; ++i)
+  {
+    if (x % i == 0)
+      return false;
+  }
+  return true;
+}
+
+int gcd(int a, int b)
+{
+  if (b == 0)
+    return b;
+  return gcd(b, a % b);
 }
 
 int main()
