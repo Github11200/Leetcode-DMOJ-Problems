@@ -38,82 +38,46 @@ vector<int> visited(N + 1);
 vector<tuple<int, int, int>> edgeListRepresentation(N + 1);
 vector<vector<int>> adjacencymatrixRepresentation;
 
-void floydWarshall()
+void bfs(int x)
 {
-  vector<vector<int>> distances;
+  vector<int> distances;
+  queue<int> nextNodes;
 
-  for (int i = 0; i < N; ++i)
+  nextNodes.push(x);
+  distances[x] = 0;
+  while (!nextNodes.empty())
   {
-    for (int j = 0; j < N; ++j)
+    int currentNode = nextNodes.front();
+    nextNodes.pop();
+
+    cout << "Node: " << currentNode << endl;
+    for (auto u : adj[currentNode])
     {
-      if (i == j)
-        distances[i][j] = 0;
-      else if (adjacencymatrixRepresentation[i][j])
-        distances[i][j] = adjacencymatrixRepresentation[i][j];
+      if (visited[u.first])
+        continue;
+      nextNodes.push(u.first);
+      visited[u.first] = true;
+      distances[u.first] = distances[currentNode] + 1;
     }
   }
-
-  for (int k = 0; k < N; ++k)
-  {
-    for (int i = 0; i < N; ++i)
-    {
-      for (int j = 0; j < N; ++j)
-      {
-        distances[i][j] = min(distances[i][j], distances[i][k] + distances[k][j]);
-      }
-    }
-  }
-}
-
-void bellmanFord()
-{
-  vector<int> distances(N + 1);
-
-  for (int i = 0; i < N; ++i)
-  {
-    for (auto e : edgeListRepresentation)
-    {
-      int a, b, w;
-      tie(a, b, w) = e;
-      distances[b] = min(distances[b], distances[a] + w);
-    }
-  }
-}
-
-vector<int> getFactors(int x)
-{
-  vector<int> factors;
-  for (int i = 2; i * i < x; ++i)
-  {
-    while (x % i == 0)
-    {
-      factors.push_back(i);
-      x /= i;
-    }
-  }
-
-  if (x > 2)
-    factors.push_back(x);
-  return factors;
-}
-
-bool isPrime(int x)
-{
-  if (x < 2)
-    return false;
-  for (int i = 2; i * i < x; ++i)
-  {
-    if (x % i == 0)
-      return false;
-  }
-  return true;
 }
 
 int gcd(int a, int b)
 {
   if (b == 0)
-    return b;
-  return gcd(b, a % b);
+    return a;
+  gcd(b, a % b);
+}
+
+void kruskals()
+{
+  for (auto e : edgeListRepresentation)
+  {
+    int a, b, w;
+    tie(a, b, w) = e;
+    if (!same(a, b))
+      unite(a, b);
+  }
 }
 
 int main()
