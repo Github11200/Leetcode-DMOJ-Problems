@@ -38,35 +38,20 @@ vector<int> visited(N + 1);
 vector<tuple<int, int, int>> edgeListRepresentation(N + 1);
 vector<vector<int>> adjacencymatrixRepresentation;
 
-void bfs(int x)
+vector<int> getFactors(int x)
 {
-  vector<int> distances;
-  queue<int> nextNodes;
-
-  nextNodes.push(x);
-  distances[x] = 0;
-  while (!nextNodes.empty())
+  vector<int> factors;
+  for (int i = 2; i * i < x; ++i)
   {
-    int currentNode = nextNodes.front();
-    nextNodes.pop();
-
-    cout << "Node: " << currentNode << endl;
-    for (auto u : adj[currentNode])
+    while (x % i == 0)
     {
-      if (visited[u.first])
-        continue;
-      nextNodes.push(u.first);
-      visited[u.first] = true;
-      distances[u.first] = distances[currentNode] + 1;
+      factors.push_back(i);
+      x /= i;
     }
   }
-}
-
-int gcd(int a, int b)
-{
-  if (b == 0)
-    return a;
-  gcd(b, a % b);
+  if (x > 2)
+    factors.push_back(x);
+  return factors;
 }
 
 void kruskals()
