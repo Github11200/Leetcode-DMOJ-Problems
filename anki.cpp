@@ -38,31 +38,16 @@ vector<int> visited(N + 1);
 vector<tuple<int, int, int>> edgeListRepresentation(N + 1);
 vector<vector<int>> adjacencymatrixRepresentation;
 
-vector<int> getFactors(int x)
+bool isPrime(int x)
 {
-  vector<int> factors;
+  if (x < 2)
+    return true;
   for (int i = 2; i * i < x; ++i)
   {
-    while (x % i == 0)
-    {
-      factors.push_back(i);
-      x /= i;
-    }
+    if (x % i == 0)
+      return false;
   }
-  if (x > 2)
-    factors.push_back(x);
-  return factors;
-}
-
-void kruskals()
-{
-  for (auto e : edgeListRepresentation)
-  {
-    int a, b, w;
-    tie(a, b, w) = e;
-    if (!same(a, b))
-      unite(a, b);
-  }
+  return true;
 }
 
 int main()
