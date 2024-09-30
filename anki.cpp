@@ -38,16 +38,84 @@ vector<int> visited(N + 1);
 vector<tuple<int, int, int>> edgeListRepresentation(N + 1);
 vector<vector<int>> adjacencymatrixRepresentation;
 
-bool isPrime(int x)
-{
-  if (x < 2)
-    return true;
-  for (int i = 2; i * i < x; ++i)
-  {
-    if (x % i == 0)
-      return false;
+// sum query from 0...k
+void binaryIndexedTreeSumQuery(int k) {
+  int s = 0;
+  while (k >= 1) {
+    s += tree[k];
+    k -= k & -k;
   }
-  return true;
+  return s;
+}
+
+void recursiveDfs(int x)
+{
+  cout << "Node: " << x << endl;
+  for (auto u : adj[x])
+  {
+    if (visited[u.first])
+      continue;
+    recursiveDfs(u.first);
+    visited[u.first] = true;
+  }
+}
+
+class UnionFind
+{
+  vector<int> parents;
+  vector<int> sizes;
+
+  void init(int n)
+  {
+    for (int i = 0; i <= n; ++i)
+    {
+      this->parents[i] = i;
+      this->sizes[i] = 1;
+    }
+  }
+
+  int find(int x)
+  {
+    while (x != this->parents[x])
+      x = this->parents[x];
+    return x;
+  }
+
+  bool same(int a, int b)
+  {
+    return this->find(a) == this->find(b);
+  }
+
+  void unite(int a, int b)
+  {
+    a = this->find(a);
+    b = this->find(b);
+    if (this->sizes[a] < this->sizes[b])
+      swap(a, b);
+    this->sizes[a] += this->sizes[b];
+    this->parents[b] = this->parents[a];
+  }
+};
+
+void treeDfs(int current, int previous)
+{
+  for (auto u : adj[current])
+  {
+    if (u.first != previous)
+      treeDfs(u.first, current);
+  }
+}
+
+// Create spanning tree
+void kruskals()
+{
+  for (auto e : edgeListRepresentation)
+  {
+    int a, b, w;
+    tie(a, b, w) = e;
+    if (!same(a, b))
+      unite(a, b);
+  }
 }
 
 int main()
