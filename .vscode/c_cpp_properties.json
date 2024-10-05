@@ -9,7 +9,8 @@
             "compilerPath": "/usr/bin/gcc",
             "cStandard": "c23",
             "intelliSenseMode": "linux-gcc-x64",
-            "cppStandard": "c++23"
+            "cppStandard": "c++23",
+            "compileCommands": "${workspaceFolder}/build/compile_commands.json"
         }
     ],
     "version": 4

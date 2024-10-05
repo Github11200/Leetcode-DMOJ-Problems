@@ -38,84 +38,47 @@ vector<int> visited(N + 1);
 vector<tuple<int, int, int>> edgeListRepresentation(N + 1);
 vector<vector<int>> adjacencymatrixRepresentation;
 
-// sum query from 0...k
-void binaryIndexedTreeSumQuery(int k) {
-  int s = 0;
-  while (k >= 1) {
-    s += tree[k];
-    k -= k & -k;
-  }
-  return s;
-}
-
-void recursiveDfs(int x)
+void dijkstras(int x)
 {
-  cout << "Node: " << x << endl;
-  for (auto u : adj[x])
+  vector<int> distances(N + 1, INFINITY);
+  priority_queue<pair<int, int>> nextNodes;
+
+  nextNodes.push({0, x});
+  distances[x] = 0;
+  while (!nextNodes.empty())
   {
-    if (visited[u.first])
+    int a = nextNodes.top().second;
+    nextNodes.pop();
+    if (visited[a])
       continue;
-    recursiveDfs(u.first);
-    visited[u.first] = true;
-  }
-}
-
-class UnionFind
-{
-  vector<int> parents;
-  vector<int> sizes;
-
-  void init(int n)
-  {
-    for (int i = 0; i <= n; ++i)
+    visited[a] = true;
+    for (auto u : adj[a])
     {
-      this->parents[i] = i;
-      this->sizes[i] = 1;
+      int b = u.first;
+      int w = u.second;
+      if (distances[a] + w < distances[b])
+      {
+        distances[b] = distances[a] + w;
+        nextNodes.push({-distances[b], b});
+      }
     }
   }
-
-  int find(int x)
-  {
-    while (x != this->parents[x])
-      x = this->parents[x];
-    return x;
-  }
-
-  bool same(int a, int b)
-  {
-    return this->find(a) == this->find(b);
-  }
-
-  void unite(int a, int b)
-  {
-    a = this->find(a);
-    b = this->find(b);
-    if (this->sizes[a] < this->sizes[b])
-      swap(a, b);
-    this->sizes[a] += this->sizes[b];
-    this->parents[b] = this->parents[a];
-  }
-};
-
-void treeDfs(int current, int previous)
-{
-  for (auto u : adj[current])
-  {
-    if (u.first != previous)
-      treeDfs(u.first, current);
-  }
 }
 
-// Create spanning tree
-void kruskals()
+vector<int> factors(int x)
 {
-  for (auto e : edgeListRepresentation)
+  vector<int> f;
+  for (int i = 2; i * i < x; ++i)
   {
-    int a, b, w;
-    tie(a, b, w) = e;
-    if (!same(a, b))
-      unite(a, b);
+    while (x % i == 0)
+    {
+      f.push_back(i);
+      x /= i;
+    }
   }
+  if (x > 1)
+    f.push_back(x);
+  return f;
 }
 
 int main()
@@ -126,12 +89,12 @@ int main()
   adj[3] = {{5, 4}};
   adj[1] = {{5, 2}};
 
-  edgeListRepresentation.push_back(tuple(9, 7, 3));
-  edgeListRepresentation.push_back(tuple(9, 1, 8));
-  edgeListRepresentation.push_back(tuple(7, 1, -6));
-  edgeListRepresentation.push_back(tuple(7, 3, -1));
-  edgeListRepresentation.push_back(tuple(1, 5, 2));
-  edgeListRepresentation.push_back(tuple(3, 5, 4));
+  edgeListRepresentation.push_back(make_tuple(9, 7, 3));
+  edgeListRepresentation.push_back(make_tuple(9, 1, 8));
+  edgeListRepresentation.push_back(make_tuple(7, 1, -6));
+  edgeListRepresentation.push_back(make_tuple(7, 3, -1));
+  edgeListRepresentation.push_back(make_tuple(1, 5, 2));
+  edgeListRepresentation.push_back(make_tuple(3, 5, 4));
 
   adjacencymatrixRepresentation = {
       {},
