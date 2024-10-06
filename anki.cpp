@@ -43,42 +43,25 @@ void dijkstras(int x)
   vector<int> distances(N + 1, INFINITY);
   priority_queue<pair<int, int>> nextNodes;
 
-  nextNodes.push({0, x});
   distances[x] = 0;
+  nextNodes.push({0, x});
   while (!nextNodes.empty())
   {
-    int a = nextNodes.top().second;
-    nextNodes.pop();
-    if (visited[a])
+    int currentNode = nextNodes.top().second;
+    if (visited[currentNode])
       continue;
-    visited[a] = true;
-    for (auto u : adj[a])
+    visited[currentNode] = true;
+    for (auto u : adj[currentNode])
     {
       int b = u.first;
       int w = u.second;
-      if (distances[a] + w < distances[b])
+      if (distances[currentNode] + w < distances[b])
       {
-        distances[b] = distances[a] + w;
+        distances[b] = distances[currentNode] + w;
         nextNodes.push({-distances[b], b});
       }
     }
   }
-}
-
-vector<int> factors(int x)
-{
-  vector<int> f;
-  for (int i = 2; i * i < x; ++i)
-  {
-    while (x % i == 0)
-    {
-      f.push_back(i);
-      x /= i;
-    }
-  }
-  if (x > 1)
-    f.push_back(x);
-  return f;
 }
 
 int main()
