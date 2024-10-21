@@ -38,39 +38,15 @@ vector<int> visited(N + 1);
 vector<tuple<int, int, int>> edgeListRepresentation(N + 1);
 vector<vector<int>> adjacencymatrixRepresentation;
 
-vector<int> getFactors(int x)
+int sum(int x, int y, int a, int b, int k)
 {
-  vector<int> factors;
-  for (int i = 2; i * i < x; ++i)
-  {
-    while (x % i == 0)
-    {
-      factors.push_back(i);
-      x /= i;
-    }
-  }
-  if (x > 1)
-    factors.push_back(1);
-  return factors;
-}
+  if (a > y || b < x)
+    return 0;
+  else if (a <= x && y <= b)
+    return tree[k];
+  int d = (x + y) / 2;
 
-void recursiveDfs(int x)
-{
-  stack<int> nextNodes;
-
-  nextNodes.push(x);
-  while (!nextNodes.empty())
-  {
-    int currentNode = nextNodes.top();
-    nextNodes.pop();
-    if (visited[currentNode])
-      continue;
-    visited[currentNode] = true;
-    for (auto u : adj[currentNode])
-    {
-      nextNodes.push(u.first);
-    }
-  }
+  return sum(x, d, a, b, k * 2) + sum(d + 1, y, a, b, k * 2);
 }
 
 int main()

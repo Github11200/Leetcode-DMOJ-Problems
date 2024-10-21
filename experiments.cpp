@@ -20,6 +20,8 @@ vector<int> z(string s)
   int x = 0, y = 0;
   for (int i = 1; i < n; i++)
   {
+    // We basically want to check if we have another prefix from before using z[i - x] (i is current pointer and subtracting x gets us the position from the start)
+    // then y - i + 1 gets us how far we are from y
     z[i] = max(0, min(z[i - x], y - i + 1));
 
     // (i + z[i] < n) this makes sure we don't go out of bounds when accessing s with these values
