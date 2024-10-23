@@ -38,15 +38,14 @@ vector<int> visited(N + 1);
 vector<tuple<int, int, int>> edgeListRepresentation(N + 1);
 vector<vector<int>> adjacencymatrixRepresentation;
 
-int sum(int x, int y, int a, int b, int k)
+int sum(int x, int y, int k, int a, int b)
 {
-  if (a > y || b < x)
+  if (b < x || a > y)
     return 0;
-  else if (a <= x && y <= b)
+  else if (a <= x && b <= y)
     return tree[k];
-  int d = (x + y) / 2;
-
-  return sum(x, d, a, b, k * 2) + sum(d + 1, y, a, b, k * 2);
+  int d = (a + b) / 2;
+  return sum(x, d, k * 2, a, b) + sum(d + 1, y, k * 2, a, b);
 }
 
 int main()
