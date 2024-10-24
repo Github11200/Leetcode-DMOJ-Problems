@@ -38,14 +38,13 @@ vector<int> visited(N + 1);
 vector<tuple<int, int, int>> edgeListRepresentation(N + 1);
 vector<vector<int>> adjacencymatrixRepresentation;
 
-int sum(int x, int y, int k, int a, int b)
+void treeDfs(int current, int previous)
 {
-  if (b < x || a > y)
-    return 0;
-  else if (a <= x && b <= y)
-    return tree[k];
-  int d = (a + b) / 2;
-  return sum(x, d, k * 2, a, b) + sum(d + 1, y, k * 2, a, b);
+  for (auto u : adj[current])
+  {
+    if (u.first != previous)
+      treeDfs(u.first, current);
+  }
 }
 
 int main()
