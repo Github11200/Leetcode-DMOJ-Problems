@@ -47,6 +47,42 @@ void treeDfs(int current, int previous)
   }
 }
 
+int sum(int x, int y, int a, int b, int k)
+{
+  if (b < x || a > y)
+    return 0;
+  else if (a <= x && y <= b)
+    return tree[k];
+  int d = (x + y) / 2;
+  return sum(x, d, a, b, k * 2) + sum(d + 1, y, a, b, k * 2 + 1);
+}
+
+void dijkstras(int x)
+{
+  vector<int> distances(N, INFINITY);
+  priority_queue<pair<int, int>> nextNodes;
+
+  nextNodes.push({0, x});
+  while (!nextNodes.empty())
+  {
+    int a = nextNodes.top().second;
+    nextNodes.pop();
+    if (visited[a])
+      continue;
+    visited[a] = true;
+    for (auto u : adj[a])
+    {
+      int w = u.first;
+      int b = u.second;
+      if (distances[a] + w < distances[b])
+      {
+        distances[b] = distances[a] + w;
+        nextNodes.push({-distances[b], b});
+      }
+    }
+  }
+}
+
 int main()
 {
   edgeListRepresentation.push_back(make_tuple(9, 7, 3));
