@@ -2067,6 +2067,22 @@ int searchInsertPosition(vector<int> &nums, int target)
   return l;
 }
 
+int climbStairs(int n)
+{
+  if (n == 1)
+    return 1;
+  int previous = 1;
+  int current = 1;
+  int s = 2;
+  for (int i = 2; i <= n; ++i)
+  {
+    s = previous + current;
+    previous = current;
+    current = s;
+  }
+  return s;
+}
+
 template <typename T>
 void displayVector(vector<T> arr)
 {
@@ -2090,7 +2106,7 @@ int main()
   vector<int> nums1({1, 2, 4, 2, 5, 7, 2, 4, 9, 0, 9});
   vector<int> nums2({5, 6, 7, 8});
 
-  cout << bestTimeToBuyAndSellAStock(nums1) << endl;
+  cout << climbStairs(3) << endl;
 
   return 0;
 }
