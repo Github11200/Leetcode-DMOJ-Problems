@@ -38,6 +38,24 @@ vector<int> visited(N + 1);
 vector<tuple<int, int, int>> edgeListRepresentation(N + 1);
 vector<vector<int>> adjacencymatrixRepresentation;
 
+void update(int x, int k)
+{
+  while (k <= n)
+  {
+    tree[k] += x;
+    k += k & -k;
+  }
+}
+
+void kruskals()
+{
+  for (auto u : edgeListRepresentation)
+  {
+    if (!same(a, b))
+      unite(a, b);
+  }
+}
+
 void treeDfs(int current, int previous)
 {
   for (auto u : adj[current])
@@ -47,37 +65,119 @@ void treeDfs(int current, int previous)
   }
 }
 
-int sum(int x, int y, int a, int b, int k)
+void recursiveDfs(int x)
 {
-  if (b < x || a > y)
+  for (auto u : adj[x])
+  {
+    if (!visited[u.first])
+      recursiveDfs(u.first);
+  }
+}
+
+int binaryIndexedSum(int k)
+{
+  int s = 0;
+  while (k >= 1)
+  {
+    s += tree[k];
+    k -= k & -k;
+  }
+  return s;
+}
+
+class UnionFind
+{
+private:
+  vector<int> parents;
+  vector<int> sizes;
+
+public:
+  UnionFind(int n)
+  {
+    for (int i = 0; i < n; ++i)
+    {
+      parents[i] = i;
+      sizes[i] = 0;
+    }
+  }
+
+  int top(int x)
+  {
+    while (x != parents[x])
+      x = parents[x];
+    return x;
+  }
+
+  bool same(int a, int b)
+  {
+    return top(a) == top(b);
+  }
+
+  void unite(int a, int b)
+  {
+    a = top(a);
+    b = top(b);
+    if (same(a, b))
+      swap(a, b);
+    sizes[a] += sizes[b];
+    parents[b] = a;
+  }
+};
+
+int sumSegmentTreeTopDown(int a, int b, int x, int y, int k)
+{
+  if (a < x || b > y)
     return 0;
   else if (a <= x && y <= b)
     return tree[k];
-  int d = (x + y) / 2;
-  return sum(x, d, a, b, k * 2) + sum(d + 1, y, a, b, k * 2 + 1);
+  int d = (a + b) / 2;
+  return sumSegmentTreeTopDown(a, d, x, y, k * 2) + sumSegmentTreeTopDown(d, b, x, y, k * 2 + 1);
 }
 
-void dijkstras(int x)
+int gcd(int a, int b)
 {
-  vector<int> distances(N, INFINITY);
-  priority_queue<pair<int, int>> nextNodes;
+  if (b == 0)
+    return a;
+  return gcd(b, a % b);
+}
 
-  nextNodes.push({0, x});
-  while (!nextNodes.empty())
+vector<int> getFactors(int x)
+{
+  vector<int> factors;
+  for (int i = 1; i * i < x; ++i)
   {
-    int a = nextNodes.top().second;
-    nextNodes.pop();
-    if (visited[a])
-      continue;
-    visited[a] = true;
-    for (auto u : adj[a])
+    while (x % i == 0)
     {
-      int w = u.first;
-      int b = u.second;
-      if (distances[a] + w < distances[b])
+      factors.push_back(i);
+      i /= 2;
+    }
+  }
+  return factors;
+}
+
+void floydWarshall()
+{
+  vector<vector<int>> distances;
+  for (int i = 0; i < n; ++i)
+  {
+    for (int j = 0; j < n; ++j)
+    {
+      if (i == j)
+        distances[i][j] = 0;
+      else if (adjacencymatrixRepresentation[i][j])
+        distances[i][j] = adjacencymatrixRepresentation[i][j];
+      else
+        distances[i][j] = INFINITY;
+    }
+  }
+
+  for (int k = 0; k <= n; ++k)
+  {
+    for (int i = 0; i <= n; ++i)
+    {
+      for (int j = 0; j <= n; ++j)
       {
-        distances[b] = distances[a] + w;
-        nextNodes.push({-distances[b], b});
+        distances[i][j] = min(distances[i][j], distances[i][k] + distances[k][j]);
       }
     }
   }

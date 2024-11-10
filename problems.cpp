@@ -2103,10 +2103,10 @@ void display2DVector(vector<vector<T>> arr)
 
 int main()
 {
-  vector<int> nums1({1, 2, 4, 2, 5, 7, 2, 4, 9, 0, 9});
+  vector<int> nums1({1, 2, 32, 21});
   vector<int> nums2({5, 6, 7, 8});
 
-  cout << climbStairs(3) << endl;
+  cout << shortestSubarrayWithORAtLeastK2(nums1, 55) << endl;
 
   return 0;
 }
