@@ -2083,6 +2083,45 @@ int climbStairs(int n)
   return s;
 }
 
+void updateBits(vector<int> &bits, int n, int diff)
+{
+  for (int i = 0; i < 32; ++i)
+    if (n & (1 << i))
+      bits[i] += diff;
+}
+
+int bitsToInteger(vector<int> bits)
+{
+  int res = 0;
+  for (int i = 0; i < 32; ++i)
+    if (bits[i])
+      res += (1 << i);
+  return res;
+}
+
+int shortestSubarrayWithORAtLeastK2(vector<int> &nums, int k)
+{
+  int res = INT_MAX;
+  int left = 0;
+  vector<int> bits(32, 0);
+  int currentOr = 0;
+
+  for (int right = 0; right < nums.size(); ++right)
+  {
+    updateBits(bits, nums[right], 1);
+    currentOr = bitsToInteger(bits);
+    while (left <= right && currentOr >= k)
+    {
+      res = min(res, right - left + 1);
+      updateBits(bits, nums[left], -1);
+      currentOr = bitsToInteger(bits);
+      ++left;
+    }
+  }
+
+  return res == INT_MAX ? -1 : res;
+}
+
 template <typename T>
 void displayVector(vector<T> arr)
 {
@@ -2103,10 +2142,10 @@ void display2DVector(vector<vector<T>> arr)
 
 int main()
 {
-  vector<int> nums1({1, 2, 32, 21});
+  vector<int> nums1({2, 1, 8});
   vector<int> nums2({5, 6, 7, 8});
 
-  cout << shortestSubarrayWithORAtLeastK2(nums1, 55) << endl;
+  cout << shortestSubarrayWithORAtLeastK2(nums1, 10) << endl;
 
   return 0;
 }
