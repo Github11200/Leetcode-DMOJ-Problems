@@ -38,129 +38,22 @@ vector<int> visited(N + 1);
 vector<tuple<int, int, int>> edgeListRepresentation(N + 1);
 vector<vector<int>> adjacencymatrixRepresentation;
 
-void update(int x, int k)
-{
-  while (k <= n)
-  {
-    tree[k] += x;
-    k += k & -k;
-  }
-}
-
-void kruskals()
-{
-  for (auto u : edgeListRepresentation)
-  {
-    if (!same(a, b))
-      unite(a, b);
-  }
-}
-
-void treeDfs(int current, int previous)
-{
-  for (auto u : adj[current])
-  {
-    if (u.first != previous)
-      treeDfs(u.first, current);
-  }
-}
-
-void recursiveDfs(int x)
-{
-  for (auto u : adj[x])
-  {
-    if (!visited[u.first])
-      recursiveDfs(u.first);
-  }
-}
-
-int binaryIndexedSum(int k)
-{
-  int s = 0;
-  while (k >= 1)
-  {
-    s += tree[k];
-    k -= k & -k;
-  }
-  return s;
-}
-
-class UnionFind
-{
-private:
-  vector<int> parents;
-  vector<int> sizes;
-
-public:
-  UnionFind(int n)
-  {
-    for (int i = 0; i < n; ++i)
-    {
-      parents[i] = i;
-      sizes[i] = 0;
-    }
-  }
-
-  int top(int x)
-  {
-    while (x != parents[x])
-      x = parents[x];
-    return x;
-  }
-
-  bool same(int a, int b)
-  {
-    return top(a) == top(b);
-  }
-
-  void unite(int a, int b)
-  {
-    a = top(a);
-    b = top(b);
-    if (same(a, b))
-      swap(a, b);
-    sizes[a] += sizes[b];
-    parents[b] = a;
-  }
-};
-
 int sumSegmentTreeTopDown(int a, int b, int x, int y, int k)
 {
-  if (a < x || b > y)
+  if (b < x || a > y)
     return 0;
   else if (a <= x && y <= b)
     return tree[k];
   int d = (a + b) / 2;
-  return sumSegmentTreeTopDown(a, d, x, y, k * 2) + sumSegmentTreeTopDown(d, b, x, y, k * 2 + 1);
-}
-
-int gcd(int a, int b)
-{
-  if (b == 0)
-    return a;
-  return gcd(b, a % b);
-}
-
-vector<int> getFactors(int x)
-{
-  vector<int> factors;
-  for (int i = 1; i * i < x; ++i)
-  {
-    while (x % i == 0)
-    {
-      factors.push_back(i);
-      i /= 2;
-    }
-  }
-  return factors;
+  return sumSegmentTreeTopDown(a, d, x, y, k * 2) + sumSegmentTreeTopDown(d + 1, b, x, y, k * 2 + 1);
 }
 
 void floydWarshall()
 {
   vector<vector<int>> distances;
-  for (int i = 0; i < n; ++i)
+  for (int i = 0; i < N; ++i)
   {
-    for (int j = 0; j < n; ++j)
+    for (int j = 0; j < N; ++j)
     {
       if (i == j)
         distances[i][j] = 0;
@@ -171,11 +64,11 @@ void floydWarshall()
     }
   }
 
-  for (int k = 0; k <= n; ++k)
+  for (int k = 0; k < N; ++k)
   {
-    for (int i = 0; i <= n; ++i)
+    for (int i = 0; i < N; ++i)
     {
-      for (int j = 0; j <= n; ++j)
+      for (int j = 0; j < N; ++j)
       {
         distances[i][j] = min(distances[i][j], distances[i][k] + distances[k][j]);
       }
