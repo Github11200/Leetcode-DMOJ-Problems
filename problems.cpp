@@ -2122,6 +2122,34 @@ int shortestSubarrayWithORAtLeastK2(vector<int> &nums, int k)
   return res == INT_MAX ? -1 : res;
 }
 
+vector<vector<int>> findTheDifferenceOfTwoArrays(vector<int> &nums1, vector<int> &nums2)
+{
+  unordered_map<int, int> nums1Hash;
+  for (int i = 0; i < nums1.size(); ++i)
+    nums1Hash[nums1[i]] = 1;
+
+  unordered_map<int, int> nums2Hash;
+  for (int i = 0; i < nums2.size(); ++i)
+    nums2Hash[nums2[i]] = 1;
+
+  vector<vector<int>> result(2, vector<int>());
+  for (int i = 0; i < nums1.size(); ++i)
+    if (nums2Hash.count(nums1[i]) == 0 && nums1Hash[nums1[i]] == 1)
+    {
+      result[0].push_back(nums1[i]);
+      --nums1Hash[nums1[i]];
+    }
+
+  for (int i = 0; i < nums2.size(); ++i)
+    if (nums1Hash.count(nums2[i]) == 0 && nums2Hash[nums2[i]] == 1)
+    {
+      result[1].push_back(nums2[i]);
+      --nums2Hash[nums2[i]];
+    }
+
+  return result;
+}
+
 template <typename T>
 void displayVector(vector<T> arr)
 {
@@ -2142,10 +2170,10 @@ void display2DVector(vector<vector<T>> arr)
 
 int main()
 {
-  vector<int> nums1({2, 1, 8});
-  vector<int> nums2({5, 6, 7, 8});
+  vector<int> nums1({1, 2, 3, 3});
+  vector<int> nums2({1, 1, 2, 2});
 
-  cout << shortestSubarrayWithORAtLeastK2(nums1, 10) << endl;
+  display2DVector(findTheDifferenceOfTwoArrays(nums1, nums2));
 
   return 0;
 }
