@@ -2150,6 +2150,31 @@ vector<vector<int>> findTheDifferenceOfTwoArrays(vector<int> &nums1, vector<int>
   return result;
 }
 
+bool cmp(int x)
+{
+}
+
+string largestNumber(vector<int> &nums)
+{
+  vector<int> digits;
+  for (int i = 0; i < nums.size(); ++i)
+  {
+    int num = nums[i];
+    for (int j = pow(10, to_string(num).size() - 1); j >= 1; j /= 10)
+    {
+      digits.push_back(floor(num / j));
+      num %= j;
+    }
+  }
+
+  string result = "";
+  sort(digits.rbegin(), digits.rend(), cmp);
+  for (int i = 0; i < digits.size(); ++i)
+    result.append(to_string(digits[i]));
+
+  return result;
+}
+
 template <typename T>
 void displayVector(vector<T> arr)
 {
@@ -2170,10 +2195,10 @@ void display2DVector(vector<vector<T>> arr)
 
 int main()
 {
-  vector<int> nums1({1, 2, 3, 3});
+  vector<int> nums1({3, 30, 34, 5, 9});
   vector<int> nums2({1, 1, 2, 2});
 
-  display2DVector(findTheDifferenceOfTwoArrays(nums1, nums2));
+  cout << largestNumber(nums1) << endl;
 
   return 0;
 }
