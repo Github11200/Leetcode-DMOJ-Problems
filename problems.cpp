@@ -2150,29 +2150,21 @@ vector<vector<int>> findTheDifferenceOfTwoArrays(vector<int> &nums1, vector<int>
   return result;
 }
 
-bool cmp(int x)
-{
-}
-
 string largestNumber(vector<int> &nums)
 {
-  vector<int> digits;
-  for (int i = 0; i < nums.size(); ++i)
+  auto compare = [&](int a, int b)
   {
-    int num = nums[i];
-    for (int j = pow(10, to_string(num).size() - 1); j >= 1; j /= 10)
-    {
-      digits.push_back(floor(num / j));
-      num %= j;
-    }
-  }
+    string aStr = to_string(a);
+    string bStr = to_string(b);
+    return aStr + bStr > bStr + aStr;
+  };
 
+  sort(nums.begin(), nums.end(), compare);
   string result = "";
-  sort(digits.rbegin(), digits.rend(), cmp);
-  for (int i = 0; i < digits.size(); ++i)
-    result.append(to_string(digits[i]));
+  for (int i = 0; i < nums.size(); ++i)
+    result += to_string(nums[i]);
 
-  return result;
+  return stoll(result) == 0 ? "0" : result;
 }
 
 template <typename T>
