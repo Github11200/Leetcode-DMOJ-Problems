@@ -2047,6 +2047,7 @@ int bestTimeToBuyAndSellAStock(vector<int> &prices)
   return profit;
 }
 
+// https://leetcode.com/problems/search-insert-position/description/
 int searchInsertPosition(vector<int> &nums, int target)
 {
   int h = nums.size() - 1;
@@ -2067,7 +2068,8 @@ int searchInsertPosition(vector<int> &nums, int target)
   return l;
 }
 
-int climbStairs(int n)
+// https://leetcode.com/problems/climbing-stairs/description/
+int climbingStairs(int n)
 {
   if (n == 1)
     return 1;
@@ -2099,6 +2101,7 @@ int bitsToInteger(vector<int> bits)
   return res;
 }
 
+// https://leetcode.com/problems/shortest-subarray-with-or-at-least-k-ii/description/
 int shortestSubarrayWithORAtLeastK2(vector<int> &nums, int k)
 {
   int res = INT_MAX;
@@ -2167,6 +2170,31 @@ string largestNumber(vector<int> &nums)
   return stoll(result) == 0 ? "0" : result;
 }
 
+// https://leetcode.com/problems/backspace-string-compare/description/
+bool backspaceCompare(string s, string t)
+{
+  string a = "";
+  string b = "";
+
+  for (int i = 0; i < s.size(); ++i)
+  {
+    if (s[i] == '#' && !a.empty())
+      a.pop_back();
+    else if (s[i] != '#')
+      a.push_back(s[i]);
+  }
+
+  for (int i = 0; i < t.size(); ++i)
+  {
+    if (t[i] == '#' && !b.empty())
+      b.pop_back();
+    else if (t[i] != '#')
+      b.push_back(t[i]);
+  }
+
+  return a == b;
+}
+
 template <typename T>
 void displayVector(vector<T> arr)
 {
@@ -2189,8 +2217,9 @@ int main()
 {
   vector<int> nums1({3, 30, 34, 5, 9});
   vector<int> nums2({1, 1, 2, 2});
+  vector<vector<int>> nums2d({{1, 3, 1, 15}, {1, 3, 3, 1}});
 
-  cout << largestNumber(nums1) << endl;
+  cout << backspaceCompare("bxj##tw", "bxo#j##tw") << endl;
 
   return 0;
 }
