@@ -38,50 +38,32 @@ vector<int> visited(N + 1);
 vector<tuple<int, int, int>> edgeListRepresentation(N + 1);
 vector<vector<int>> adjacencymatrixRepresentation;
 
-void bfs(int x)
+void dijkstras(int x)
 {
-  queue<int> nextNodes;
+  priority_queue<pair<int, int>> nextNodes;
+  vector<int> distances;
 
-  nextNodes.push(x);
+  distances[x] = 0;
+  nextNodes.push({0, x});
+
   while (!nextNodes.empty())
   {
-    int top = nextNodes.front();
-    if (visited[top])
+    int a = nextNodes.top().first;
+    if (visited[a])
       continue;
-    visited[top] = true;
-    for (auto u : adj[top])
+    visited[a] = true;
 
-      nextNodes.push(u.first);
+    for (auto u : adj[a])
+    {
+      int b = u.first;
+      int w = u.second;
+      if (distances[a] + w < distances[b])
+      {
+        distances[b] = distances[a] + w;
+        nextNodes.push({-distances[b], b});
+      }
+    }
   }
-}
-
-void treeDfs(int current, int previous)
-{
-  for (auto u : adj[current])
-  {
-    if (u.first != previous)
-      treeDfs(u.first, current);
-  }
-}
-
-bool isPrime(int x)
-{
-  for (int i = 1; i * i < x; ++i)
-  {
-    if (x % i == 0)
-      return false;
-  }
-  return true;
-}
-
-int sumSegmentTreeTopDown(int a, int b, int x, int y, int k)
-{
-  if (a < x || b > y)
-    return 0;
-  else if (x <= a && b <= y)
-    return tree[k];
-  int d = (a + b) / 2;
-  return sumSegmentTreeTopDown(a, d, x, y, k * 2) + sumSegmentTreeTopDown(d + 1, b, x, y, k * 2 + 1);
 }
 
 int main()
