@@ -2125,6 +2125,7 @@ int shortestSubarrayWithORAtLeastK2(vector<int> &nums, int k)
   return res == INT_MAX ? -1 : res;
 }
 
+// https://leetcode.com/problems/find-the-difference-of-two-arrays/description/
 vector<vector<int>> findTheDifferenceOfTwoArrays(vector<int> &nums1, vector<int> &nums2)
 {
   unordered_map<int, int> nums1Hash;
@@ -2153,6 +2154,7 @@ vector<vector<int>> findTheDifferenceOfTwoArrays(vector<int> &nums1, vector<int>
   return result;
 }
 
+// https://leetcode.com/problems/largest-number/description/
 string largestNumber(vector<int> &nums)
 {
   auto compare = [&](int a, int b)
@@ -2195,6 +2197,53 @@ bool backspaceCompare(string s, string t)
   return a == b;
 }
 
+// https://leetcode.com/problems/check-if-two-string-arrays-are-equivalent/
+bool checkIfTwoStringArraysAreEquivalent(vector<string> &word1, vector<string> &word2)
+{
+  string a = "";
+  string b = "";
+  for (auto s : word1)
+    a += s;
+  for (auto s : word2)
+    b += s;
+  return a == b;
+}
+
+// https://leetcode.com/problems/contains-duplicate-ii/
+bool containsDuplicate2(vector<int> &nums, int k)
+{
+  unordered_map<int, int> previousNums;
+  for (int i = 0; i < nums.size(); ++i)
+  {
+    if (previousNums.count(nums[i]) && i - previousNums[nums[i]] <= k)
+      return true;
+    else
+      previousNums[nums[i]] = i;
+  }
+  return false;
+}
+
+// https://leetcode.com/problems/make-the-string-great/
+string makeTheStringGreat(string s)
+{
+  stack<char> letters;
+  for (int i = 0; i < s.size(); ++i)
+  {
+    if (letters.empty() || abs(int(letters.top()) - int(s[i])) != 32)
+      letters.push(s[i]);
+    else
+      letters.pop();
+  }
+  string res = "";
+  while (!letters.empty())
+  {
+    res += letters.top();
+    letters.pop();
+  }
+  reverse(res.begin(), res.end());
+  return res;
+}
+
 template <typename T>
 void displayVector(vector<T> arr)
 {
@@ -2219,7 +2268,7 @@ int main()
   vector<int> nums2({1, 1, 2, 2});
   vector<vector<int>> nums2d({{1, 3, 1, 15}, {1, 3, 3, 1}});
 
-  cout << backspaceCompare("bxj##tw", "bxo#j##tw") << endl;
+  cout << makeTheStringGreat("leEeetcode") << endl;
 
   return 0;
 }
