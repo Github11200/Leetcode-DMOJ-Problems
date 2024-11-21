@@ -2244,6 +2244,26 @@ string makeTheStringGreat(string s)
   return res;
 }
 
+// https://leetcode.com/problems/jump-game-ii/description/
+int jumpGame2(vector<int> &nums)
+{
+  int r = 0;
+  int l = 0;
+  int res = 0;
+
+  while (r < nums.size() - 1)
+  {
+    int farthest = 0;
+    for (int i = l; i <= r; ++i)
+      farthest = max(farthest, i + nums[i]);
+    l = r + 1;
+    r = farthest;
+    ++res;
+  }
+
+  return res;
+}
+
 template <typename T>
 void displayVector(vector<T> arr)
 {
@@ -2264,11 +2284,11 @@ void display2DVector(vector<vector<T>> arr)
 
 int main()
 {
-  vector<int> nums1({3, 30, 34, 5, 9});
+  vector<int> nums1({2, 3, 1, 1, 4});
   vector<int> nums2({1, 1, 2, 2});
   vector<vector<int>> nums2d({{1, 3, 1, 15}, {1, 3, 3, 1}});
 
-  cout << makeTheStringGreat("leEeetcode") << endl;
+  cout << jumpGame2(nums1) << endl;
 
   return 0;
 }
