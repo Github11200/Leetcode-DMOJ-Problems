@@ -2264,6 +2264,47 @@ int jumpGame2(vector<int> &nums)
   return res;
 }
 
+// https://dmoj.ca/problem/ccc16s1
+void ragaman()
+{
+  string s1 = "";
+  string s2 = "";
+
+  cin >> s1;
+  cin >> s2;
+
+  if (s1.size() != s2.size())
+  {
+    cout << "N" << endl;
+    return;
+  }
+
+  unordered_map<char, int> s1Hash;
+
+  for (int i = 0; i < s1.size(); ++i)
+    ++s1Hash[s1[i]];
+
+  int numberOfAsterixes = 0;
+
+  for (int i = 0; i < s2.size(); ++i)
+  {
+    if (s2[i] == '*')
+      ++numberOfAsterixes;
+    else if (s1Hash.count(s2[i]))
+    {
+      --s1Hash[s2[i]];
+      if (s1Hash[s2[i]] == 0)
+        s1Hash.erase(s2[i]);
+    }
+  }
+
+  int charactersRemaining = 0;
+  for (auto x : s1Hash)
+    charactersRemaining += x.second;
+
+  cout << (charactersRemaining <= numberOfAsterixes ? "A" : "N") << endl;
+}
+
 template <typename T>
 void displayVector(vector<T> arr)
 {
@@ -2288,7 +2329,7 @@ int main()
   vector<int> nums2({1, 1, 2, 2});
   vector<vector<int>> nums2d({{1, 3, 1, 15}, {1, 3, 3, 1}});
 
-  cout << jumpGame2(nums1) << endl;
+  ragaman();
 
   return 0;
 }
