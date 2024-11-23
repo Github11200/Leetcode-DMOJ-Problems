@@ -2305,6 +2305,62 @@ void ragaman()
   cout << (charactersRemaining <= numberOfAsterixes ? "A" : "N") << endl;
 }
 
+// https://dmoj.ca/problem/ccc17s1
+void sumGame()
+{
+  int numberOfDays = 0;
+
+  scanf("%d", &numberOfDays);
+
+  vector<int> sums(numberOfDays);
+
+  int prefixSum = 0;
+  string input;
+  for (int i = 0; i < numberOfDays; ++i)
+  {
+    cin >> input;
+    sums[i] = prefixSum + stoi(input);
+    prefixSum += stoi(input);
+  }
+
+  prefixSum = 0;
+  pair<int, int> maxRunsAndIndex = pair<int, int>(0, 0);
+  for (int i = 0; i < numberOfDays; ++i)
+  {
+    cin >> input;
+    prefixSum += stoi(input);
+    if (prefixSum == sums[i] && prefixSum >= maxRunsAndIndex.first)
+    {
+      maxRunsAndIndex.first = prefixSum;
+      maxRunsAndIndex.second = i + 1;
+    }
+  }
+
+  printf("%d", maxRunsAndIndex.second);
+}
+
+// https://dmoj.ca/problem/ccc18s1
+void voronoiVillages()
+{
+  int N;
+  scanf("%d", &N);
+
+  vector<int> villages(N);
+  for (int i = 0; i < N; ++i)
+    scanf("%d", &villages[i]);
+
+  sort(villages.begin(), villages.end());
+  double minimumDistance = INT_MAX;
+  double distance = 0;
+  for (int i = 1; i < N - 1; ++i)
+  {
+    distance = ((villages[i] - villages[i - 1]) / (double)2) + (((villages[i + 1] - villages[i]) / (double)2));
+    minimumDistance = min(minimumDistance, distance);
+  }
+
+  printf("%.1f", minimumDistance);
+}
+
 template <typename T>
 void displayVector(vector<T> arr)
 {
@@ -2329,7 +2385,7 @@ int main()
   vector<int> nums2({1, 1, 2, 2});
   vector<vector<int>> nums2d({{1, 3, 1, 15}, {1, 3, 3, 1}});
 
-  ragaman();
+  voronoiVillages();
 
   return 0;
 }
