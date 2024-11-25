@@ -2361,6 +2361,104 @@ void voronoiVillages()
   printf("%.1f", minimumDistance);
 }
 
+// https://dmoj.ca/problem/ccc19s1
+void flipper()
+{
+  string steps;
+  cin >> steps;
+
+  int grid[4] = {1, 2, 3, 4};
+  for (int i = 0; i < steps.size(); ++i)
+  {
+    if (steps[i] == 'H')
+    {
+      swap(grid[0], grid[2]);
+      swap(grid[1], grid[3]);
+    }
+    else
+    {
+      swap(grid[0], grid[1]);
+      swap(grid[2], grid[3]);
+    }
+  }
+
+  printf("%d %d\n%d %d", grid[0], grid[1], grid[2], grid[3]);
+}
+
+// https://dmoj.ca/problem/ccc20s1
+void surmisingASprintersSpeed()
+{
+  int N;
+  scanf("%d", &N);
+
+  vector<pair<int, int>> measurements(N);
+  for (int i = 0; i < N; ++i)
+    scanf("%d %d", &measurements[i].first, &measurements[i].second);
+  sort(measurements.begin(), measurements.end());
+
+  double maxSpeed = -1;
+  for (int i = 1; i < measurements.size(); ++i)
+  {
+    double speed = abs((measurements[i].second - measurements[i - 1].second) / (double)(measurements[i].first - measurements[i - 1].first));
+    maxSpeed = max(maxSpeed, speed);
+  }
+
+  printf("%.1f", maxSpeed);
+}
+
+// https://dmoj.ca/problem/ccc21s1
+void crazyFencing()
+{
+  int N;
+  scanf("%d", &N);
+
+  int leftWidth;
+  int rightWidth;
+  scanf("%d", &leftWidth);
+  scanf("%d", &rightWidth);
+  vector<int> sums(N);
+  for (int i = 0; i < N; ++i)
+  {
+    sums[i] = leftWidth + rightWidth;
+    leftWidth = rightWidth;
+    scanf("%d", &rightWidth);
+  }
+
+  int width = rightWidth;
+  double area = 0;
+  for (int i = 0; i < N; ++i)
+  {
+    area += width * (sums[i] / (double)2);
+    if (i < N - 1)
+      scanf("%d", &width);
+  }
+
+  printf("%.1f", area);
+}
+
+// https://dmoj.ca/problem/ccc12s1
+void dontPassMeTheBall()
+{
+  int J;
+  scanf("%d", &J);
+
+  if (J < 4)
+  {
+    printf("0");
+    return;
+  }
+
+  int n = J - 1;
+  int r = 3;
+  int rFactorial = 6;
+  int maxNumbersToMultiply = n - r;
+  int nFactorialProduct = 1;
+  for (int i = n; i > maxNumbersToMultiply; --i)
+    nFactorialProduct *= i;
+
+  printf("%d", nFactorialProduct / rFactorial);
+}
+
 template <typename T>
 void displayVector(vector<T> arr)
 {
@@ -2385,7 +2483,7 @@ int main()
   vector<int> nums2({1, 1, 2, 2});
   vector<vector<int>> nums2d({{1, 3, 1, 15}, {1, 3, 3, 1}});
 
-  voronoiVillages();
+  dontPassMeTheBall();
 
   return 0;
 }
