@@ -2459,6 +2459,77 @@ void dontPassMeTheBall()
   printf("%d", nFactorialProduct / rFactorial);
 }
 
+// https://dmoj.ca/problem/ccc00s2
+void babblingBrooks()
+{
+  int N;
+  scanf("%d", &N);
+
+  vector<int> streams(N);
+  for (int i = 0; i < N; ++i)
+    scanf("%d", &streams[i]);
+
+  int input = -1;
+  while (input != 77)
+  {
+    scanf("%d", &input);
+    if (input == 99)
+    {
+      int splitStreamIndex;
+      int percentage;
+      scanf("%d", &splitStreamIndex);
+      scanf("%d", &percentage);
+
+      int leftSplitValue = percentage * streams[splitStreamIndex - 1] / 100;
+      int rightSplitValue = streams[splitStreamIndex - 1] - leftSplitValue;
+
+      streams[splitStreamIndex - 1] = leftSplitValue;
+      streams.insert(streams.begin() + splitStreamIndex, rightSplitValue);
+    }
+    else if (input == 88)
+    {
+      int joinedStreamIndex;
+      scanf("%d", &joinedStreamIndex);
+      streams[joinedStreamIndex - 1] += streams[joinedStreamIndex];
+      streams.erase(streams.begin() + joinedStreamIndex);
+    }
+  }
+
+  for (int i = 0; i < streams.size(); ++i)
+    printf("%d ", streams[i]);
+}
+
+string reduce(int numerator, int denominator)
+{
+  for (int i = numerator; i >= 1; --i)
+    if (numerator % i == 0 && denominator % i == 0)
+      return to_string(numerator / i) + "/" + to_string(denominator / i);
+}
+
+// https://dmoj.ca/problem/ccc02s2
+void fractionAction()
+{
+  int numerator, denominator;
+  scanf("%d", &numerator);
+  scanf("%d", &denominator);
+
+  if (numerator == 0)
+  {
+    printf("0");
+    return;
+  }
+  else if (numerator % denominator == 0)
+  {
+    printf("%d", numerator / denominator);
+    return;
+  }
+
+  if (numerator > denominator)
+    printf("%d %s", numerator / denominator, reduce(numerator % denominator, denominator).c_str());
+  else
+    printf("%s", reduce(numerator, denominator).c_str());
+}
+
 template <typename T>
 void displayVector(vector<T> arr)
 {
@@ -2483,7 +2554,7 @@ int main()
   vector<int> nums2({1, 1, 2, 2});
   vector<vector<int>> nums2d({{1, 3, 1, 15}, {1, 3, 3, 1}});
 
-  dontPassMeTheBall();
+  fractionAction();
 
   return 0;
 }
