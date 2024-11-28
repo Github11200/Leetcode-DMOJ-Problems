@@ -2530,6 +2530,76 @@ void fractionAction()
     printf("%s", reduce(numerator, denominator).c_str());
 }
 
+void spirals()
+{
+  int x, y;
+  scanf("%d", &x);
+  scanf("%d", &y);
+
+  int diff = y - x + 1;
+  int width = floor(sqrt(diff));
+  int height = pow(round(sqrt(diff)), 2) == diff ? sqrt(diff) : width + 1;
+
+  vector<vector<string>> matrix(height, vector<string>(width, " "));
+
+  // 0 -> Down
+  // 1 -> Right
+  // 2 -> Up
+  // 3 -> Left
+  int direction = 0;
+  int i = floor(height / 2);
+  int j = width % 2 == 0 ? width / 2 - 1 : float(width / 2);
+
+  int right = j + 1;
+  int left = j - 1;
+  int top = i - 1;
+  int bottom = i + 1;
+
+  while (x <= y)
+  {
+    matrix[i][j] = to_string(x);
+
+    if (direction == 0 && i + 1 < matrix.size())
+      ++i;
+    else if (direction == 1 && j + 1 < matrix[0].size())
+      ++j;
+    else if (direction == 2 && i - 1 >= 0)
+      --i;
+    else if (direction == 3 && j - 1 >= 0)
+      --j;
+
+    if (i == bottom)
+    {
+      direction = 1;
+      ++bottom;
+    }
+    else if (j == right)
+    {
+      direction = 2;
+      ++right;
+    }
+    else if (i == top)
+    {
+      direction = 3;
+      --top;
+    }
+    else if (j == left)
+    {
+      direction = 0;
+      --left;
+    }
+
+    ++x;
+  }
+
+  for (int i = 0; i < matrix.size(); ++i)
+  {
+    for (int j = 0; j < matrix[i].size(); ++j)
+      cout << matrix[i][j] << " ";
+    cout << endl;
+  }
+}
+
 template <typename T>
 void displayVector(vector<T> arr)
 {
@@ -2554,7 +2624,7 @@ int main()
   vector<int> nums2({1, 1, 2, 2});
   vector<vector<int>> nums2d({{1, 3, 1, 15}, {1, 3, 3, 1}});
 
-  fractionAction();
+  spirals();
 
   return 0;
 }
