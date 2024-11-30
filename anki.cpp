@@ -38,30 +38,69 @@ vector<int> visited(N + 1);
 vector<tuple<int, int, int>> edgeListRepresentation(N + 1);
 vector<vector<int>> adjacencymatrixRepresentation;
 
-void dijkstras(int x)
+void floydWarshalls()
 {
-  priority_queue<pair<int, int>> nextNodes;
-  vector<int> distances;
+  vector<vector<int>> distances;
 
-  distances[x] = 0;
-  nextNodes.push({0, x});
-
-  while (!nextNodes.empty())
+  for (int i = 0; i < N; ++i)
   {
-    int a = nextNodes.top().first;
-    if (visited[a])
-      continue;
-    visited[a] = true;
-
-    for (auto u : adj[a])
+    for (int j = 0; j < N; ++j)
     {
-      int b = u.first;
-      int w = u.second;
-      if (distances[a] + w < distances[b])
-      {
-        distances[b] = distances[a] + w;
-        nextNodes.push({-distances[b], b});
-      }
+      if (i == j)
+        distances[i][j] = 0;
+      else if (adjacencymatrixRepresentation[i][j])
+        distances[i][j] = adjacencymatrixRepresentation[i][j];
+      else
+        distances[i][j] = INFINITY;
+    }
+  }
+
+  for (int k = 0; k < N; ++k)
+  {
+    for (int i = 0; i < N; ++i)
+    {
+      for (int j = 0; j < N; ++j)
+        distances[i][j] = min(distances[i][j], distances[i][k] + distances[k][j]);
+    }
+  }
+}
+
+int segmentTreeSumTopDown(int a, int b, int x, int y, int k)
+{
+  if (b < x || a > y)
+    return 0;
+  else if (x <= a && b <= y)
+    return tree[k];
+  int d = (a + b) / 2;
+  return segmentTreeSumTopDown(a, d, x, y, k * 2) + segmentTreeSumTopDown(d + 1, b, x, y, k * 2 + 1);
+}
+
+void treeDfs(int current, int previous)
+{
+  for (auto u : adj[current])
+  {
+    if (u.first != previous)
+      treeDfs(u.first, current);
+  }
+}
+
+int gcd(int a, int b)
+{
+  if (b == 0)
+    return a;
+  return gcd(b, a % b);
+}
+
+void bellmanFord()
+{
+  vector<int> distances(N, INFINITY);
+  for (int i = 0; i < N - 1; ++i)
+  {
+    for (auto e : edgeListRepresentation)
+    {
+      int a, b, w;
+      tie(a, b, w) = e;
+      distances[b] = min(distances[b], distances[a] + w);
     }
   }
 }

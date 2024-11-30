@@ -94,7 +94,9 @@
     "thread": "cpp",
     "typeindex": "cpp",
     "expected": "cpp",
-    "spanstream": "cpp"
+    "spanstream": "cpp",
+    "queue": "cpp",
+    "stack": "cpp"
   },
   "C_Cpp.errorSquiggles": "enabled"
 }
