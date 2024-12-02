@@ -2530,50 +2530,63 @@ void fractionAction()
     printf("%s", reduce(numerator, denominator).c_str());
 }
 
-void poetry()
+// https://dmoj.ca/problem/ccc05s2
+void mouseMove()
+{
+  int c, r;
+  scanf("%d", &c);
+  scanf("%d", &r);
+
+  int a, b;
+
+  vector<pair<int, int>> result;
+  pair<int, int> position = pair<int, int>(0, 0);
+  while (true)
+  {
+    scanf("%d %d", &a, &b);
+    if (a == 0 && b == 0)
+      break;
+
+    position.first += a;
+    position.second += b;
+
+    if (position.first < 0)
+      position.first = 0;
+    else if (position.first > c)
+      position.first = c;
+
+    if (position.second < 0)
+      position.second = 0;
+    else if (position.second > r)
+      position.second = r;
+
+    result.push_back(position);
+  }
+
+  for (int i = 0; i < result.size(); ++i)
+    printf("%d %d\n", result[i].first, result[i].second);
+}
+
+// https://dmoj.ca/problem/ccc11s2
+void multipleChoice()
 {
   int N;
   scanf("%d", &N);
 
-  vector<string> results(N);
+  vector<string> answers(N);
+  for (int i = 0; i < N; ++i)
+    cin >> answers[i];
 
+  int numberCorrect = 0;
+  string s;
   for (int i = 0; i < N; ++i)
   {
-    string input;
-    string syllables[4];
-
-    for (int j = 0; j < 4; ++j)
-    {
-      string temp;
-      cin >> temp;
-      while (!temp.empty())
-      {
-        input += temp + " ";
-        cin >> temp;
-      }
-
-      syllables[j] = input;
-      for (auto c : input)
-      {
-        if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u' || c == 'y')
-          syllables[j] = c;
-      }
-    }
-
-    if (syllables[0] == syllables[1] && syllables[1] == syllables[2] && syllables[2] == syllables[3])
-      results[i] = "perfect";
-    else if (syllables[0] == syllables[1] && syllables[2] == syllables[3])
-      results[i] = "even";
-    else if (syllables[0] == syllables[2] && syllables[1] == syllables[3])
-      results[i] = "cross";
-    else if (syllables[0] == syllables[3] && syllables[1] == syllables[2])
-      results[i] = "shell";
-    else
-      results[i] = "free";
+    cin >> s;
+    if (s == answers[i])
+      ++numberCorrect;
   }
 
-  for (int i = 0; i < results.size(); ++i)
-    printf("%s\n", results[i]);
+  printf("%d", numberCorrect);
 }
 
 template <typename T>
@@ -2600,7 +2613,7 @@ int main()
   vector<int> nums2({1, 1, 2, 2});
   vector<vector<int>> nums2d({{1, 3, 1, 15}, {1, 3, 3, 1}});
 
-  poetry();
+  multipleChoice();
 
   return 0;
 }
