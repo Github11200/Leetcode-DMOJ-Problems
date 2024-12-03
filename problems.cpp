@@ -2589,6 +2589,37 @@ void multipleChoice()
   printf("%d", numberCorrect);
 }
 
+// https://dmoj.ca/problem/ccc13s2
+void bridgeTransport()
+{
+  int maxWeight;
+  scanf("%d", &maxWeight);
+
+  int numberOfTrainCars;
+  scanf("%d", &numberOfTrainCars);
+
+  vector<int> weights(numberOfTrainCars, 0);
+  for (int i = 0; i < numberOfTrainCars; ++i)
+    scanf("%d", &weights[i]);
+
+  int weight = 0;
+  int numberOfCarsCrossed = 0;
+  for (int i = 0; i < numberOfTrainCars; ++i)
+  {
+    weight += weights[i];
+    if (i > 3)
+      weight -= weights[i - 4];
+    if (weight > maxWeight)
+    {
+      printf("%d", numberOfCarsCrossed);
+      return;
+    }
+    ++numberOfCarsCrossed;
+  }
+
+  printf("%d", numberOfCarsCrossed);
+}
+
 template <typename T>
 void displayVector(vector<T> arr)
 {
@@ -2613,7 +2644,7 @@ int main()
   vector<int> nums2({1, 1, 2, 2});
   vector<vector<int>> nums2d({{1, 3, 1, 15}, {1, 3, 3, 1}});
 
-  multipleChoice();
+  escapeRoom();
 
   return 0;
 }
