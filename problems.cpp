@@ -2620,6 +2620,37 @@ void bridgeTransport()
   printf("%d", numberOfCarsCrossed);
 }
 
+// https://dmoj.ca/problem/ccc17s2
+void highTideLowTide()
+{
+  int N;
+  scanf("%d", &N);
+
+  vector<int> measurements(N, 0);
+  for (int i = 0; i < N; ++i)
+    scanf("%d", &measurements[i]);
+
+  sort(measurements.begin(), measurements.end());
+
+  int middle = N / 2;
+  vector<int> highs;
+  vector<int> lows;
+  int i = 0;
+  for (i = 0; i < middle; ++i)
+    lows.push_back(measurements[i]);
+  if (N % 2 != 0)
+    lows.push_back(measurements[i++]);
+  for (; i < measurements.size(); ++i)
+    highs.push_back(measurements[i]);
+
+  sort(lows.rbegin(), lows.rend());
+
+  for (i = 0; i < middle; ++i)
+    printf("%d %d ", lows[i], highs[i]);
+  if (N % 2 != 0)
+    printf("%d", lows[i]);
+}
+
 template <typename T>
 void displayVector(vector<T> arr)
 {
@@ -2644,7 +2675,7 @@ int main()
   vector<int> nums2({1, 1, 2, 2});
   vector<vector<int>> nums2d({{1, 3, 1, 15}, {1, 3, 3, 1}});
 
-  escapeRoom();
+  highTideLowTide();
 
   return 0;
 }
