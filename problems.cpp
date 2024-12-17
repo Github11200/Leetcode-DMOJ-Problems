@@ -2651,6 +2651,75 @@ void highTideLowTide()
     printf("%d", lows[i]);
 }
 
+// https://dmoj.ca/problem/ccc24s2
+void heavyLightComposition()
+{
+  int T, N;
+
+  scanf("%d", &T);
+  scanf("%d", &N);
+
+  vector<char> result(T, 'T');
+  string input = "";
+  for (int i = 0; i < T; ++i)
+  {
+    cin >> input;
+    unordered_map<char, bool> isHeavy;
+    for (auto c : input)
+    {
+      if (isHeavy.count(c) > 0)
+        isHeavy[c] = true;
+      else
+        isHeavy[c] = false;
+    }
+
+    bool previousHeavy = isHeavy[input[0]];
+    for (int j = 1; j < input.size(); ++j)
+    {
+      if (isHeavy[input[j]] == previousHeavy)
+      {
+        result[i] = 'F';
+        break;
+      }
+      previousHeavy = isHeavy[input[j]];
+    }
+  }
+
+  for (auto c : result)
+    printf("%c\n", c);
+}
+
+// https://dmoj.ca/problem/ccc16s2
+void tandemBicycle()
+{
+  int questionNumber, N;
+
+  scanf("%d", &questionNumber);
+  scanf("%d", &N);
+
+  vector<int> dmojistan(N);
+  vector<int> pegland(N);
+
+  for (int i = 0; i < N; ++i)
+    scanf("%d", &dmojistan[i]);
+
+  sort(dmojistan.rbegin(), dmojistan.rend());
+
+  for (int i = 0; i < N; ++i)
+    scanf("%d", &pegland[i]);
+
+  if (questionNumber == 1)
+    sort(pegland.rbegin(), pegland.rend());
+  else
+    sort(pegland.begin(), pegland.end());
+
+  int totalSpeed = 0;
+  for (int i = 0; i < N; ++i)
+    totalSpeed += max(dmojistan[i], pegland[i]);
+
+  printf("%d", totalSpeed);
+}
+
 template <typename T>
 void displayVector(vector<T> arr)
 {
@@ -2675,7 +2744,7 @@ int main()
   vector<int> nums2({1, 1, 2, 2});
   vector<vector<int>> nums2d({{1, 3, 1, 15}, {1, 3, 3, 1}});
 
-  highTideLowTide();
+  tandemBicycle();
 
   return 0;
 }
