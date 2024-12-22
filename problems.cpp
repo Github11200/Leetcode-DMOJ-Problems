@@ -2720,11 +2720,26 @@ void tandemBicycle()
   printf("%d", totalSpeed);
 }
 
-template <typename T>
-void displayVector(vector<T> arr)
+// https://dmoj.ca/problem/ccc08s2
+void penniesInTheRing()
 {
-  for (auto x : arr)
-    cout << x << " ";
+  int radius = -1;
+
+  while (radius != 0)
+  {
+    scanf("%d", &radius);
+    if (radius == 0)
+      break;
+
+    int numberOfPennies = 0;
+
+    for (int i = 0; i < radius; ++i)
+    {
+      numberOfPennies += sqrt(pow(radius, 2) - pow(i, 2));
+    }
+
+    printf("%d\n", numberOfPennies * 4 + 1);
+  }
 }
 
 template <typename T>
@@ -2738,13 +2753,66 @@ void display2DVector(vector<vector<T>> arr)
   }
 }
 
+// https://dmoj.ca/problem/ccc21s2
+void modernArt()
+{
+  int M, N, K;
+
+  scanf("%d", &M);
+  scanf("%d", &N);
+  scanf("%d", &K);
+
+  // 0 -> Black
+  // 1 -> Gold
+  vector<bool> rows(M, false);
+  vector<bool> columns(N, false);
+  int numberOfGold = 0;
+  for (int i = 0; i < K; ++i)
+  {
+    char rowOrColumn;
+    int rowOrColumnNumber;
+    cin >> rowOrColumn >> rowOrColumnNumber;
+    --rowOrColumnNumber;
+
+    if (rowOrColumn == 'R')
+      rows[rowOrColumnNumber] = !rows[rowOrColumnNumber];
+    else
+      columns[rowOrColumnNumber] = !columns[rowOrColumnNumber];
+  }
+
+  int numberOfRowsOn = 0;
+  for (int i = 0; i < rows.size(); ++i)
+  {
+    if (rows[i])
+    {
+      ++numberOfRowsOn;
+      numberOfGold += N;
+    }
+  }
+
+  for (int i = 0; i < columns.size(); ++i)
+  {
+    if (columns[i])
+      numberOfGold += M - (numberOfRowsOn * 2);
+  }
+
+  printf("%d", numberOfGold);
+}
+
+template <typename T>
+void displayVector(vector<T> arr)
+{
+  for (auto x : arr)
+    cout << x << " ";
+}
+
 int main()
 {
   vector<int> nums1({2, 3, 1, 1, 4});
   vector<int> nums2({1, 1, 2, 2});
   vector<vector<int>> nums2d({{1, 3, 1, 15}, {1, 3, 3, 1}});
 
-  tandemBicycle();
+  modernArt();
 
   return 0;
 }
