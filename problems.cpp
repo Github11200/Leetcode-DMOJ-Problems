@@ -2799,6 +2799,95 @@ void modernArt()
   printf("%d", numberOfGold);
 }
 
+// https://dmoj.ca/problem/ccc14s2
+void assigningPartners()
+{
+  int N;
+  scanf("%d", &N);
+
+  vector<string> classOne(N, "");
+  unordered_map<string, string> partners;
+
+  for (int i = 0; i < N; ++i)
+    cin >> classOne[i];
+
+  string name = "";
+  int j = 0;
+  for (int i = 0; i < N; ++i)
+  {
+    cin >> name;
+    if (name == classOne[j] || partners.count(name) > 0 && partners[name] != classOne[j])
+    {
+      printf("bad");
+      return;
+    }
+    else
+      partners[classOne[j]] = name;
+    ++j;
+  }
+
+  printf("good");
+}
+
+void sunflowers()
+{
+  int N;
+  scanf("%d", &N);
+
+  vector<vector<int>> grid(N, vector<int>(N, 0));
+  for (int i = 0; i < N; ++i)
+    for (int j = 0; j < N; ++j)
+      cin >> grid[i][j];
+
+  bool correctColumnOrder = true;
+
+  for (int i = 1; i < N; ++i)
+  {
+    if (grid[0][i] < grid[0][i - 1])
+    {
+      correctColumnOrder = false;
+      break;
+    }
+  }
+
+  bool correctRowOrder = true;
+  for (int i = 1; i < N; ++i)
+  {
+    if (grid[i][0] < grid[i - 1][0])
+    {
+      correctRowOrder = false;
+      break;
+    }
+  }
+
+  int maxN = N % 2 == 0 ? N / 2 : N / 2 + 1;
+  if (!correctColumnOrder && !correctRowOrder)
+  {
+    for (int i = 0; i < maxN; ++i)
+      for (int j = 0; j < N; ++j)
+        swap(grid[i][j], grid[N - 1 - i][N - 1 - j]);
+  }
+  else if (!correctColumnOrder && correctRowOrder)
+  {
+    for (int i = 0; i < maxN; ++i)
+      for (int j = 0; j < N; ++j)
+        swap(grid[i][j], grid[N - 1 - j][i]);
+  }
+  else if (correctColumnOrder && !correctRowOrder)
+  {
+    for (int i = 0; i < maxN; ++i)
+      for (int j = 0; j < N; ++j)
+        swap(grid[i][j], grid[i][N - 1 - j]);
+  }
+
+  for (int i = 0; i < N; ++i)
+  {
+    for (int j = 0; j < N; ++j)
+      printf("%d ", grid[i][j]);
+    printf("\n");
+  }
+}
+
 template <typename T>
 void displayVector(vector<T> arr)
 {
@@ -2812,7 +2901,7 @@ int main()
   vector<int> nums2({1, 1, 2, 2});
   vector<vector<int>> nums2d({{1, 3, 1, 15}, {1, 3, 3, 1}});
 
-  modernArt();
+  sunflowers();
 
   return 0;
 }
