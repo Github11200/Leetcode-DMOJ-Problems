@@ -2829,63 +2829,50 @@ void assigningPartners()
   printf("good");
 }
 
-void sunflowers()
+// https://dmoj.ca/problem/ccc10s2
+void huffmanEncoding()
+{
+  int k;
+  scanf("%d", &k);
+
+  unordered_map<string, char> encodedCharacters;
+  for (int i = 0; i < k; ++i)
+  {
+    char letter;
+    string sequence;
+    cin >> letter >> sequence;
+    encodedCharacters[sequence] = letter;
+  }
+
+  string sequence;
+  string output = "";
+  cin >> sequence;
+
+  for (int i = 0; i < sequence.size();)
+  {
+    string substring = "";
+    while (encodedCharacters.count(substring) == 0 && i < sequence.size())
+    {
+      substring += sequence[i];
+      ++i;
+    }
+    output += encodedCharacters[substring];
+  }
+
+  cout << output;
+}
+
+void symmetricMountains()
 {
   int N;
   scanf("%d", &N);
 
-  vector<vector<int>> grid(N, vector<int>(N, 0));
+  int *heights = new int[N];
   for (int i = 0; i < N; ++i)
-    for (int j = 0; j < N; ++j)
-      cin >> grid[i][j];
+    scanf("%d", &heights[i]);
 
-  bool correctColumnOrder = true;
-
-  for (int i = 1; i < N; ++i)
-  {
-    if (grid[0][i] < grid[0][i - 1])
-    {
-      correctColumnOrder = false;
-      break;
-    }
-  }
-
-  bool correctRowOrder = true;
-  for (int i = 1; i < N; ++i)
-  {
-    if (grid[i][0] < grid[i - 1][0])
-    {
-      correctRowOrder = false;
-      break;
-    }
-  }
-
-  int maxN = N % 2 == 0 ? N / 2 : N / 2 + 1;
-  if (!correctColumnOrder && !correctRowOrder)
-  {
-    for (int i = 0; i < maxN; ++i)
-      for (int j = 0; j < N; ++j)
-        swap(grid[i][j], grid[N - 1 - i][N - 1 - j]);
-  }
-  else if (!correctColumnOrder && correctRowOrder)
-  {
-    for (int i = 0; i < maxN; ++i)
-      for (int j = 0; j < N; ++j)
-        swap(grid[i][j], grid[N - 1 - j][i]);
-  }
-  else if (correctColumnOrder && !correctRowOrder)
-  {
-    for (int i = 0; i < maxN; ++i)
-      for (int j = 0; j < N; ++j)
-        swap(grid[i][j], grid[i][N - 1 - j]);
-  }
-
-  for (int i = 0; i < N; ++i)
-  {
-    for (int j = 0; j < N; ++j)
-      printf("%d ", grid[i][j]);
-    printf("\n");
-  }
+  int *result = new int[N];
+  result[0] = 0;
 }
 
 template <typename T>
@@ -2901,7 +2888,7 @@ int main()
   vector<int> nums2({1, 1, 2, 2});
   vector<vector<int>> nums2d({{1, 3, 1, 15}, {1, 3, 3, 1}});
 
-  sunflowers();
+  huffmanEncoding();
 
   return 0;
 }
