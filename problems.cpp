@@ -2862,17 +2862,87 @@ void huffmanEncoding()
   cout << output;
 }
 
-void symmetricMountains()
+// https://dmoj.ca/problem/ccc18s2
+void sunflowers()
 {
   int N;
   scanf("%d", &N);
 
-  int *heights = new int[N];
+  vector<vector<int>> grid(N, vector<int>(N, 0));
   for (int i = 0; i < N; ++i)
-    scanf("%d", &heights[i]);
+    for (int j = 0; j < N; ++j)
+      cin >> grid[i][j];
 
-  int *result = new int[N];
-  result[0] = 0;
+  bool isRowWrong = false;
+  for (int i = 1; i < N; ++i)
+  {
+    if (grid[0][i] < grid[0][i - 1])
+    {
+      isRowWrong = true;
+      break;
+    }
+  }
+
+  bool isColumnWrong = false;
+  for (int i = 1; i < N; ++i)
+  {
+    if (grid[i][0] < grid[i - 1][0])
+    {
+      isColumnWrong = true;
+      break;
+    }
+  }
+
+  set<pair<int, int>> previousCoordinates;
+  if (isRowWrong && isColumnWrong)
+  {
+    for (int i = 0; i < N; ++i)
+    {
+      for (int j = 0; j < N; ++j)
+      {
+        if (previousCoordinates.count(pair<int, int>(i, j)) == 0)
+        {
+          swap(grid[i][j], grid[N - 1 - i][N - 1 - j]);
+          previousCoordinates.insert(pair<int, int>(N - 1 - i, N - 1 - j));
+        }
+      }
+    }
+  }
+  else if (!isRowWrong && isColumnWrong)
+  {
+    for (int i = 0; i < N; ++i)
+    {
+      for (int j = 0; j < N; ++j)
+      {
+        if (previousCoordinates.count(pair<int, int>(i, j)) == 0)
+        {
+          swap(grid[i][j], grid[j][N - 1 - i]);
+          previousCoordinates.insert(pair<int, int>(j, N - 1 - i));
+        }
+      }
+    }
+  }
+  else if (isRowWrong && !isColumnWrong)
+  {
+    for (int i = 0; i < N; ++i)
+    {
+      for (int j = 0; j < N; ++j)
+      {
+        if (previousCoordinates.count(pair<int, int>(i, j)) == 0)
+        {
+          swap(grid[i][j], grid[N - 1 - j][i]);
+          previousCoordinates.insert(pair<int, int>(N - 1 - j, i));
+        }
+      }
+    }
+  }
+
+  for (int i = 0; i < N; ++i)
+  {
+    for (int j = 0; j < N; ++j)
+      printf("%d ", grid[i][j]);
+    printf("\n");
+  }
 }
 
 template <typename T>
@@ -2886,9 +2956,22 @@ int main()
 {
   vector<int> nums1({2, 3, 1, 1, 4});
   vector<int> nums2({1, 1, 2, 2});
-  vector<vector<int>> nums2d({{1, 3, 1, 15}, {1, 3, 3, 1}});
+  vector<vector<int>> nums2d({{4, 3, 1}, {6, 5, 2}, {9, 7, 3}});
 
-  huffmanEncoding();
+  set<pair<int, int>> previousCoordinates;
+  for (int i = 0; i < 3; ++i)
+  {
+    for (int j = 0; j < 3; ++j)
+    {
+      if (previousCoordinates.count(pair<int, int>(i, j)) == 0)
+      {
+        swap(nums2d[i][j], nums2d[2 - j][i]);
+        previousCoordinates.insert(pair<int, int>(2 - j, i));
+      }
+    }
+  }
+
+  sunflowers();
 
   return 0;
 }
