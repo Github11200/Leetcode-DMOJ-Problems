@@ -2945,6 +2945,36 @@ void sunflowers()
   }
 }
 
+int asymmetricValue(int *arr, int a, int b)
+{
+  int result = 0;
+  while (a <= b)
+  {
+    result += abs(arr[a] - arr[b]);
+    ++a;
+    --b;
+  }
+  return result;
+}
+
+void symmetricMountains()
+{
+  int N;
+  scanf("%d", &N);
+
+  int *heights = new int[N];
+  for (int i = 0; i < N; ++i)
+    scanf("%d", &heights[i]);
+
+  for (int i = 0; i < N; ++i)
+  {
+    int minimumAsymmetricValue = INT_MAX;
+    for (int j = i; j < N; ++j)
+      minimumAsymmetricValue = min(minimumAsymmetricValue, asymmetricValue(heights, j - i, j));
+    printf("%d ", minimumAsymmetricValue);
+  }
+}
+
 template <typename T>
 void displayVector(vector<T> arr)
 {
@@ -2958,20 +2988,7 @@ int main()
   vector<int> nums2({1, 1, 2, 2});
   vector<vector<int>> nums2d({{4, 3, 1}, {6, 5, 2}, {9, 7, 3}});
 
-  set<pair<int, int>> previousCoordinates;
-  for (int i = 0; i < 3; ++i)
-  {
-    for (int j = 0; j < 3; ++j)
-    {
-      if (previousCoordinates.count(pair<int, int>(i, j)) == 0)
-      {
-        swap(nums2d[i][j], nums2d[2 - j][i]);
-        previousCoordinates.insert(pair<int, int>(2 - j, i));
-      }
-    }
-  }
-
-  sunflowers();
+  symmetricMountains();
 
   return 0;
 }
