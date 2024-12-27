@@ -2945,18 +2945,7 @@ void sunflowers()
   }
 }
 
-int asymmetricValue(int *arr, int a, int b)
-{
-  int result = 0;
-  while (a <= b)
-  {
-    result += abs(arr[a] - arr[b]);
-    ++a;
-    --b;
-  }
-  return result;
-}
-
+// https://dmoj.ca/problem/ccc23s2
 void symmetricMountains()
 {
   int N;
@@ -2966,13 +2955,183 @@ void symmetricMountains()
   for (int i = 0; i < N; ++i)
     scanf("%d", &heights[i]);
 
+  vector<int> results(N, INT_MAX);
   for (int i = 0; i < N; ++i)
   {
-    int minimumAsymmetricValue = INT_MAX;
-    for (int j = i; j < N; ++j)
-      minimumAsymmetricValue = min(minimumAsymmetricValue, asymmetricValue(heights, j - i, j));
-    printf("%d ", minimumAsymmetricValue);
+    int l = i;
+    int r = l;
+    int j = 0;
+
+    int asymmetricValue = 0;
+    while (l >= 0 && r < N)
+    {
+      asymmetricValue += abs(heights[l] - heights[r]);
+      results[j] = min(results[j], asymmetricValue);
+
+      --l;
+      ++r;
+      j += 2;
+    }
+
+    l = i;
+    r = l + 1;
+    j = 1;
+    asymmetricValue = 0;
+    while (l >= 0 && r < N)
+    {
+      asymmetricValue += abs(heights[l] - heights[r]);
+      results[j] = min(results[j], asymmetricValue);
+
+      --l;
+      ++r;
+      j += 2;
+    }
   }
+
+  for (int i = 0; i < N; ++i)
+    printf("%d ", results[i]);
+}
+
+// https://dmoj.ca/problem/ccc20s2
+void escapeRoom()
+{
+  int M, N;
+  scanf("%d", &M);
+  scanf("%d", &N);
+
+  vector<vector<pair<int, int>>> adj(1000001);
+  for (int i = 1; i <= M; ++i)
+  {
+    for (int j = 1; j <= N; ++j)
+    {
+      int input = 0;
+      scanf("%d", &input);
+      adj[input].push_back(pair<int, int>(i, j));
+    }
+  }
+
+  queue<pair<int, int>> nextElements;
+  vector<vector<bool>> visited(M + 1, vector<bool>(N + 1));
+  visited[1][1] = true;
+  nextElements.push(pair<int, int>(1, 1));
+
+  while (!nextElements.empty())
+  {
+    pair<int, int> currentElement = nextElements.front();
+    nextElements.pop();
+    for (auto neighbour : adj[currentElement.first * currentElement.second])
+    {
+      if (neighbour.first == 1 && neighbour.second == 1)
+      {
+        printf("yes");
+        return;
+      }
+      else if (visited[neighbour.first][neighbour.second] == 0)
+      {
+        nextElements.push(neighbour);
+        visited[neighbour.first][neighbour.second] = true;
+      }
+    }
+  }
+
+  printf("no");
+}
+
+// https://dmoj.ca/problem/ccc97s2
+void nastyNumbers()
+{
+  int N;
+  scanf("%d", &N);
+  int input;
+  for (int i = 0; i < N; ++i)
+  {
+    scanf("%d", &input);
+
+    vector<pair<int, int>> factors;
+    factors.push_back(pair<int, int>(input, 1));
+
+    unordered_map<int, pair<int, int>> sums;
+
+    int x = input;
+    for (int j = 2; j * j <= input; ++j)
+    {
+      if (x % j == 0)
+      {
+        factors.push_back(pair<int, int>(j, x / j));
+        sums[j + x / j] = pair<int, int>(j, x / j);
+      }
+    }
+
+    bool nasty = false;
+    for (auto factor : factors)
+    {
+      int difference = abs(factor.first - factor.second);
+      if (sums.count(difference) && sums[difference] != factor)
+      {
+        nasty = true;
+        break;
+      }
+    }
+
+    if (nasty)
+      printf("%d is nasty\n", input);
+    else
+      printf("%d is not nasty\n", input);
+  }
+}
+
+int sizeToInt(char size)
+{
+  int integerSize = 0;
+  switch (size)
+  {
+  case 'S':
+    integerSize = 0;
+    break;
+  case 'M':
+    integerSize = 1;
+    break;
+  case 'L':
+    integerSize = 2;
+    break;
+  default:
+    break;
+  }
+  return integerSize;
+}
+
+// https://dmoj.ca/problem/ccc15s2
+void jerseys()
+{
+  int numberOfJerseys;
+  int numberOfAthletes;
+
+  scanf("%d", &numberOfJerseys);
+  scanf("%d", &numberOfAthletes);
+
+  int *jerseys = new int[numberOfJerseys];
+  for (int i = 0; i < numberOfJerseys; ++i)
+  {
+    char temp;
+    cin >> temp;
+    jerseys[i] = sizeToInt(temp);
+  }
+
+  int fulfilled = 0;
+  char size;
+  int number;
+
+  for (int i = 0; i < numberOfAthletes; ++i)
+  {
+    cin >> size >> number;
+    if (jerseys[number - 1] >= sizeToInt(size))
+    {
+      ++fulfilled;
+      jerseys[number - 1] = INT_MIN;
+    }
+  }
+
+  printf("%d", fulfilled);
 }
 
 template <typename T>
@@ -2988,7 +3147,7 @@ int main()
   vector<int> nums2({1, 1, 2, 2});
   vector<vector<int>> nums2d({{4, 3, 1}, {6, 5, 2}, {9, 7, 3}});
 
-  symmetricMountains();
+  jerseys();
 
   return 0;
 }
