@@ -3134,6 +3134,141 @@ void jerseys()
   printf("%d", fulfilled);
 }
 
+// https://dmoj.ca/problem/ccc22s2
+void goodGroups()
+{
+  int X, Y, G;
+
+  unordered_map<string, vector<string>> sameGroups;
+  unordered_map<string, vector<string>> seperateGroups;
+
+  scanf("%d", &X);
+  for (int i = 0; i < X; ++i)
+  {
+    string studentOne, studentTwo;
+    cin >> studentOne >> studentTwo;
+    sameGroups[studentOne].push_back(studentTwo);
+    sameGroups[studentTwo].push_back(studentOne);
+  }
+
+  scanf("%d", &Y);
+  for (int i = 0; i < Y; ++i)
+  {
+    string studentOne, studentTwo;
+    cin >> studentOne >> studentTwo;
+    seperateGroups[studentOne].push_back(studentTwo);
+    seperateGroups[studentTwo].push_back(studentOne);
+  }
+
+  int numberOfViolations = 0;
+  set<string> students;
+  scanf("%d", &G);
+  for (int i = 0; i < G; ++i)
+  {
+    string studentOne, studentTwo, studentThree;
+    cin >> studentOne >> studentTwo >> studentThree;
+
+    students.insert(studentOne);
+    students.insert(studentTwo);
+    students.insert(studentThree);
+
+    if (sameGroups.count(studentOne) > 0)
+    {
+      for (auto student : sameGroups[studentOne])
+      {
+        if (students.count(student) == 0)
+          ++numberOfViolations;
+      }
+    }
+
+    if (sameGroups.count(studentTwo) > 0)
+    {
+      for (auto student : sameGroups[studentTwo])
+      {
+        if (students.count(student) == 0)
+          ++numberOfViolations;
+      }
+    }
+
+    if (sameGroups.count(studentThree) > 0)
+    {
+      for (auto student : sameGroups[studentThree])
+      {
+        if (students.count(student) == 0)
+          ++numberOfViolations;
+      }
+    }
+
+    if (seperateGroups.count(studentOne) > 0)
+    {
+      for (auto student : seperateGroups[studentOne])
+      {
+        if (students.count(student) > 0)
+          ++numberOfViolations;
+      }
+    }
+
+    if (seperateGroups.count(studentTwo) > 0)
+    {
+      for (auto student : seperateGroups[studentTwo])
+      {
+        if (students.count(student) > 0)
+          ++numberOfViolations;
+      }
+    }
+
+    if (seperateGroups.count(studentThree) > 0)
+    {
+      for (auto student : seperateGroups[studentThree])
+      {
+        if (students.count(student) > 0)
+          ++numberOfViolations;
+      }
+    }
+
+    students.clear();
+  }
+
+  printf("%d", numberOfViolations / 2);
+}
+
+bool isPrime(int x)
+{
+  for (int i = 2; i * i <= x; ++i)
+    if (x % i == 0)
+      return false;
+  return true;
+}
+
+// https://dmoj.ca/problem/ccc19s2
+void prettyAveragePrimes()
+{
+  int T;
+  scanf("%d", &T);
+
+  int num, j;
+  bool leftPrime, rightPrime;
+  for (int i = 0; i < T; ++i)
+  {
+    scanf("%d", &num);
+    num *= 2;
+
+    j = 2;
+    while (j <= num / 2)
+    {
+      leftPrime = isPrime(j);
+      rightPrime = isPrime(num - j);
+
+      if (leftPrime && rightPrime)
+      {
+        printf("%d %d\n", j, num - j);
+        break;
+      }
+      ++j;
+    }
+  }
+}
+
 template <typename T>
 void displayVector(vector<T> arr)
 {
@@ -3147,7 +3282,7 @@ int main()
   vector<int> nums2({1, 1, 2, 2});
   vector<vector<int>> nums2d({{4, 3, 1}, {6, 5, 2}, {9, 7, 3}});
 
-  jerseys();
+  prettyAveragePrimes();
 
   return 0;
 }

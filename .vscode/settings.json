@@ -98,5 +98,6 @@
     "queue": "cpp",
     "stack": "cpp"
   },
-  "C_Cpp.errorSquiggles": "enabled"
+  "C_Cpp.errorSquiggles": "enabled",
+  "editor.fontSize": 18
 }
