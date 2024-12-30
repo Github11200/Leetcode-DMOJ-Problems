@@ -3269,6 +3269,168 @@ void prettyAveragePrimes()
   }
 }
 
+// https://dmoj.ca/problem/ccc12s2
+void aromaticNumbers()
+{
+  string input;
+  cin >> input;
+
+  unordered_map<char, int> baseValues{
+      {'I', 1},
+      {'V', 5},
+      {'X', 10},
+      {'L', 50},
+      {'C', 100},
+      {'D', 500},
+      {'M', 1000}};
+
+  int totalSum = 0;
+  for (int i = 1; i < input.size(); i += 2)
+  {
+    int sum = (input[i - 1] - '0') * baseValues[input[i]];
+    if (i > 1 && baseValues[input[i]] > baseValues[input[i - 2]])
+      totalSum -= 2 * ((input[i - 3] - '0') * baseValues[input[i - 2]]);
+    totalSum += sum;
+  }
+
+  printf("%d", totalSum);
+}
+
+// https://dmoj.ca/problem/ccc06s2
+void attackOfTheCipherTexts()
+{
+  cin.sync_with_stdio(0);
+  cin.tie(0);
+
+  string plainText;
+  string ciphered;
+  string toDecode;
+
+  getline(cin, plainText);
+  getline(cin, ciphered);
+  getline(cin, toDecode);
+
+  string letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ ";
+  set<char> keySet;
+  set<char> valSet;
+
+  for (int i = 0; i < letters.size(); ++i)
+  {
+    keySet.insert(letters[i]);
+    valSet.insert(letters[i]);
+  }
+
+  unordered_map<char, char> mapping;
+  for (int i = 0; i < plainText.size(); ++i)
+  {
+    mapping[ciphered[i]] = plainText[i];
+    if (keySet.count(ciphered[i]) > 0)
+      keySet.erase(ciphered[i]);
+    if (valSet.count(plainText[i]) > 0)
+      valSet.erase(plainText[i]);
+  }
+
+  if (keySet.size() == 1)
+    mapping[*keySet.begin()] = *valSet.begin();
+
+  string result;
+  for (int i = 0; i < toDecode.size(); ++i)
+  {
+    if (mapping.count(toDecode[i]) == 0)
+      result += ".";
+    else
+      result += mapping[toDecode[i]];
+  }
+
+  cout << result << endl;
+}
+
+// https://dmoj.ca/problem/ccc00s3
+void surfing()
+{
+  int numberOfWebPages;
+  cin >> numberOfWebPages;
+
+  string link;
+  string line;
+
+  getline(cin, link);
+  unordered_map<string, vector<string>> linksMap;
+  vector<pair<string, string>> orderedLinks;
+  for (int i = 0; i < numberOfWebPages; ++i)
+  {
+    getline(cin, link);
+
+    int res = 0;
+    while (true)
+    {
+      getline(cin, line);
+      while ((res = line.find("HREF", res + 1)) != string::npos)
+      {
+        string hyperlink = "";
+        int j = res + 6;
+        while (line[j] != '"')
+        {
+          hyperlink += line[j];
+          ++j;
+        }
+        linksMap[link].push_back(hyperlink);
+        orderedLinks.push_back(pair<string, string>(link, hyperlink));
+      }
+
+      if (line.find("</HTML>") != string::npos)
+        break;
+    }
+  }
+
+  string startLink;
+  string endLink;
+
+  getline(cin, startLink);
+  getline(cin, endLink);
+  vector<string> results;
+  while (startLink != "The End")
+  {
+    queue<string> nextUrls;
+    set<string> visited;
+    bool canSurf = false;
+
+    nextUrls.push(startLink);
+    while (!nextUrls.empty())
+    {
+      string url = nextUrls.front();
+      nextUrls.pop();
+      if (visited.count(url) > 0)
+        continue;
+      visited.insert(url);
+
+      if (url == endLink)
+      {
+        results.push_back("Can surf from " + startLink + " to " + endLink + ".");
+        canSurf = true;
+        break;
+      }
+
+      for (auto neighbour : linksMap[url])
+        nextUrls.push(neighbour);
+    }
+
+    if (canSurf == false)
+      results.push_back("Can't surf from " + startLink + " to " + endLink + ".");
+
+    getline(cin, startLink);
+    if (startLink == "The End")
+      break;
+    getline(cin, endLink);
+  }
+
+  for (int i = 0; i < orderedLinks.size(); ++i)
+    cout << "Link from " << orderedLinks[i].first << " to " << orderedLinks[i].second << "\n";
+
+  for (auto result : results)
+    cout << result << "\n";
+}
+
 template <typename T>
 void displayVector(vector<T> arr)
 {
@@ -3282,7 +3444,7 @@ int main()
   vector<int> nums2({1, 1, 2, 2});
   vector<vector<int>> nums2d({{4, 3, 1}, {6, 5, 2}, {9, 7, 3}});
 
-  prettyAveragePrimes();
+  surfing();
 
   return 0;
 }
