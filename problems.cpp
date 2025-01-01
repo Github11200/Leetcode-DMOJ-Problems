@@ -3503,6 +3503,183 @@ void strategicBombing()
   printf("There are %d disconnecting roads.\n", results.size());
 }
 
+// https://dmoj.ca/problem/ccc02s3, TLE on case 5
+void blindfold()
+{
+  int r, c, m;
+
+  scanf("%d", &r);
+  scanf("%d", &c);
+
+  vector<vector<char>> backyard(r, vector<char>(c));
+  for (int i = 0; i < r; ++i)
+    for (int j = 0; j < c; ++j)
+      cin >> backyard[i][j];
+
+  scanf("%d", &m);
+  vector<char> moves(m);
+  for (int i = 0; i < m; ++i)
+    cin >> moves[i];
+
+  set<pair<int, int>> invalidPositions;
+  for (int i = 0; i < r; ++i)
+  {
+    for (int j = 0; j < c; ++j)
+    {
+      if (backyard[i][j] == 'X' && invalidPositions.count(pair<int, int>(i, j)) > 0)
+        continue;
+      for (int k = 0; k < 4; ++k)
+      {
+        // 0 -> up, 1 -> right, 2 -> down, 3 -> left
+        int direction = k;
+        int currentRow = i;
+        int currentColumn = j;
+        bool canMove = true;
+        for (auto move : moves)
+        {
+          if (move == 'F')
+          {
+            switch (direction)
+            {
+            case 0:
+              --currentRow;
+              break;
+            case 1:
+              ++currentColumn;
+              break;
+            case 2:
+              ++currentRow;
+              break;
+            case 3:
+              --currentColumn;
+              break;
+            default:
+              break;
+            }
+          }
+          else if (move == 'R')
+          {
+            ++direction;
+            if (direction == 4)
+              direction = 0;
+          }
+          else
+          {
+            --direction;
+            if (direction == -1)
+              direction = 3;
+          }
+          if (currentRow < 0 || currentRow == r || currentColumn < 0 || currentColumn > c || backyard[currentRow][currentColumn] == 'X')
+          {
+            canMove = false;
+            invalidPositions.insert(pair<int, int>(currentRow, currentColumn));
+            break;
+          }
+        }
+        if (canMove)
+          backyard[currentRow][currentColumn] = '*';
+      }
+    }
+  }
+
+  for (int i = 0; i < r; ++i)
+  {
+    for (int j = 0; j < c; ++j)
+      printf("%c", backyard[i][j]);
+    printf("\n");
+  }
+}
+
+void spreadSheet()
+{
+  unordered_map<string, vector<string>> adjacencyList;
+  for (int i = 0; i < 10; ++i)
+  {
+    char currentLetter = (char)(i + 65);
+    for (int j = 0; j < 9; ++j)
+    {
+      string currentSquare;
+      currentSquare += currentLetter;
+      currentSquare += to_string(j + 1);
+
+      string temp;
+      cin >> temp;
+      // If it is a number
+      if ((int)temp[0] - 65 < 0)
+        adjacencyList[currentSquare].push_back(temp);
+      else
+      {
+        for (int k = 0; k < temp.size(); k += 3)
+          adjacencyList[currentSquare].push_back(temp.substr(k, 2));
+      }
+    }
+  }
+
+  vector<vector<string>> result(10, vector<string>(9));
+  unordered_map<string, int> savedValues;
+  for (auto element : adjacencyList)
+  {
+    int row = element.first[0] - 65;
+    int column = (int)element.first[1] - 49;
+
+    // If it is A1, A2, A3, so on
+    if (element.second[0][0] - 65 >= 0)
+    {
+      int sum = -1;
+      queue<string> nextSquare;
+      set<string> visited;
+      string parentNode;
+      for (int i = 0; i < element.second.size(); ++i)
+        nextSquare.push(element.second[i]);
+      while (!nextSquare.empty())
+      {
+        string currentSquare = nextSquare.front();
+        nextSquare.pop();
+        parentNode = currentSquare;
+
+        if (visited.count(currentSquare) > 0)
+        {
+          sum = -1;
+          break;
+        }
+        visited.insert(currentSquare);
+
+        if (savedValues.count(currentSquare) > 0)
+        {
+          if (savedValues[currentSquare] != -1)
+            sum += savedValues[currentSquare];
+          continue;
+        }
+
+        // It's a number
+        int temp = (int)adjacencyList[currentSquare][0][0];
+        if (adjacencyList[currentSquare][0][0] - 65 < 0)
+          sum += stoi(adjacencyList[currentSquare][0]);
+        else
+        {
+          for (auto square : adjacencyList[currentSquare])
+            nextSquare.push(square);
+        }
+      }
+
+      savedValues[element.first] = sum;
+      if (sum == -1)
+        result[row][column] = "*";
+      else
+        result[row][column] = to_string(sum + 1);
+    }
+    else
+      result[row][column] = element.second[0];
+  }
+
+  for (int i = 0; i < result.size(); ++i)
+  {
+    for (int j = 0; j < result[i].size(); ++j)
+      cout << result[i][j] << " ";
+    printf("\n");
+  }
+}
+
 template <typename T>
 void displayVector(vector<T> arr)
 {
@@ -3516,7 +3693,7 @@ int main()
   vector<int> nums2({1, 1, 2, 2});
   vector<vector<int>> nums2d({{4, 3, 1}, {6, 5, 2}, {9, 7, 3}});
 
-  strategicBombing();
+  spreadSheet();
 
   return 0;
 }
