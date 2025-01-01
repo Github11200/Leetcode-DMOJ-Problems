@@ -3590,94 +3590,69 @@ void blindfold()
   }
 }
 
-void spreadSheet()
+// https://dmoj.ca/problem/ccc03s3
+void floorPlan()
 {
-  unordered_map<string, vector<string>> adjacencyList;
-  for (int i = 0; i < 10; ++i)
+  int amountOfFlooring, r, c;
+  scanf("%d", &amountOfFlooring);
+  scanf("%d", &r);
+  scanf("%d", &c);
+
+  vector<vector<char>> grid(r, vector<char>(c));
+  for (int i = 0; i < r; ++i)
+    for (int j = 0; j < c; ++j)
+      cin >> grid[i][j];
+
+  vector<int> roomSizes;
+  for (int i = 0; i < r; ++i)
   {
-    char currentLetter = (char)(i + 65);
-    for (int j = 0; j < 9; ++j)
+    for (int j = 0; j < c; ++j)
     {
-      string currentSquare;
-      currentSquare += currentLetter;
-      currentSquare += to_string(j + 1);
+      if (grid[i][j] != '.')
+        continue;
+      queue<pair<int, int>> nextNodes;
+      set<pair<int, int>> visited;
 
-      string temp;
-      cin >> temp;
-      // If it is a number
-      if ((int)temp[0] - 65 < 0)
-        adjacencyList[currentSquare].push_back(temp);
-      else
+      nextNodes.push(pair<int, int>(i, j));
+      int roomSize = 0;
+      while (!nextNodes.empty())
       {
-        for (int k = 0; k < temp.size(); k += 3)
-          adjacencyList[currentSquare].push_back(temp.substr(k, 2));
-      }
-    }
-  }
-
-  vector<vector<string>> result(10, vector<string>(9));
-  unordered_map<string, int> savedValues;
-  for (auto element : adjacencyList)
-  {
-    int row = element.first[0] - 65;
-    int column = (int)element.first[1] - 49;
-
-    // If it is A1, A2, A3, so on
-    if (element.second[0][0] - 65 >= 0)
-    {
-      int sum = -1;
-      queue<string> nextSquare;
-      set<string> visited;
-      string parentNode;
-      for (int i = 0; i < element.second.size(); ++i)
-        nextSquare.push(element.second[i]);
-      while (!nextSquare.empty())
-      {
-        string currentSquare = nextSquare.front();
-        nextSquare.pop();
-        parentNode = currentSquare;
-
-        if (visited.count(currentSquare) > 0)
-        {
-          sum = -1;
-          break;
-        }
-        visited.insert(currentSquare);
-
-        if (savedValues.count(currentSquare) > 0)
-        {
-          if (savedValues[currentSquare] != -1)
-            sum += savedValues[currentSquare];
+        pair<int, int> currentNode = nextNodes.front();
+        nextNodes.pop();
+        if (visited.count(currentNode) > 0)
           continue;
-        }
+        visited.insert(currentNode);
+        grid[currentNode.first][currentNode.second] = 'I';
+        ++roomSize;
 
-        // It's a number
-        int temp = (int)adjacencyList[currentSquare][0][0];
-        if (adjacencyList[currentSquare][0][0] - 65 < 0)
-          sum += stoi(adjacencyList[currentSquare][0]);
-        else
-        {
-          for (auto square : adjacencyList[currentSquare])
-            nextSquare.push(square);
-        }
+        if (currentNode.first - 1 >= 0 && grid[currentNode.first - 1][currentNode.second] != 'I')
+          nextNodes.push(pair<int, int>(currentNode.first - 1, currentNode.second));
+        if (currentNode.second - 1 >= 0 && grid[currentNode.first][currentNode.second - 1] != 'I')
+          nextNodes.push(pair<int, int>(currentNode.first, currentNode.second - 1));
+        if (currentNode.first + 1 < r && grid[currentNode.first + 1][currentNode.second] != 'I')
+          nextNodes.push(pair<int, int>(currentNode.first + 1, currentNode.second));
+        if (currentNode.second + 1 < c && grid[currentNode.first][currentNode.second + 1] != 'I')
+          nextNodes.push(pair<int, int>(currentNode.first, currentNode.second + 1));
       }
-
-      savedValues[element.first] = sum;
-      if (sum == -1)
-        result[row][column] = "*";
-      else
-        result[row][column] = to_string(sum + 1);
+      roomSizes.push_back(roomSize);
     }
-    else
-      result[row][column] = element.second[0];
   }
 
-  for (int i = 0; i < result.size(); ++i)
+  sort(roomSizes.rbegin(), roomSizes.rend());
+
+  int i = 0;
+  for (; i < roomSizes.size(); ++i)
   {
-    for (int j = 0; j < result[i].size(); ++j)
-      cout << result[i][j] << " ";
-    printf("\n");
+    if (amountOfFlooring - roomSizes[i] >= 0)
+      amountOfFlooring -= roomSizes[i];
+    else
+      break;
   }
+
+  if (i == 1)
+    printf("%d room, %d square metre(s) left over\n", i, amountOfFlooring);
+  else
+    printf("%d rooms, %d square metre(s) left over\n", i, amountOfFlooring);
 }
 
 template <typename T>
@@ -3693,7 +3668,7 @@ int main()
   vector<int> nums2({1, 1, 2, 2});
   vector<vector<int>> nums2d({{4, 3, 1}, {6, 5, 2}, {9, 7, 3}});
 
-  spreadSheet();
+  floorPlan();
 
   return 0;
 }
