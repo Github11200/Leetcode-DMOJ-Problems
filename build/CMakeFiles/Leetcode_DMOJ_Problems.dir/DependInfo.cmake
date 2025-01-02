@@ -8,8 +8,6 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/user/code/Leetcode-DMOJ-Problems/LeetcodeContests/Weekly-Contest-391.cpp" "CMakeFiles/Leetcode_DMOJ_Problems.dir/LeetcodeContests/Weekly-Contest-391.cpp.o" "gcc" "CMakeFiles/Leetcode_DMOJ_Problems.dir/LeetcodeContests/Weekly-Contest-391.cpp.o.d"
-  "/home/user/code/Leetcode-DMOJ-Problems/anki.cpp" "CMakeFiles/Leetcode_DMOJ_Problems.dir/anki.cpp.o" "gcc" "CMakeFiles/Leetcode_DMOJ_Problems.dir/anki.cpp.o.d"
   "/home/user/code/Leetcode-DMOJ-Problems/problems.cpp" "CMakeFiles/Leetcode_DMOJ_Problems.dir/problems.cpp.o" "gcc" "CMakeFiles/Leetcode_DMOJ_Problems.dir/problems.cpp.o.d"
   )
 

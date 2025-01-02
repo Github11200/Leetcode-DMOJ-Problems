@@ -69,24 +69,10 @@ include CMakeFiles/Leetcode_DMOJ_Problems.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/Leetcode_DMOJ_Problems.dir/flags.make
 
-CMakeFiles/Leetcode_DMOJ_Problems.dir/LeetcodeContests/Weekly-Contest-391.cpp.o: CMakeFiles/Leetcode_DMOJ_Problems.dir/flags.make
-CMakeFiles/Leetcode_DMOJ_Problems.dir/LeetcodeContests/Weekly-Contest-391.cpp.o: ../LeetcodeContests/Weekly-Contest-391.cpp
-CMakeFiles/Leetcode_DMOJ_Problems.dir/LeetcodeContests/Weekly-Contest-391.cpp.o: CMakeFiles/Leetcode_DMOJ_Problems.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/user/code/Leetcode-DMOJ-Problems/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Leetcode_DMOJ_Problems.dir/LeetcodeContests/Weekly-Contest-391.cpp.o"
-	/home/user/miniconda3/bin/x86_64-conda-linux-gnu-g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Leetcode_DMOJ_Problems.dir/LeetcodeContests/Weekly-Contest-391.cpp.o -MF CMakeFiles/Leetcode_DMOJ_Problems.dir/LeetcodeContests/Weekly-Contest-391.cpp.o.d -o CMakeFiles/Leetcode_DMOJ_Problems.dir/LeetcodeContests/Weekly-Contest-391.cpp.o -c /home/user/code/Leetcode-DMOJ-Problems/LeetcodeContests/Weekly-Contest-391.cpp
-
-CMakeFiles/Leetcode_DMOJ_Problems.dir/LeetcodeContests/Weekly-Contest-391.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Leetcode_DMOJ_Problems.dir/LeetcodeContests/Weekly-Contest-391.cpp.i"
-	/home/user/miniconda3/bin/x86_64-conda-linux-gnu-g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/user/code/Leetcode-DMOJ-Problems/LeetcodeContests/Weekly-Contest-391.cpp > CMakeFiles/Leetcode_DMOJ_Problems.dir/LeetcodeContests/Weekly-Contest-391.cpp.i
-
-CMakeFiles/Leetcode_DMOJ_Problems.dir/LeetcodeContests/Weekly-Contest-391.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Leetcode_DMOJ_Problems.dir/LeetcodeContests/Weekly-Contest-391.cpp.s"
-	/home/user/miniconda3/bin/x86_64-conda-linux-gnu-g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/user/code/Leetcode-DMOJ-Problems/LeetcodeContests/Weekly-Contest-391.cpp -o CMakeFiles/Leetcode_DMOJ_Problems.dir/LeetcodeContests/Weekly-Contest-391.cpp.s
-
 CMakeFiles/Leetcode_DMOJ_Problems.dir/problems.cpp.o: CMakeFiles/Leetcode_DMOJ_Problems.dir/flags.make
 CMakeFiles/Leetcode_DMOJ_Problems.dir/problems.cpp.o: ../problems.cpp
 CMakeFiles/Leetcode_DMOJ_Problems.dir/problems.cpp.o: CMakeFiles/Leetcode_DMOJ_Problems.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/user/code/Leetcode-DMOJ-Problems/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/Leetcode_DMOJ_Problems.dir/problems.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/user/code/Leetcode-DMOJ-Problems/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Leetcode_DMOJ_Problems.dir/problems.cpp.o"
 	/home/user/miniconda3/bin/x86_64-conda-linux-gnu-g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Leetcode_DMOJ_Problems.dir/problems.cpp.o -MF CMakeFiles/Leetcode_DMOJ_Problems.dir/problems.cpp.o.d -o CMakeFiles/Leetcode_DMOJ_Problems.dir/problems.cpp.o -c /home/user/code/Leetcode-DMOJ-Problems/problems.cpp
 
 CMakeFiles/Leetcode_DMOJ_Problems.dir/problems.cpp.i: cmake_force
@@ -97,35 +83,17 @@ CMakeFiles/Leetcode_DMOJ_Problems.dir/problems.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Leetcode_DMOJ_Problems.dir/problems.cpp.s"
 	/home/user/miniconda3/bin/x86_64-conda-linux-gnu-g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/user/code/Leetcode-DMOJ-Problems/problems.cpp -o CMakeFiles/Leetcode_DMOJ_Problems.dir/problems.cpp.s
 
-CMakeFiles/Leetcode_DMOJ_Problems.dir/anki.cpp.o: CMakeFiles/Leetcode_DMOJ_Problems.dir/flags.make
-CMakeFiles/Leetcode_DMOJ_Problems.dir/anki.cpp.o: ../anki.cpp
-CMakeFiles/Leetcode_DMOJ_Problems.dir/anki.cpp.o: CMakeFiles/Leetcode_DMOJ_Problems.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/user/code/Leetcode-DMOJ-Problems/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/Leetcode_DMOJ_Problems.dir/anki.cpp.o"
-	/home/user/miniconda3/bin/x86_64-conda-linux-gnu-g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Leetcode_DMOJ_Problems.dir/anki.cpp.o -MF CMakeFiles/Leetcode_DMOJ_Problems.dir/anki.cpp.o.d -o CMakeFiles/Leetcode_DMOJ_Problems.dir/anki.cpp.o -c /home/user/code/Leetcode-DMOJ-Problems/anki.cpp
-
-CMakeFiles/Leetcode_DMOJ_Problems.dir/anki.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Leetcode_DMOJ_Problems.dir/anki.cpp.i"
-	/home/user/miniconda3/bin/x86_64-conda-linux-gnu-g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/user/code/Leetcode-DMOJ-Problems/anki.cpp > CMakeFiles/Leetcode_DMOJ_Problems.dir/anki.cpp.i
-
-CMakeFiles/Leetcode_DMOJ_Problems.dir/anki.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Leetcode_DMOJ_Problems.dir/anki.cpp.s"
-	/home/user/miniconda3/bin/x86_64-conda-linux-gnu-g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/user/code/Leetcode-DMOJ-Problems/anki.cpp -o CMakeFiles/Leetcode_DMOJ_Problems.dir/anki.cpp.s
-
 # Object files for target Leetcode_DMOJ_Problems
 Leetcode_DMOJ_Problems_OBJECTS = \
-"CMakeFiles/Leetcode_DMOJ_Problems.dir/LeetcodeContests/Weekly-Contest-391.cpp.o" \
-"CMakeFiles/Leetcode_DMOJ_Problems.dir/problems.cpp.o" \
-"CMakeFiles/Leetcode_DMOJ_Problems.dir/anki.cpp.o"
+"CMakeFiles/Leetcode_DMOJ_Problems.dir/problems.cpp.o"
 
 # External object files for target Leetcode_DMOJ_Problems
 Leetcode_DMOJ_Problems_EXTERNAL_OBJECTS =
 
-Leetcode_DMOJ_Problems: CMakeFiles/Leetcode_DMOJ_Problems.dir/LeetcodeContests/Weekly-Contest-391.cpp.o
 Leetcode_DMOJ_Problems: CMakeFiles/Leetcode_DMOJ_Problems.dir/problems.cpp.o
-Leetcode_DMOJ_Problems: CMakeFiles/Leetcode_DMOJ_Problems.dir/anki.cpp.o
 Leetcode_DMOJ_Problems: CMakeFiles/Leetcode_DMOJ_Problems.dir/build.make
 Leetcode_DMOJ_Problems: CMakeFiles/Leetcode_DMOJ_Problems.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/user/code/Leetcode-DMOJ-Problems/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable Leetcode_DMOJ_Problems"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/user/code/Leetcode-DMOJ-Problems/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable Leetcode_DMOJ_Problems"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/Leetcode_DMOJ_Problems.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

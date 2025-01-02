@@ -81,12 +81,12 @@ clean: CMakeFiles/Leetcode_DMOJ_Problems.dir/clean
 CMakeFiles/Leetcode_DMOJ_Problems.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Leetcode_DMOJ_Problems.dir/build.make CMakeFiles/Leetcode_DMOJ_Problems.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Leetcode_DMOJ_Problems.dir/build.make CMakeFiles/Leetcode_DMOJ_Problems.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/user/code/Leetcode-DMOJ-Problems/build/CMakeFiles --progress-num=1,2,3,4 "Built target Leetcode_DMOJ_Problems"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/user/code/Leetcode-DMOJ-Problems/build/CMakeFiles --progress-num=1,2 "Built target Leetcode_DMOJ_Problems"
 .PHONY : CMakeFiles/Leetcode_DMOJ_Problems.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/Leetcode_DMOJ_Problems.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/user/code/Leetcode-DMOJ-Problems/build/CMakeFiles 4
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/user/code/Leetcode-DMOJ-Problems/build/CMakeFiles 2
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/Leetcode_DMOJ_Problems.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/user/code/Leetcode-DMOJ-Problems/build/CMakeFiles 0
 .PHONY : CMakeFiles/Leetcode_DMOJ_Problems.dir/rule

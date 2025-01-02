@@ -1,8 +1,4 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/Leetcode_DMOJ_Problems.dir/LeetcodeContests/Weekly-Contest-391.cpp.o"
-  "CMakeFiles/Leetcode_DMOJ_Problems.dir/LeetcodeContests/Weekly-Contest-391.cpp.o.d"
-  "CMakeFiles/Leetcode_DMOJ_Problems.dir/anki.cpp.o"
-  "CMakeFiles/Leetcode_DMOJ_Problems.dir/anki.cpp.o.d"
   "CMakeFiles/Leetcode_DMOJ_Problems.dir/problems.cpp.o"
   "CMakeFiles/Leetcode_DMOJ_Problems.dir/problems.cpp.o.d"
   "Leetcode_DMOJ_Problems"

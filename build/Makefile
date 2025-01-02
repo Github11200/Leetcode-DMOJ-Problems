@@ -129,54 +129,6 @@ Leetcode_DMOJ_Problems/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Leetcode_DMOJ_Problems.dir/build.make CMakeFiles/Leetcode_DMOJ_Problems.dir/build
 .PHONY : Leetcode_DMOJ_Problems/fast
 
-LeetcodeContests/Weekly-Contest-391.o: LeetcodeContests/Weekly-Contest-391.cpp.o
-.PHONY : LeetcodeContests/Weekly-Contest-391.o
-
-# target to build an object file
-LeetcodeContests/Weekly-Contest-391.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Leetcode_DMOJ_Problems.dir/build.make CMakeFiles/Leetcode_DMOJ_Problems.dir/LeetcodeContests/Weekly-Contest-391.cpp.o
-.PHONY : LeetcodeContests/Weekly-Contest-391.cpp.o
-
-LeetcodeContests/Weekly-Contest-391.i: LeetcodeContests/Weekly-Contest-391.cpp.i
-.PHONY : LeetcodeContests/Weekly-Contest-391.i
-
-# target to preprocess a source file
-LeetcodeContests/Weekly-Contest-391.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Leetcode_DMOJ_Problems.dir/build.make CMakeFiles/Leetcode_DMOJ_Problems.dir/LeetcodeContests/Weekly-Contest-391.cpp.i
-.PHONY : LeetcodeContests/Weekly-Contest-391.cpp.i
-
-LeetcodeContests/Weekly-Contest-391.s: LeetcodeContests/Weekly-Contest-391.cpp.s
-.PHONY : LeetcodeContests/Weekly-Contest-391.s
-
-# target to generate assembly for a file
-LeetcodeContests/Weekly-Contest-391.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Leetcode_DMOJ_Problems.dir/build.make CMakeFiles/Leetcode_DMOJ_Problems.dir/LeetcodeContests/Weekly-Contest-391.cpp.s
-.PHONY : LeetcodeContests/Weekly-Contest-391.cpp.s
-
-anki.o: anki.cpp.o
-.PHONY : anki.o
-
-# target to build an object file
-anki.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Leetcode_DMOJ_Problems.dir/build.make CMakeFiles/Leetcode_DMOJ_Problems.dir/anki.cpp.o
-.PHONY : anki.cpp.o
-
-anki.i: anki.cpp.i
-.PHONY : anki.i
-
-# target to preprocess a source file
-anki.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Leetcode_DMOJ_Problems.dir/build.make CMakeFiles/Leetcode_DMOJ_Problems.dir/anki.cpp.i
-.PHONY : anki.cpp.i
-
-anki.s: anki.cpp.s
-.PHONY : anki.s
-
-# target to generate assembly for a file
-anki.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Leetcode_DMOJ_Problems.dir/build.make CMakeFiles/Leetcode_DMOJ_Problems.dir/anki.cpp.s
-.PHONY : anki.cpp.s
-
 problems.o: problems.cpp.o
 .PHONY : problems.o
 
@@ -210,12 +162,6 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... Leetcode_DMOJ_Problems"
-	@echo "... LeetcodeContests/Weekly-Contest-391.o"
-	@echo "... LeetcodeContests/Weekly-Contest-391.i"
-	@echo "... LeetcodeContests/Weekly-Contest-391.s"
-	@echo "... anki.o"
-	@echo "... anki.i"
-	@echo "... anki.s"
 	@echo "... problems.o"
 	@echo "... problems.i"
 	@echo "... problems.s"
