@@ -3543,7 +3543,6 @@ void blindfold()
             {
             case 0:
               --currentRow;
-              break;
             case 1:
               ++currentColumn;
               break;
@@ -3655,6 +3654,35 @@ void floorPlan()
     printf("%d rooms, %d square metre(s) left over\n", i, amountOfFlooring);
 }
 
+// https://dmoj.ca/problem/ccc15s3
+void gates()
+{
+  int numberOfGates, numberOfPlanes;
+  scanf("%d", &numberOfGates);
+  scanf("%d", &numberOfPlanes);
+
+  vector<int> gatesToDock(numberOfPlanes);
+  for (int i = 0; i < numberOfPlanes; ++i)
+    scanf("%d", &gatesToDock[i]);
+
+  vector<bool> gates(numberOfGates, false);
+  set<int, greater<int>> freeGates;
+  for (int i = 1; i <= numberOfGates; ++i)
+    freeGates.insert(i);
+
+  int numberOfPlanesDocked = 0;
+  for (int i = 0; i < gatesToDock.size(); ++i)
+  {
+    auto result = freeGates.lower_bound(gatesToDock[i]);
+    if (result == freeGates.end())
+      break;
+    ++numberOfPlanesDocked;
+    freeGates.erase(*result);
+  }
+
+  printf("%d", numberOfPlanesDocked);
+}
+
 template <typename T>
 void displayVector(vector<T> arr)
 {
@@ -3667,8 +3695,6 @@ int main()
   vector<int> nums1({2, 3, 1, 1, 4});
   vector<int> nums2({1, 1, 2, 2});
   vector<vector<int>> nums2d({{4, 3, 1}, {6, 5, 2}, {9, 7, 3}});
-
-  floorPlan();
 
   return 0;
 }
