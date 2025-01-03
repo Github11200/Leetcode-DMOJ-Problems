@@ -2742,6 +2742,72 @@ void penniesInTheRing()
   }
 }
 
+void swipe()
+{
+  int N;
+  scanf("%d", &N);
+
+  vector<int> A(N), B(N);
+  for (int i = 0; i < N; ++i)
+    scanf("%d", &A[i]);
+  for (int i = 0; i < N; ++i)
+    scanf("%d", &B[i]);
+
+  int l = 0;
+  int r = 0;
+  vector<pair<char, pair<int, int>>> instructions;
+  for (int i = 1; i < N; ++i)
+  {
+    if (A[i] != B[i])
+    {
+      l = i - 1;
+      r = i;
+      bool canMove = false;
+      while (A[r] != B[r] && A[l] == B[r] && r < N)
+      {
+        canMove = true;
+        A[r] = A[r - 1];
+        ++r;
+      }
+
+      if (canMove)
+        instructions.push_back(pair<char, pair<int, int>>('R', pair<int, int>(l, r - 1)));
+    }
+  }
+
+  for (int i = N - 2; i >= 0; --i)
+  {
+    if (A[i] != B[i])
+    {
+      l = i;
+      r = i + 1;
+      bool canMove = false;
+      while (A[l] != B[l] && A[r] == B[l] && l >= 0)
+      {
+        canMove = true;
+        A[l] = A[l + 1];
+        --l;
+      }
+
+      if (canMove)
+        instructions.push_back(pair<char, pair<int, int>>('L', pair<int, int>(l + 1, r)));
+    }
+  }
+
+  for (int i = 0; i < N; ++i)
+  {
+    if (A[i] != B[i])
+    {
+      printf("NO\n");
+      return;
+    }
+  }
+
+  printf("YES\n%d\n", instructions.size());
+  for (int i = 0; i < instructions.size(); ++i)
+    printf("%c %d %d\n", instructions[i].first, instructions[i].second.first, instructions[i].second.second);
+}
+
 template <typename T>
 void display2DVector(vector<vector<T>> arr)
 {
@@ -2751,245 +2817,6 @@ void display2DVector(vector<vector<T>> arr)
       cout << arr[i][j] << " ";
     cout << endl;
   }
-}
-
-// https://dmoj.ca/problem/ccc21s2
-void modernArt()
-{
-  int M, N, K;
-
-  scanf("%d", &M);
-  scanf("%d", &N);
-  scanf("%d", &K);
-
-  // 0 -> Black
-  // 1 -> Gold
-  vector<bool> rows(M, false);
-  vector<bool> columns(N, false);
-  int numberOfGold = 0;
-  for (int i = 0; i < K; ++i)
-  {
-    char rowOrColumn;
-    int rowOrColumnNumber;
-    cin >> rowOrColumn >> rowOrColumnNumber;
-    --rowOrColumnNumber;
-
-    if (rowOrColumn == 'R')
-      rows[rowOrColumnNumber] = !rows[rowOrColumnNumber];
-    else
-      columns[rowOrColumnNumber] = !columns[rowOrColumnNumber];
-  }
-
-  int numberOfRowsOn = 0;
-  for (int i = 0; i < rows.size(); ++i)
-  {
-    if (rows[i])
-    {
-      ++numberOfRowsOn;
-      numberOfGold += N;
-    }
-  }
-
-  for (int i = 0; i < columns.size(); ++i)
-  {
-    if (columns[i])
-      numberOfGold += M - (numberOfRowsOn * 2);
-  }
-
-  printf("%d", numberOfGold);
-}
-
-// https://dmoj.ca/problem/ccc14s2
-void assigningPartners()
-{
-  int N;
-  scanf("%d", &N);
-
-  vector<string> classOne(N, "");
-  unordered_map<string, string> partners;
-
-  for (int i = 0; i < N; ++i)
-    cin >> classOne[i];
-
-  string name = "";
-  int j = 0;
-  for (int i = 0; i < N; ++i)
-  {
-    cin >> name;
-    if (name == classOne[j] || partners.count(name) > 0 && partners[name] != classOne[j])
-    {
-      printf("bad");
-      return;
-    }
-    else
-      partners[classOne[j]] = name;
-    ++j;
-  }
-
-  printf("good");
-}
-
-// https://dmoj.ca/problem/ccc10s2
-void huffmanEncoding()
-{
-  int k;
-  scanf("%d", &k);
-
-  unordered_map<string, char> encodedCharacters;
-  for (int i = 0; i < k; ++i)
-  {
-    char letter;
-    string sequence;
-    cin >> letter >> sequence;
-    encodedCharacters[sequence] = letter;
-  }
-
-  string sequence;
-  string output = "";
-  cin >> sequence;
-
-  for (int i = 0; i < sequence.size();)
-  {
-    string substring = "";
-    while (encodedCharacters.count(substring) == 0 && i < sequence.size())
-    {
-      substring += sequence[i];
-      ++i;
-    }
-    output += encodedCharacters[substring];
-  }
-
-  cout << output;
-}
-
-// https://dmoj.ca/problem/ccc18s2
-void sunflowers()
-{
-  int N;
-  scanf("%d", &N);
-
-  vector<vector<int>> grid(N, vector<int>(N, 0));
-  for (int i = 0; i < N; ++i)
-    for (int j = 0; j < N; ++j)
-      cin >> grid[i][j];
-
-  bool isRowWrong = false;
-  for (int i = 1; i < N; ++i)
-  {
-    if (grid[0][i] < grid[0][i - 1])
-    {
-      isRowWrong = true;
-      break;
-    }
-  }
-
-  bool isColumnWrong = false;
-  for (int i = 1; i < N; ++i)
-  {
-    if (grid[i][0] < grid[i - 1][0])
-    {
-      isColumnWrong = true;
-      break;
-    }
-  }
-
-  set<pair<int, int>> previousCoordinates;
-  if (isRowWrong && isColumnWrong)
-  {
-    for (int i = 0; i < N; ++i)
-    {
-      for (int j = 0; j < N; ++j)
-      {
-        if (previousCoordinates.count(pair<int, int>(i, j)) == 0)
-        {
-          swap(grid[i][j], grid[N - 1 - i][N - 1 - j]);
-          previousCoordinates.insert(pair<int, int>(N - 1 - i, N - 1 - j));
-        }
-      }
-    }
-  }
-  else if (!isRowWrong && isColumnWrong)
-  {
-    for (int i = 0; i < N; ++i)
-    {
-      for (int j = 0; j < N; ++j)
-      {
-        if (previousCoordinates.count(pair<int, int>(i, j)) == 0)
-        {
-          swap(grid[i][j], grid[j][N - 1 - i]);
-          previousCoordinates.insert(pair<int, int>(j, N - 1 - i));
-        }
-      }
-    }
-  }
-  else if (isRowWrong && !isColumnWrong)
-  {
-    for (int i = 0; i < N; ++i)
-    {
-      for (int j = 0; j < N; ++j)
-      {
-        if (previousCoordinates.count(pair<int, int>(i, j)) == 0)
-        {
-          swap(grid[i][j], grid[N - 1 - j][i]);
-          previousCoordinates.insert(pair<int, int>(N - 1 - j, i));
-        }
-      }
-    }
-  }
-
-  for (int i = 0; i < N; ++i)
-  {
-    for (int j = 0; j < N; ++j)
-      printf("%d ", grid[i][j]);
-    printf("\n");
-  }
-}
-
-// https://dmoj.ca/problem/ccc23s2
-void symmetricMountains()
-{
-  int N;
-  scanf("%d", &N);
-
-  int *heights = new int[N];
-  for (int i = 0; i < N; ++i)
-    scanf("%d", &heights[i]);
-
-  vector<int> results(N, INT_MAX);
-  for (int i = 0; i < N; ++i)
-  {
-    int l = i;
-    int r = l;
-    int j = 0;
-
-    int asymmetricValue = 0;
-    while (l >= 0 && r < N)
-    {
-      asymmetricValue += abs(heights[l] - heights[r]);
-      results[j] = min(results[j], asymmetricValue);
-
-      --l;
-      ++r;
-      j += 2;
-    }
-
-    l = i;
-    r = l + 1;
-    j = 1;
-    asymmetricValue = 0;
-    while (l >= 0 && r < N)
-    {
-      asymmetricValue += abs(heights[l] - heights[r]);
-      results[j] = min(results[j], asymmetricValue);
-
-      --l;
-      ++r;
-      j += 2;
-    }
-  }
-
-  for (int i = 0; i < N; ++i)
-    printf("%d ", results[i]);
 }
 
 template <typename T>
@@ -3004,6 +2831,8 @@ int main()
   vector<int> nums1({2, 3, 1, 1, 4});
   vector<int> nums2({1, 1, 2, 2});
   vector<vector<int>> nums2d({{4, 3, 1}, {6, 5, 2}, {9, 7, 3}});
+
+  swipe();
 
   return 0;
 }
