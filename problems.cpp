@@ -2808,6 +2808,77 @@ void swipe()
     printf("%c %d %d\n", instructions[i].first, instructions[i].second.first, instructions[i].second.second);
 }
 
+void maze()
+{
+  int numberOfTests, r, c;
+
+  scanf("%d", &numberOfTests);
+
+  vector<int> results(numberOfTests);
+  for (int i = 0; i < numberOfTests; ++i)
+  {
+    scanf("%d", &r);
+    scanf("%d", &c);
+
+    vector<vector<char>> grid(r, vector<char>(c));
+    for (int j = 0; j < r; ++j)
+      for (int k = 0; k < c; ++k)
+        cin >> grid[j][k];
+
+    queue<pair<pair<int, int>, int>> nextCoords;
+    set<pair<int, int>> visited;
+    nextCoords.push(pair<pair<int, int>, int>(pair<int, int>(0, 0), 1));
+
+    while (!nextCoords.empty())
+    {
+      pair<int, int> currentCoords = nextCoords.front().first;
+      int distance = nextCoords.front().second;
+      char currentChar = grid[currentCoords.first][currentCoords.second];
+      nextCoords.pop();
+
+      if (visited.count(currentCoords) || currentChar == '*')
+        continue;
+      visited.insert(currentCoords);
+
+      if (currentCoords.first == c - 1 && currentCoords.second == r - 1)
+      {
+        results[i] = numberOfIntersections;
+        break;
+      }
+
+      if (currentChar == '+')
+      {
+        if (currentCoords.first - 1 >= 0)
+          nextCoords.push(pair<int, int>(currentCoords.first - 1, currentCoords.second));
+        if (currentCoords.first + 1 < c)
+          nextCoords.push(pair<int, int>(currentCoords.first + 1, currentCoords.second));
+        if (currentCoords.second - 1 >= 0)
+          nextCoords.push(pair<int, int>(currentCoords.first, currentCoords.second - 1));
+        if (currentCoords.second + 1 < r)
+          nextCoords.push(pair<int, int>(currentCoords.first, currentCoords.second + 1));
+      }
+      else if (currentChar == '-')
+      {
+        if (currentCoords.second - 1 >= 0)
+          nextCoords.push(pair<int, int>(currentCoords.first, currentCoords.second - 1));
+        if (currentCoords.second + 1 < r)
+          nextCoords.push(pair<int, int>(currentCoords.first, currentCoords.second + 1));
+      }
+      else
+      {
+        if (currentCoords.first - 1 >= 0)
+          nextCoords.push(pair<int, int>(currentCoords.first - 1, currentCoords.second));
+        if (currentCoords.first + 1 < c)
+          nextCoords.push(pair<int, int>(currentCoords.first + 1, currentCoords.second));
+      }
+      ++numberOfIntersections;
+    }
+  }
+
+  for (int i = 0; i < numberOfTests; ++i)
+    printf("%d\n", results[i]);
+}
+
 template <typename T>
 void display2DVector(vector<vector<T>> arr)
 {
@@ -2832,7 +2903,7 @@ int main()
   vector<int> nums2({1, 1, 2, 2});
   vector<vector<int>> nums2d({{4, 3, 1}, {6, 5, 2}, {9, 7, 3}});
 
-  swipe();
+  maze();
 
   return 0;
 }
