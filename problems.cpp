@@ -2742,141 +2742,51 @@ void penniesInTheRing()
   }
 }
 
-void swipe()
+void theGenevaConfection()
 {
-  int N;
-  scanf("%d", &N);
+  scanf("%d", &T);
 
-  vector<int> A(N), B(N);
-  for (int i = 0; i < N; ++i)
-    scanf("%d", &A[i]);
-  for (int i = 0; i < N; ++i)
-    scanf("%d", &B[i]);
-
-  int l = 0;
-  int r = 0;
-  vector<pair<char, pair<int, int>>> instructions;
-  for (int i = 1; i < N; ++i)
+  vector<string> results(T);
+  for (int i = 0; i < T; ++i)
   {
-    if (A[i] != B[i])
-    {
-      l = i - 1;
-      r = i;
-      bool canMove = false;
-      while (A[r] != B[r] && A[l] == B[r] && r < N)
-      {
-        canMove = true;
-        A[r] = A[r - 1];
-        ++r;
-      }
+    scanf("%d", &N);
+    vector<int> trains(N);
+    for (int j = 0; j < N; ++j)
+      scanf("%d", &trains[j]);
 
-      if (canMove)
-        instructions.push_back(pair<char, pair<int, int>>('R', pair<int, int>(l, r - 1)));
+    stack<int> trainsInBranch;
+    int k = 1;
+    for (int j = N - 1; j >= 0; --j)
+    {
+      if (!trainsInBranch.empty() && trainsInBranch.top() == k)
+      {
+        trainsInBranch.pop();
+        ++k;
+      }
+      else if (trains[j] != k)
+        trainsInBranch.push(trains[j]);
+      else if (trains[j] == k)
+        ++k;
     }
-  }
 
-  for (int i = N - 2; i >= 0; --i)
-  {
-    if (A[i] != B[i])
+    while (!trainsInBranch.empty())
     {
-      l = i;
-      r = i + 1;
-      bool canMove = false;
-      while (A[l] != B[l] && A[r] == B[l] && l >= 0)
+      if (trainsInBranch.top() == k)
       {
-        canMove = true;
-        A[l] = A[l + 1];
-        --l;
-      }
-
-      if (canMove)
-        instructions.push_back(pair<char, pair<int, int>>('L', pair<int, int>(l + 1, r)));
-    }
-  }
-
-  for (int i = 0; i < N; ++i)
-  {
-    if (A[i] != B[i])
-    {
-      printf("NO\n");
-      return;
-    }
-  }
-
-  printf("YES\n%d\n", instructions.size());
-  for (int i = 0; i < instructions.size(); ++i)
-    printf("%c %d %d\n", instructions[i].first, instructions[i].second.first, instructions[i].second.second);
-}
-
-void maze()
-{
-  int numberOfTests, r, c;
-
-  scanf("%d", &numberOfTests);
-
-  vector<int> results(numberOfTests);
-  for (int i = 0; i < numberOfTests; ++i)
-  {
-    scanf("%d", &r);
-    scanf("%d", &c);
-
-    vector<vector<char>> grid(r, vector<char>(c));
-    for (int j = 0; j < r; ++j)
-      for (int k = 0; k < c; ++k)
-        cin >> grid[j][k];
-
-    queue<pair<pair<int, int>, int>> nextCoords;
-    set<pair<int, int>> visited;
-    nextCoords.push(pair<pair<int, int>, int>(pair<int, int>(0, 0), 1));
-
-    while (!nextCoords.empty())
-    {
-      pair<int, int> currentCoords = nextCoords.front().first;
-      int distance = nextCoords.front().second;
-      char currentChar = grid[currentCoords.first][currentCoords.second];
-      nextCoords.pop();
-
-      if (visited.count(currentCoords) || currentChar == '*')
-        continue;
-      visited.insert(currentCoords);
-
-      if (currentCoords.first == c - 1 && currentCoords.second == r - 1)
-      {
-        results[i] = numberOfIntersections;
-        break;
-      }
-
-      if (currentChar == '+')
-      {
-        if (currentCoords.first - 1 >= 0)
-          nextCoords.push(pair<int, int>(currentCoords.first - 1, currentCoords.second));
-        if (currentCoords.first + 1 < c)
-          nextCoords.push(pair<int, int>(currentCoords.first + 1, currentCoords.second));
-        if (currentCoords.second - 1 >= 0)
-          nextCoords.push(pair<int, int>(currentCoords.first, currentCoords.second - 1));
-        if (currentCoords.second + 1 < r)
-          nextCoords.push(pair<int, int>(currentCoords.first, currentCoords.second + 1));
-      }
-      else if (currentChar == '-')
-      {
-        if (currentCoords.second - 1 >= 0)
-          nextCoords.push(pair<int, int>(currentCoords.first, currentCoords.second - 1));
-        if (currentCoords.second + 1 < r)
-          nextCoords.push(pair<int, int>(currentCoords.first, currentCoords.second + 1));
+        trainsInBranch.pop();
+        ++k;
       }
       else
-      {
-        if (currentCoords.first - 1 >= 0)
-          nextCoords.push(pair<int, int>(currentCoords.first - 1, currentCoords.second));
-        if (currentCoords.first + 1 < c)
-          nextCoords.push(pair<int, int>(currentCoords.first + 1, currentCoords.second));
-      }
-      ++numberOfIntersections;
+        break;
     }
+    if (k - 1 == N)
+      results[i] = "Y\n";
+    else
+      results[i] = "N\n";
   }
 
-  for (int i = 0; i < numberOfTests; ++i)
-    printf("%d\n", results[i]);
+  for (int i = 0; i < results.size(); ++i)
+    cout << results[i];
 }
 
 template <typename T>
@@ -2903,7 +2813,7 @@ int main()
   vector<int> nums2({1, 1, 2, 2});
   vector<vector<int>> nums2d({{4, 3, 1}, {6, 5, 2}, {9, 7, 3}});
 
-  maze();
+  theGenevaConfection();
 
   return 0;
 }
