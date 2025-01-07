@@ -2789,6 +2789,60 @@ void theGenevaConfection()
     cout << results[i];
 }
 
+void swipe()
+{
+  int N;
+  scanf("%d", &N);
+
+  vector<int> A(N), B(N);
+  for (int i = 0; i < N; ++i)
+    scanf("%d", &A[i]);
+
+  stack<int> BPrime;
+  for (int i = 0; i < N; ++i)
+  {
+    scanf("%d", &B[i]);
+    if (BPrime.empty())
+      BPrime.push(B[i]);
+    else if (BPrime.top() != B[i])
+      BPrime.push(B[i]);
+
+    if (A[i] == BPrime.top())
+      BPrime.pop();
+  }
+
+  if (!BPrime.empty())
+  {
+    printf("NO\n");
+    return;
+  }
+  printf("YES\n");
+
+  vector<pair<int, int>> rightSwipes;
+  for (int i = 1; i < N; ++i)
+  {
+    if (A[i] != B[i])
+    {
+      int startI = i - 1;
+      while (i < N && A[i - 1] == B[i] && A[i] != B[i])
+        ++i;
+      rightSwipes.push_back(pair<int, int>(startI, i));
+    }
+  }
+
+  vector<pair<int, int>> leftSwipes;
+  for (int i = N - 2; i >= 0; --i)
+  {
+    if (A[i] != B[i])
+    {
+      int startI = i + 1;
+      while (i < N && A[i - 1] == B[i] && A[i] != B[i])
+        --i;
+      rightSwipes.push_back(pair<int, int>(i, startI));
+    }
+  }
+}
+
 template <typename T>
 void display2DVector(vector<vector<T>> arr)
 {
