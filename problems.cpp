@@ -2651,99 +2651,9 @@ void highTideLowTide()
     printf("%d", lows[i]);
 }
 
-// https://dmoj.ca/problem/ccc24s2
-void heavyLightComposition()
-{
-  int T, N;
-
-  scanf("%d", &T);
-  scanf("%d", &N);
-
-  vector<char> result(T, 'T');
-  string input = "";
-  for (int i = 0; i < T; ++i)
-  {
-    cin >> input;
-    unordered_map<char, bool> isHeavy;
-    for (auto c : input)
-    {
-      if (isHeavy.count(c) > 0)
-        isHeavy[c] = true;
-      else
-        isHeavy[c] = false;
-    }
-
-    bool previousHeavy = isHeavy[input[0]];
-    for (int j = 1; j < input.size(); ++j)
-    {
-      if (isHeavy[input[j]] == previousHeavy)
-      {
-        result[i] = 'F';
-        break;
-      }
-      previousHeavy = isHeavy[input[j]];
-    }
-  }
-
-  for (auto c : result)
-    printf("%c\n", c);
-}
-
-// https://dmoj.ca/problem/ccc16s2
-void tandemBicycle()
-{
-  int questionNumber, N;
-
-  scanf("%d", &questionNumber);
-  scanf("%d", &N);
-
-  vector<int> dmojistan(N);
-  vector<int> pegland(N);
-
-  for (int i = 0; i < N; ++i)
-    scanf("%d", &dmojistan[i]);
-
-  sort(dmojistan.rbegin(), dmojistan.rend());
-
-  for (int i = 0; i < N; ++i)
-    scanf("%d", &pegland[i]);
-
-  if (questionNumber == 1)
-    sort(pegland.rbegin(), pegland.rend());
-  else
-    sort(pegland.begin(), pegland.end());
-
-  int totalSpeed = 0;
-  for (int i = 0; i < N; ++i)
-    totalSpeed += max(dmojistan[i], pegland[i]);
-
-  printf("%d", totalSpeed);
-}
-
-// https://dmoj.ca/problem/ccc08s2
-void penniesInTheRing()
-{
-  int radius = -1;
-
-  while (radius != 0)
-  {
-    scanf("%d", &radius);
-    if (radius == 0)
-      break;
-
-    int numberOfPennies = 0;
-
-    for (int i = 0; i < radius; ++i)
-    {
-      numberOfPennies += sqrt(pow(radius, 2) - pow(i, 2));
-    }
-
-    printf("%d\n", numberOfPennies * 4 + 1);
-  }
-}
-
 void theGenevaConfection()
 {
+  int T, N;
   scanf("%d", &T);
 
   vector<string> results(T);
@@ -2789,60 +2699,6 @@ void theGenevaConfection()
     cout << results[i];
 }
 
-void swipe()
-{
-  int N;
-  scanf("%d", &N);
-
-  vector<int> A(N), B(N);
-  for (int i = 0; i < N; ++i)
-    scanf("%d", &A[i]);
-
-  stack<int> BPrime;
-  for (int i = 0; i < N; ++i)
-  {
-    scanf("%d", &B[i]);
-    if (BPrime.empty())
-      BPrime.push(B[i]);
-    else if (BPrime.top() != B[i])
-      BPrime.push(B[i]);
-
-    if (A[i] == BPrime.top())
-      BPrime.pop();
-  }
-
-  if (!BPrime.empty())
-  {
-    printf("NO\n");
-    return;
-  }
-  printf("YES\n");
-
-  vector<pair<int, int>> rightSwipes;
-  for (int i = 1; i < N; ++i)
-  {
-    if (A[i] != B[i])
-    {
-      int startI = i - 1;
-      while (i < N && A[i - 1] == B[i] && A[i] != B[i])
-        ++i;
-      rightSwipes.push_back(pair<int, int>(startI, i));
-    }
-  }
-
-  vector<pair<int, int>> leftSwipes;
-  for (int i = N - 2; i >= 0; --i)
-  {
-    if (A[i] != B[i])
-    {
-      int startI = i + 1;
-      while (i < N && A[i - 1] == B[i] && A[i] != B[i])
-        --i;
-      rightSwipes.push_back(pair<int, int>(i, startI));
-    }
-  }
-}
-
 template <typename T>
 void display2DVector(vector<vector<T>> arr)
 {
@@ -2866,8 +2722,6 @@ int main()
   vector<int> nums1({2, 3, 1, 1, 4});
   vector<int> nums2({1, 1, 2, 2});
   vector<vector<int>> nums2d({{4, 3, 1}, {6, 5, 2}, {9, 7, 3}});
-
-  theGenevaConfection();
 
   return 0;
 }
