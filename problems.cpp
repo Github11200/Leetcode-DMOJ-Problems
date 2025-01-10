@@ -2723,5 +2723,7 @@ int main()
   vector<int> nums2({1, 1, 2, 2});
   vector<vector<int>> nums2d({{4, 3, 1}, {6, 5, 2}, {9, 7, 3}});
 
+  patternGenerator();
+
   return 0;
 }
