@@ -3,61 +3,47 @@
 using namespace std;
 
 /*******************************************************************************************
-  Link:
-  Points:
+  Link: https://dmoj.ca/problem/ccc13s3
+  Points: 15/15
 *******************************************************************************************/
 
-int numberOfTimesWinning(vector<vector<int>> gamesToPlay, vector<int> scores, int teamThatAlwaysWins, int favouriteTeam)
+int numberOfTimesWinning(vector<vector<int>> gamesToPlay, vector<int> scores, int favouriteTeam)
 {
-  vector<vector<int>> tempGamesToPlay = gamesToPlay;
-  for (int i = 0; i < gamesToPlay.size(); ++i)
-  {
-    if (gamesToPlay[i][0] == teamThatAlwaysWins || gamesToPlay[i][1] == teamThatAlwaysWins)
-    {
-      if (gamesToPlay[i][0] == teamThatAlwaysWins)
-        scores[gamesToPlay[i][0]] += 3;
-      else if (gamesToPlay[i][1] == teamThatAlwaysWins)
-        scores[gamesToPlay[i][1]] += 3;
-      for (int j = 0; j < tempGamesToPlay.size(); ++j)
-      {
-        if (tempGamesToPlay[j][0] == gamesToPlay[i][0] && tempGamesToPlay[j][1] == gamesToPlay[i][1])
-        {
-          tempGamesToPlay.erase(tempGamesToPlay.begin() + j);
-          break;
-        }
-      }
-    }
-  }
-
-  gamesToPlay = tempGamesToPlay;
-  set<int> teamsToStillPlay;
-  for (int i = 0; i < gamesToPlay.size(); ++i)
-  {
-    teamsToStillPlay.insert(gamesToPlay[i][0]);
-    teamsToStillPlay.insert(gamesToPlay[i][1]);
-  }
-
-  if (teamsToStillPlay.size() == 0)
+  if (gamesToPlay.size() == 0)
   {
     int maxScore = -1;
     int teamWithMaxScore = -1;
-    for (int i = 1; i <= 4; ++i)
+    for (int i = 1; i < scores.size(); ++i)
     {
       if (scores[i] > maxScore)
       {
         maxScore = scores[i];
         teamWithMaxScore = i;
       }
+      else if (scores[i] == maxScore && teamWithMaxScore == favouriteTeam && maxScore != -1)
+        return 0;
     }
-    return teamWithMaxScore == favouriteTeam ? 1 : 0;
+
+    if (teamWithMaxScore == favouriteTeam)
+      return 1;
+    else
+      return 0;
   }
-  else
-  {
-    int numberOfTimesWon = 0;
-    for (auto teamToStillPlay : teamsToStillPlay)
-      numberOfTimesWon += numberOfTimesWinning(gamesToPlay, scores, teamToStillPlay, favouriteTeam);
-    return numberOfTimesWon;
-  }
+
+  int numberOfTimesWon = 0;
+  vector<int> tempScores1, tempScores2, tempScores3;
+  tempScores1 = scores;
+  tempScores2 = scores;
+  tempScores3 = scores;
+
+  tempScores1[gamesToPlay[0][0]] += 3;
+  tempScores2[gamesToPlay[0][1]] += 3;
+  tempScores3[gamesToPlay[0][0]] += 1;
+  tempScores3[gamesToPlay[0][1]] += 1;
+
+  gamesToPlay.erase(gamesToPlay.begin());
+
+  return numberOfTimesWinning(gamesToPlay, tempScores1, favouriteTeam) + numberOfTimesWinning(gamesToPlay, tempScores2, favouriteTeam) + numberOfTimesWinning(gamesToPlay, tempScores3, favouriteTeam);
 }
 
 void chancesOfWinning()
@@ -90,12 +76,7 @@ void chancesOfWinning()
         gamesToPlay.erase(gamesToPlay.begin() + i);
   }
 
-  vector<vector<int>> initialGamesToPlaySnapshot = gamesToPlay;
-  vector<int> initialScoresSnapshot = scores;
-
-  int numberOfTimesChampion = 0;
-  for (int i = 1; i <= 4; ++i)
-    numberOfTimesChampion += numberOfTimesWinning(gamesToPlay, scores, i, favouriteTeam);
+  int numberOfTimesChampion = numberOfTimesWinning(gamesToPlay, scores, favouriteTeam);
 
   printf("%d", numberOfTimesChampion);
 }

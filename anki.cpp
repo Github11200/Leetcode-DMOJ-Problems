@@ -12,88 +12,228 @@
 
 using namespace std;
 
-int calculateBitwiseOr(vector<int> bitCounts)
+int jumpGame2(vector<int> nums)
 {
-  int sum = 0;
-  for (int i = 0; i < 32; ++i)
-    if (bitCounts[i])
-      sum += 1 << i;
-  return sum;
-}
-
-void updateBits(vector<int> bitCounts, int x, int sign)
-{
-  for (int i = 0; i < 32; ++i)
-    if (x & (1 << i))
-      bitCounts[i] += sign;
-}
-
-int shortestSubarrayWithOrAtLeastK2(vector<int> nums, int k)
-{
-  int shortestSubarray = INT_MAX;
-  int bitsOrValue = 0;
-  int j = 0;
-
-  vector<int> bitCounts(32, 0);
-  for (int i = 0; i < nums.size(); ++i)
+  int left = 0;
+  int right = 0;
+  int numberOfJumps = 0;
+  while (right < nums.size())
   {
-    updateBits(bitCounts, nums[i], 1);
-    bitsOrValue = calculateBitwiseOr(bitCounts);
-    while (j <= i && bitsOrValue >= k)
+    int farthest = 0;
+    for (int i = left; i < right; ++i)
+      farthest = max(farthest, i + nums[i]);
+    left = right + 1;
+    right = farthest;
+    ++numberOfJumps;
+  }
+
+  return numberOfJumps;
+}
+
+void arithmeticSquare()
+{
+  vector<vector<int>> grid(3, vector<int>(3, 0));
+  vector<vector<bool>> x(3, vector<bool>(3, false));
+  vector<int> rows(3), columns(3);
+  int numberOfXs = 0;
+
+  for (int i = 0; i < 3; ++i)
+  {
+    string temp;
+    for (int j = 0; j < 3; ++j)
     {
-      shortestSubarray = min(shortestSubarray, i - j + 1);
-      updateBits(bitCounts, nums[j], -1);
-      bitsOrValue = calculateBitwiseOr(bitCounts);
+      cin >> temp;
+      if (temp == "X")
+      {
+        ++numberOfXs;
+        x[i][j] = true;
+        ++rows[i];
+        ++columns[j];
+      }
+      else
+        grid[i][j] = stoi(temp);
+    }
+  }
+
+  while (numberOfXs > 0)
+  {
+    bool shouldNotRestart = true;
+    for (int i = 0; i < 3 && shouldNotRestart; ++i)
+    {
+      if (rows[i] == 1)
+      {
+        if (x[i][0])
+        {
+          grid[i][0] = grid[i][1] + (grid[i][1] - grid[i][2]);
+          x[i][0] = false;
+          --columns[0];
+        }
+        else if (x[i][1])
+        {
+          grid[i][1] = grid[i][0] + ((grid[i][2] - grid[i][0]) / 2);
+          x[i][1] = false;
+          --columns[1];
+        }
+        else if (x[i][2])
+        {
+          grid[i][2] = grid[i][1] + (grid[i][1] - grid[i][0]);
+          x[i][2] = false;
+          --columns[2];
+        }
+        --numberOfXs;
+        shouldNotRestart = false;
+        --rows[i];
+      }
+    }
+
+    for (int i = 0; i < 3 && shouldNotRestart; ++i)
+    {
+      if (columns[i] == 1)
+      {
+        if (x[0][i])
+        {
+          grid[0][i] = grid[1][i] + (grid[1][i] - grid[2][i]);
+          x[0][i] = false;
+          --rows[0];
+        }
+        else if (x[1][i])
+        {
+          grid[1][i] = grid[0][i] + ((grid[2][i] - grid[0][i]) / 2);
+          x[1][i] = false;
+          --rows[1];
+        }
+        else if (x[2][i])
+        {
+          grid[2][i] = grid[1][i] + (grid[1][i] - grid[0][i]);
+          x[2][i] = false;
+          --rows[2];
+        }
+        --numberOfXs;
+        shouldNotRestart = false;
+        --columns[i];
+      }
+    }
+
+    if (x[0][0] && shouldNotRestart)
+    {
+      x[0][0] = false;
+      grid[0][0] = 0;
+      --numberOfXs;
+      shouldNotRestart = false;
+      --rows[0];
+      --columns[0];
+    }
+    if (x[1][1] && shouldNotRestart)
+    {
+      x[1][1] = false;
+      grid[1][1] = 0;
+      --numberOfXs;
+      shouldNotRestart = false;
+      --rows[1];
+      --columns[1];
+    }
+    if (x[0][1] && shouldNotRestart)
+    {
+      x[0][1] = false;
+      grid[0][1] = 0;
+      --numberOfXs;
+      shouldNotRestart = false;
+      --rows[0];
+      --columns[1];
+    }
+    if (x[1][0] && shouldNotRestart)
+    {
+      x[1][0] = false;
+      grid[1][0] = 0;
+      --numberOfXs;
+      shouldNotRestart = false;
+      --rows[1];
+      --columns[0];
+    }
+    if (x[1][2] && shouldNotRestart)
+    {
+      x[1][2] = false;
+      grid[1][2] = 0;
+      --numberOfXs;
+      shouldNotRestart = false;
+      --rows[1];
+      --columns[2];
+    }
+    if (x[2][1] && shouldNotRestart)
+    {
+      x[2][1] = false;
+      grid[2][1] = 0;
+      --numberOfXs;
+      shouldNotRestart = false;
+      --rows[2];
+      --columns[1];
+    }
+  }
+
+  for (int i = 0; i < 3; ++i)
+  {
+    for (int j = 0; j < 3; ++j)
+      printf("%d ", grid[i][j]);
+    printf("\n");
+  }
+}
+
+void swipe()
+{
+  int N;
+  scanf("%d", &N);
+
+  vector<int> A(N), B(N), BPrime, firstOccurrences, lastOccurrences;
+  for (int i = 0; i < N; ++i)
+    scanf("%d", &A[i]);
+  for (int i = 0; i < N; ++i)
+  {
+    scanf("%d", &B[i]);
+    if (i == 0 || B[i - 1] != B[i])
+    {
+      BPrime.push_back(B[i]);
+      firstOccurrences.push_back(i);
+      lastOccurrences.push_back(i);
+    }
+    else if (i > 0 && B[i - 1] == B[i])
+      ++lastOccurrences[lastOccurrences.size() - 1];
+  }
+
+  int j = 0;
+  for (int i = 0; i < N; ++i)
+    if (A[i] == BPrime[j])
+      ++j;
+
+  if (j == BPrime.size())
+    printf("YES\n");
+  else
+  {
+    printf("NO\n");
+    return;
+  }
+
+  vector<pair<int, int>> leftSwipes, rightSwipes;
+  j = 0;
+  for (int i = 0; i < N; ++i)
+  {
+    if (A[i] == BPrime[j])
+    {
+      if (i < lastOccurrences[j])
+        rightSwipes.push_back(pair<int, int>(i, lastOccurrences[j]));
+      if (i > firstOccurrences[j])
+        leftSwipes.push_back(pair<int, int>(firstOccurrences[j], i));
       ++j;
     }
   }
 
-  return shortestSubarray == INT_MAX ? -1 : shortestSubarray;
-}
+  sort(rightSwipes.rbegin(), rightSwipes.rend());
+  sort(leftSwipes.begin(), leftSwipes.end());
 
-void gates()
-{
-  int numberOfGates, numberOfPlanes;
-  scanf("%d", &numberOfGates);
-  scanf("%d", &numberOfPlanes);
-
-  set<int, greater<int>> gates;
-  for (int i = 1; i <= numberOfGates; ++i)
-    gates.insert(i);
-  int plane = 0;
-  for (int i = 0; i < numberOfPlanes; ++i)
-  {
-    scanf("%d", &plane);
-
-    auto val = gates.lower_bound(plane);
-    if (val == gates.end())
-    {
-      printf("%d\n", i);
-      return;
-    }
-    else
-      gates.erase(*val);
-  }
-
-  printf("%d\n", numberOfPlanes);
-}
-
-int numberOfGoodPairs(vector<int> nums)
-{
-  unordered_map<int, int> counts;
-  int numberOfGoodPairs = 0;
-  for (int i = 0; i < nums.size(); ++i)
-  {
-    if (counts.count(nums[i]) == 0)
-      counts[nums[i]] = 1;
-    else
-    {
-      numberOfGoodPairs += counts[nums[i]];
-      ++counts[nums[i]];
-    }
-  }
-
-  return numberOfGoodPairs;
+  printf("%d\n", rightSwipes.size() + leftSwipes.size());
+  for (int i = 0; i < rightSwipes.size(); ++i)
+    printf("R %d %d\n", rightSwipes[i].first, rightSwipes[i].second);
+  for (int i = 0; i < leftSwipes.size(); ++i)
+    printf("L %d %d\n", leftSwipes[i].first, leftSwipes[i].second);
 }
 
 void nailedIt()
@@ -101,68 +241,71 @@ void nailedIt()
   int N;
   scanf("%d", &N);
 
-  vector<int> lengths(2001);
-  int temp;
+  vector<int> counts(2001);
   for (int i = 0; i < N; ++i)
   {
+    int temp;
     scanf("%d", &temp);
-    ++lengths[temp];
+    ++counts[temp];
   }
 
   vector<int> combinations(4001);
-  for (int i = 0; i < lengths.size(); ++i)
+  for (int i = 0; i < counts.size(); ++i)
   {
-    if (lengths[i] == 0)
+    if (counts[i] == 0)
       continue;
-    if (lengths[i] > 1)
-      combinations[i * 2] += lengths[i] / 2;
-    for (int j = i + 1; j < lengths.size(); ++j)
+    if (counts[i] > 1)
+      combinations[i * 2] = counts[i] / 2;
+    for (int j = i + 1; j < counts.size(); ++j)
     {
-      if (lengths[j] == 0)
+      if (counts[j] == 0)
         continue;
-      combinations[i + j] = min(lengths[i], lengths[j]);
+      combinations[i + j] += max(counts[i], counts[j]);
     }
   }
 
-  int maxLength = 1;
-  int heights = 0;
+  int maxLength = 0;
+  int height = 0;
   for (int i = 0; i < combinations.size(); ++i)
   {
-    if (combinations[i] != 0 && combinations[i] > maxLength)
+    if (combinations[i] > maxLength)
     {
       maxLength = combinations[i];
-      heights = 1;
+      height = 1;
     }
     else if (combinations[i] == maxLength)
-      ++heights;
+      ++height;
   }
 
-  printf("%d %d\n", maxLength, heights);
+  printf("%d %d", maxLength, height);
 }
 
-int jumpGame2(vector<int> nums)
+string addBinary(string a, string b)
 {
-  int left = 0;
-  int right = 0;
+  int i = a.size() - 1;
+  int j = b.size() - 1;
+  int carry = 0;
 
-  int numberOfJumps = 0;
-  while (right < nums.size())
+  string c = "";
+
+  while (i >= 0 || j >= 0 || carry >= 0)
   {
-    int farthestJump = 0;
-    for (int i = left; i <= right; ++i)
-      farthestJump = max(farthestJump, i + nums[i]);
+    if (i >= 0 && a[i] == '1')
+      ++carry;
+    if (j >= 0 && b[j] == '1')
+      ++carry;
 
-    left = right + 1;
-    right = farthestJump;
-    ++numberOfJumps;
+    c += to_string(carry % 2);
+    carry /= 2;
+    --i;
+    --j;
   }
 
-  return numberOfJumps;
+  return c;
 }
 
 int main()
 {
   nailedIt();
-
   return 0;
 }
