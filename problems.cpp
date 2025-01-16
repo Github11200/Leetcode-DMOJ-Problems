@@ -2651,54 +2651,6 @@ void highTideLowTide()
     printf("%d", lows[i]);
 }
 
-void theGenevaConfection()
-{
-  int T, N;
-  scanf("%d", &T);
-
-  vector<string> results(T);
-  for (int i = 0; i < T; ++i)
-  {
-    scanf("%d", &N);
-    vector<int> trains(N);
-    for (int j = 0; j < N; ++j)
-      scanf("%d", &trains[j]);
-
-    stack<int> trainsInBranch;
-    int k = 1;
-    for (int j = N - 1; j >= 0; --j)
-    {
-      if (!trainsInBranch.empty() && trainsInBranch.top() == k)
-      {
-        trainsInBranch.pop();
-        ++k;
-      }
-      else if (trains[j] != k)
-        trainsInBranch.push(trains[j]);
-      else if (trains[j] == k)
-        ++k;
-    }
-
-    while (!trainsInBranch.empty())
-    {
-      if (trainsInBranch.top() == k)
-      {
-        trainsInBranch.pop();
-        ++k;
-      }
-      else
-        break;
-    }
-    if (k - 1 == N)
-      results[i] = "Y\n";
-    else
-      results[i] = "N\n";
-  }
-
-  for (int i = 0; i < results.size(); ++i)
-    cout << results[i];
-}
-
 template <typename T>
 void display2DVector(vector<vector<T>> arr)
 {
