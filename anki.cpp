@@ -12,131 +12,117 @@
 
 using namespace std;
 
-int containerWithMostWater(vector<int> height)
+string addBinary(string a, string b)
 {
-  int maxArea = -1;
-  int i = 0;
-  int j = height.size() - 1;
-  int area = 0;
-  while (i < j)
+  int i = a.size() - 1;
+  int j = b.size() - 1;
+  int carry = 0;
+  string c = "";
+  while (i >= 0 || j >= 0 || carry > 0)
   {
-    area = (j - i) * min(height[i], height[j]);
-    maxArea = max(maxArea, area);
-    if (height[i] < height[j])
-      ++i;
-    else if (height[j] < height[i])
-      --j;
-    else
-    {
-      ++i;
-      --j;
-    }
+    if (i >= 0 && a[i] == '1')
+      ++carry;
+    if (j >= 0 && b[j] == '1')
+      ++carry;
+
+    c = to_string(carry % 2) + c;
+    carry /= 2;
+    --i;
+    --j;
   }
 
-  return maxArea;
+  return c;
 }
 
-int jumpGame2(vector<int> nums)
+void gates()
 {
-  int l = 0;
-  int r = 0;
-  int res = 0;
-  while (r < nums.size() - 1)
+  int numberOfGates, numberOfPlanes;
+  scanf("%d", &numberOfGates);
+  scanf("%d", &numberOfPlanes);
+
+  set<int, greater<int>> gates;
+  vector<int> planes(numberOfPlanes);
+
+  for (int i = 0; i < numberOfPlanes; ++i)
+    scanf("%d", &planes[i]);
+
+  for (int i = 1; i <= numberOfGates; ++i)
+    gates.insert(i);
+
+  int planesDocked = 0;
+  for (int i = 0; i < numberOfPlanes; ++i)
   {
-    int farthest = 0;
-    for (int i = 0; i <= r; ++i)
-      farthest = max(farthest, nums[i] + i);
-    l = r + 1;
-    r = farthest;
-    ++res;
+    auto result = gates.lower_bound(planes[i]);
+    if (result == gates.end())
+      break;
+    ++planesDocked;
+    gates.erase(*result);
   }
-  printf("%d", res);
-  return res;
+
+  printf("%d\n", planesDocked);
 }
 
-void symmetricMountains()
-{
-  int N;
-  scanf("%d", &N);
-  vector<int> heights(N);
-  for (int i = 0; i < heights.size(); ++i)
-    scanf("%d", &heights[i]);
-
-  vector<int> result(N, INT_MAX);
-  for (int i = 0; i < N; ++i)
-  {
-    int j = i;
-    int k = i;
-    int asymmetricValue = 0;
-    while (j >= 0 && k < N)
-    {
-      asymmetricValue += abs(heights[j] - heights[k]);
-      result[k - j] = min(result[k - j], asymmetricValue);
-      --j;
-      ++k;
-    }
-  }
-
-  for (int i = 0; i < N - 1; ++i)
-  {
-    int j = i;
-    int k = i + 1;
-    int asymmetricValue = 0;
-    while (j >= 0 && k < N)
-    {
-      asymmetricValue += abs(heights[j] - heights[k]);
-      result[k - j] = min(result[k - j], asymmetricValue);
-      --j;
-      ++k;
-    }
-  }
-
-  for (int i = 0; i < N; ++i)
-    printf("%d ", result[i]);
-}
-
-void nailedIt()
+void swipe()
 {
   int N;
   scanf("%d", &N);
 
-  vector<int> lengths(2001, 0);
+  vector<int> A(N), B(N), BPrime, firstOccurences, lastOccurences;
+  for (int i = 0; i < N; ++i)
+    scanf("%d", &A[i]);
+
   for (int i = 0; i < N; ++i)
   {
-    int temp;
-    scanf("%d", &temp);
-    ++lengths[temp];
-  }
-
-  vector<int> combinations(4001);
-  for (int i = 1; i < lengths.size(); ++i)
-  {
-    if (lengths[i] == 0)
-      continue;
-    if (lengths[i] > 1)
-      combinations[i * 2] += lengths[i] / 2;
-    for (int j = i + 1; j < lengths.size(); ++j)
-      combinations[i + j] += min(lengths[i], lengths[j]);
-  }
-
-  int maxLength = 1;
-  int heights = 0;
-  for (int i = 1; i < combinations.size(); ++i)
-  {
-    if (combinations[i] > maxLength)
+    scanf("%d", &B[i]);
+    if (BPrime.size() == 0 || BPrime[BPrime.size() - 1] != B[i])
     {
-      maxLength = combinations[i];
-      heights = 1;
+      firstOccurences.push_back(i);
+      lastOccurences.push_back(i);
+      BPrime.push_back(B[i]);
     }
-    else if (combinations[i] == maxLength)
-      ++heights;
+    else if (BPrime[BPrime.size() - 1] == B[i])
+      ++lastOccurences[lastOccurences.size() - 1];
   }
 
-  printf("%d %d", maxLength, heights);
+  int j = 0;
+  for (int i = 0; i < A.size(); ++i)
+    if (A[i] == BPrime[j])
+      ++j;
+
+  if (j == BPrime.size())
+    printf("YES\n");
+  else
+  {
+    printf("NO\n");
+    return;
+  }
+
+  j = 0;
+  vector<pair<int, int>> leftSwipes, rightSwipes;
+  for (int i = 0; i < A.size() && j < BPrime.size(); ++i)
+  {
+    if (A[i] == BPrime[j])
+    {
+      if (i < lastOccurences[j])
+        rightSwipes.push_back(pair<int, int>(i, lastOccurences[j]));
+      if (i > firstOccurences[j])
+        leftSwipes.push_back(pair<int, int>(firstOccurences[j], i));
+      ++j;
+    }
+  }
+
+  sort(rightSwipes.rbegin(), rightSwipes.rend());
+  sort(leftSwipes.begin(), leftSwipes.end());
+
+  printf("%d\n", rightSwipes.size() + leftSwipes.size());
+  for (int i = 0; i < rightSwipes.size(); ++i)
+    printf("R %d %d\n", rightSwipes[i].first, rightSwipes[i].second);
+  for (int i = 0; i < leftSwipes.size(); ++i)
+    printf("L %d %d\n", leftSwipes[i].first, leftSwipes[i].second);
 }
 
 int main()
 {
-  nailedIt();
+  swipe();
   return 0;
 }
