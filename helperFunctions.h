@@ -1,27 +1,28 @@
 #ifndef HELPERFUNCTIONS_H
 #define HELPERFUNCTIONS_H
 
-#include <vector>
-#include <iostream>
+#include <bits/stdc++.h>
 
 using namespace std;
 
-template <typename T>
-void display2DVector(vector<vector<T>> arr)
+struct TreeNode
 {
-  for (int i = 0; i < arr.size(); ++i)
-  {
-    for (int j = 0; j < arr[i].size(); ++j)
-      cout << arr[i][j] << " ";
-    cout << endl;
-  }
-}
+  int val;
+  TreeNode *left;
+  TreeNode *right;
+  TreeNode() : val(0), left(nullptr), right(nullptr) {}
+  TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+  TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+};
 
 template <typename T>
-void displayVector(vector<T> arr)
-{
-  for (auto x : arr)
-    cout << x << " ";
-}
+void display2DVector(const vector<vector<T>> &arr);
+
+template <typename T>
+void displayVector(const vector<T> &arr);
+
+TreeNode *createDefaultTree();
+
+#include "helperFunctions.cpp"
 
 #endif

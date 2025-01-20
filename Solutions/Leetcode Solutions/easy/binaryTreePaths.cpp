@@ -1,5 +1,4 @@
-#include <bits/stdc++.h>
-#include "../../helperFunctions.h"
+#include "../../../helperFunctions.h"
 
 using namespace std;
 
@@ -8,16 +7,6 @@ using namespace std;
   Runtime: 36.61%
   Memory: 12.98%
 ******************************************/
-
-struct TreeNode
-{
-  int val;
-  TreeNode *left;
-  TreeNode *right;
-  TreeNode() : val(0), left(nullptr), right(nullptr) {}
-  TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
-  TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
-};
 
 vector<string> dfs(TreeNode *root, string currentPath)
 {

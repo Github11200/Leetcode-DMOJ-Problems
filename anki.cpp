@@ -1,14 +1,4 @@
-#include <vector>
-#include <unordered_map>
-#include <string>
-#include <queue>
-#include <iostream>
-#include <algorithm>
-#include <stack>
-#include <numeric>
-#include <math.h>
-#include <set>
-#include <bits/stdc++.h>
+#include "helperFunctions.h"
 
 using namespace std;
 
