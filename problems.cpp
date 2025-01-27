@@ -9,7 +9,7 @@
 #include <math.h>
 #include <set>
 #include <bits/stdc++.h>
-#include "Miscellaneous/helperFunctions.h"
+#include "helperFunctions.h"
 
 using namespace std;
 
@@ -2657,8 +2657,6 @@ int main()
   vector<int> nums1({2, 3, 1, 1, 4});
   vector<int> nums2({1, 1, 2, 2});
   vector<vector<int>> nums2d({{4, 3, 1}, {6, 5, 2}, {9, 7, 3}});
-
-  displayVector(nums1);
 
   return 0;
 }
