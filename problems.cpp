@@ -1756,7 +1756,8 @@ void keepingScore()
   string cardsAtHand;
   cin >> cardsAtHand;
 
-  cout << "Cards Dealt " << "Points" << endl;
+  cout << "Cards Dealt "
+       << "Points" << endl;
 
   int points = 0;
   int individualCardsPoints = 0;
