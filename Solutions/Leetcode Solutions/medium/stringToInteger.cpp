@@ -3,44 +3,54 @@
 using namespace std;
 
 /******************************************
-  Link:
-  Runtime:
-  Memory:
+  Link: https://leetcode.com/problems/string-to-integer-atoi/description/
+  Runtime: 100.00%
+  Memory: 82.37%
+  Inspiration: https://leetcode.com/problems/string-to-integer-atoi/solutions/4445711/beats-100-of-users-with-c-best-solution-fast-solution-easy-to-understand/
 ******************************************/
 
 int stringToInteger(string s)
 {
-  int result = NULL;
-  vector<int> digits;
-  int sign = 1;
-  for (int i = 0; i < s.size(); ++i)
+  int result = 0;
+  bool sign = false;
+  int i = 0;
+  while (i < s.size())
   {
     if (s[i] == ' ')
-      continue;
-
-    // It's a negative
-    if (int(s[i]) == 45)
-      sign *= -1;
-    // It's a positive
-    else if (int(s[i]) == 43)
-      sign *= 1;
-    else if (int(s[i]) >= 48 && int(s[i]) <= 57)
-      digits.push_back(s[i] - '0');
-
-    // Not an integer
-    if (int(s[i]) < 48 || int(s[i]) > 57 || (i < s.size() - 1 && (int(s[i + 1]) < 48 || int(s[i + 1]) > 57)))
+      ++i;
+    else
       break;
   }
 
-  result = 0;
-  for (int i = digits.size() - 1; i >= 0; --i)
-    result += digits[i] * pow(10, digits.size() - 1 - i);
-
-  return result * sign;
+  if (s[i] == '+')
+  {
+    sign = true;
+    ++i;
+  }
+  if (s[i] == '-')
+  {
+    sign = false;
+    ++i;
+  }
+  long answer = 0;
+  for (; i < s.size(); ++i)
+  {
+    if (isdigit(s[i]))
+    {
+      answer = answer * 10 + (s[i] - '0');
+      if (answer > INT_MAX && sign)
+        return INT_MAX;
+      if (answer > INT_MAX && !sign)
+        return INT_MIN;
+    }
+    else
+      return answer * (sign ? 1 : -1);
+  }
+  return answer * (sign ? 1 : -1);
 }
 
 int main()
 {
-  cout << stringToInteger("1337c0d3") << endl;
+  cout << stringToInteger("-91283472332") << endl;
   return 0;
 }

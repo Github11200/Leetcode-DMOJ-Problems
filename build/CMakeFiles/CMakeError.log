@@ -648,3 +648,328 @@ gmake: *** [Makefile:127: cmTC_46b0e/fast] Error 2
 
 
 
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /mnt/c/ProgramData/mingw64/mingw64/bin/gcc.exe 
+Build flags: -march=nocona;-mtune=haswell;-ftree-vectorize;-fPIC;-fstack-protector-strong;-fno-plt;-O2;-ffunction-sections;-pipe;-isystem;/home/user/miniconda3/include
+Id flags:  
+
+The output was:
+1
+C:/ProgramData/mingw64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../x86_64-w64-mingw32/bin/ld.exe: cannot open output file a.exe: Invalid argument
+collect2.exe: error: ld returned 1 exit status
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /mnt/c/ProgramData/mingw64/mingw64/bin/gcc.exe 
+Build flags: -march=nocona;-mtune=haswell;-ftree-vectorize;-fPIC;-fstack-protector-strong;-fno-plt;-O2;-ffunction-sections;-pipe;-isystem;/home/user/miniconda3/include
+Id flags: -c 
+
+The output was:
+1
+Assembler messages:
+Fatal error: can't create CMakeCCompilerId.o: Invalid argument
+CMakeCCompilerId.c:802:1: fatal error: error closing -: Invalid argument
+  802 | }
+      | ^
+compilation terminated.
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /mnt/c/ProgramData/mingw64/mingw64/bin/gcc.exe 
+Build flags: -march=nocona;-mtune=haswell;-ftree-vectorize;-fPIC;-fstack-protector-strong;-fno-plt;-O2;-ffunction-sections;-pipe;-isystem;/home/user/miniconda3/include
+Id flags: -Aa 
+
+The output was:
+1
+<command-line>: error: missing '(' after predicate
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /mnt/c/ProgramData/mingw64/mingw64/bin/gcc.exe 
+Build flags: -march=nocona;-mtune=haswell;-ftree-vectorize;-fPIC;-fstack-protector-strong;-fno-plt;-O2;-ffunction-sections;-pipe;-isystem;/home/user/miniconda3/include
+Id flags: -D__CLASSIC_C__ 
+
+The output was:
+1
+C:/ProgramData/mingw64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../x86_64-w64-mingw32/bin/ld.exe: cannot open output file a.exe: Invalid argument
+collect2.exe: error: ld returned 1 exit status
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /mnt/c/ProgramData/mingw64/mingw64/bin/gcc.exe 
+Build flags: -march=nocona;-mtune=haswell;-ftree-vectorize;-fPIC;-fstack-protector-strong;-fno-plt;-O2;-ffunction-sections;-pipe;-isystem;/home/user/miniconda3/include
+Id flags: --target=arm-arm-none-eabi;-mcpu=cortex-m3 
+
+The output was:
+1
+gcc.exe: warning: '-mcpu=' is deprecated; use '-mtune=' or '-march=' instead
+gcc.exe: error: unrecognized command-line option '--target=arm-arm-none-eabi'
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /mnt/c/ProgramData/mingw64/mingw64/bin/gcc.exe 
+Build flags: -march=nocona;-mtune=haswell;-ftree-vectorize;-fPIC;-fstack-protector-strong;-fno-plt;-O2;-ffunction-sections;-pipe;-isystem;/home/user/miniconda3/include
+Id flags: -c;-I__does_not_exist__ 
+
+The output was:
+1
+Assembler messages:
+Fatal error: can't create CMakeCCompilerId.o: Invalid argument
+CMakeCCompilerId.c:802:1: fatal error: error closing -: Invalid argument
+  802 | }
+      | ^
+compilation terminated.
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /mnt/c/ProgramData/mingw64/mingw64/bin/gcc.exe 
+Build flags: 
+Id flags:  
+
+The output was:
+1
+C:/ProgramData/mingw64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../x86_64-w64-mingw32/bin/ld.exe: cannot open output file a.exe: Invalid argument
+collect2.exe: error: ld returned 1 exit status
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /mnt/c/ProgramData/mingw64/mingw64/bin/gcc.exe 
+Build flags: 
+Id flags: -c 
+
+The output was:
+1
+Assembler messages:
+Fatal error: can't create CMakeCCompilerId.o: Invalid argument
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /mnt/c/ProgramData/mingw64/mingw64/bin/gcc.exe 
+Build flags: 
+Id flags: -Aa 
+
+The output was:
+1
+<command-line>: error: missing '(' after predicate
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /mnt/c/ProgramData/mingw64/mingw64/bin/gcc.exe 
+Build flags: 
+Id flags: -D__CLASSIC_C__ 
+
+The output was:
+1
+C:/ProgramData/mingw64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../x86_64-w64-mingw32/bin/ld.exe: cannot open output file a.exe: Invalid argument
+collect2.exe: error: ld returned 1 exit status
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /mnt/c/ProgramData/mingw64/mingw64/bin/gcc.exe 
+Build flags: 
+Id flags: --target=arm-arm-none-eabi;-mcpu=cortex-m3 
+
+The output was:
+1
+gcc.exe: warning: '-mcpu=' is deprecated; use '-mtune=' or '-march=' instead
+gcc.exe: error: unrecognized command-line option '--target=arm-arm-none-eabi'
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: /mnt/c/ProgramData/mingw64/mingw64/bin/gcc.exe 
+Build flags: 
+Id flags: -c;-I__does_not_exist__ 
+
+The output was:
+1
+Assembler messages:
+Fatal error: can't create CMakeCCompilerId.o: Invalid argument
+
+
+Checking whether the C compiler is IAR using "" did not match "IAR .+ Compiler":
+gcc.exe: fatal error: no input files
+compilation terminated.
+Checking whether the C compiler is IAR using "" did not match "IAR .+ Compiler":
+gcc.exe: fatal error: no input files
+compilation terminated.
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: /mnt/c/ProgramData/mingw64/mingw64/bin/g++.exe 
+Build flags: -fvisibility-inlines-hidden;-fmessage-length=0;-march=nocona;-mtune=haswell;-ftree-vectorize;-fPIC;-fstack-protector-strong;-fno-plt;-O2;-ffunction-sections;-pipe;-isystem;/home/user/miniconda3/include
+Id flags:  
+
+The output was:
+1
+C:/ProgramData/mingw64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../x86_64-w64-mingw32/bin/ld.exe: cannot open output file a.exe: Invalid argument
+collect2.exe: error: ld returned 1 exit status
+
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: /mnt/c/ProgramData/mingw64/mingw64/bin/g++.exe 
+Build flags: -fvisibility-inlines-hidden;-fmessage-length=0;-march=nocona;-mtune=haswell;-ftree-vectorize;-fPIC;-fstack-protector-strong;-fno-plt;-O2;-ffunction-sections;-pipe;-isystem;/home/user/miniconda3/include
+Id flags: -c 
+
+The output was:
+1
+Assembler messages:
+Fatal error: can't create CMakeCXXCompilerId.o: Invalid argument
+CMakeCXXCompilerId.cpp:791:1: fatal error: error closing -: Invalid argument
+  791 | }
+      | ^
+compilation terminated.
+
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: /mnt/c/ProgramData/mingw64/mingw64/bin/g++.exe 
+Build flags: -fvisibility-inlines-hidden;-fmessage-length=0;-march=nocona;-mtune=haswell;-ftree-vectorize;-fPIC;-fstack-protector-strong;-fno-plt;-O2;-ffunction-sections;-pipe;-isystem;/home/user/miniconda3/include
+Id flags: --c++ 
+
+The output was:
+1
+g++.exe: error: unrecognized command-line option '--c++'
+
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: /mnt/c/ProgramData/mingw64/mingw64/bin/g++.exe 
+Build flags: -fvisibility-inlines-hidden;-fmessage-length=0;-march=nocona;-mtune=haswell;-ftree-vectorize;-fPIC;-fstack-protector-strong;-fno-plt;-O2;-ffunction-sections;-pipe;-isystem;/home/user/miniconda3/include
+Id flags: --ec++ 
+
+The output was:
+1
+g++.exe: error: unrecognized command-line option '--ec++'; did you mean '-Weffc++'?
+
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: /mnt/c/ProgramData/mingw64/mingw64/bin/g++.exe 
+Build flags: -fvisibility-inlines-hidden;-fmessage-length=0;-march=nocona;-mtune=haswell;-ftree-vectorize;-fPIC;-fstack-protector-strong;-fno-plt;-O2;-ffunction-sections;-pipe;-isystem;/home/user/miniconda3/include
+Id flags: --target=arm-arm-none-eabi;-mcpu=cortex-m3 
+
+The output was:
+1
+g++.exe: warning: '-mcpu=' is deprecated; use '-mtune=' or '-march=' instead
+g++.exe: error: unrecognized command-line option '--target=arm-arm-none-eabi'
+
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: /mnt/c/ProgramData/mingw64/mingw64/bin/g++.exe 
+Build flags: -fvisibility-inlines-hidden;-fmessage-length=0;-march=nocona;-mtune=haswell;-ftree-vectorize;-fPIC;-fstack-protector-strong;-fno-plt;-O2;-ffunction-sections;-pipe;-isystem;/home/user/miniconda3/include
+Id flags: -c;-I__does_not_exist__ 
+
+The output was:
+1
+Assembler messages:
+Fatal error: can't create CMakeCXXCompilerId.o: Invalid argument
+CMakeCXXCompilerId.cpp:791:1: fatal error: error closing -: Invalid argument
+  791 | }
+      | ^
+compilation terminated.
+
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: /mnt/c/ProgramData/mingw64/mingw64/bin/g++.exe 
+Build flags: 
+Id flags:  
+
+The output was:
+1
+C:/ProgramData/mingw64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../x86_64-w64-mingw32/bin/ld.exe: cannot open output file a.exe: Invalid argument
+collect2.exe: error: ld returned 1 exit status
+
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: /mnt/c/ProgramData/mingw64/mingw64/bin/g++.exe 
+Build flags: 
+Id flags: -c 
+
+The output was:
+1
+Assembler messages:
+Fatal error: can't create CMakeCXXCompilerId.o: Invalid argument
+
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: /mnt/c/ProgramData/mingw64/mingw64/bin/g++.exe 
+Build flags: 
+Id flags: --c++ 
+
+The output was:
+1
+g++.exe: error: unrecognized command-line option '--c++'
+
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: /mnt/c/ProgramData/mingw64/mingw64/bin/g++.exe 
+Build flags: 
+Id flags: --ec++ 
+
+The output was:
+1
+g++.exe: error: unrecognized command-line option '--ec++'; did you mean '-Weffc++'?
+
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: /mnt/c/ProgramData/mingw64/mingw64/bin/g++.exe 
+Build flags: 
+Id flags: --target=arm-arm-none-eabi;-mcpu=cortex-m3 
+
+The output was:
+1
+g++.exe: warning: '-mcpu=' is deprecated; use '-mtune=' or '-march=' instead
+g++.exe: error: unrecognized command-line option '--target=arm-arm-none-eabi'
+
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: /mnt/c/ProgramData/mingw64/mingw64/bin/g++.exe 
+Build flags: 
+Id flags: -c;-I__does_not_exist__ 
+
+The output was:
+1
+Assembler messages:
+Fatal error: can't create CMakeCXXCompilerId.o: Invalid argument
+
+
+Checking whether the CXX compiler is IAR using "" did not match "IAR .+ Compiler":
+g++.exe: fatal error: no input files
+compilation terminated.
+Checking whether the CXX compiler is IAR using "" did not match "IAR .+ Compiler":
+g++.exe: fatal error: no input files
+compilation terminated.
+Detecting C compiler ABI info failed to compile with the following output:
+Change Dir: /home/user/code/Leetcode-DMOJ-Problems/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_66cf6/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_66cf6.dir/build.make CMakeFiles/cmTC_66cf6.dir/build
+gmake[1]: Entering directory '/home/user/code/Leetcode-DMOJ-Problems/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_66cf6.dir/CMakeCCompilerABI.c.o
+/mnt/c/ProgramData/mingw64/mingw64/bin/gcc.exe   -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /home/user/miniconda3/include  -o CMakeFiles/cmTC_66cf6.dir/CMakeCCompilerABI.c.o -c /usr/share/cmake-3.22/Modules/CMakeCCompilerABI.c
+Assembler messages:
+Fatal error: can't create CMakeFiles/cmTC_66cf6.dir/CMakeCCompilerABI.c.o: Invalid argument
+/usr/share/cmake-3.22/Modules/CMakeCCompilerABI.c:27:1: fatal error: error closing -: Invalid argument
+   27 | }
+      | ^
+compilation terminated.
+gmake[1]: *** [CMakeFiles/cmTC_66cf6.dir/build.make:78: CMakeFiles/cmTC_66cf6.dir/CMakeCCompilerABI.c.o] Error 1
+gmake[1]: Leaving directory '/home/user/code/Leetcode-DMOJ-Problems/build/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_66cf6/fast] Error 2
+
+
+
+
+Determining if the C compiler works failed with the following output:
+Change Dir: /home/user/code/Leetcode-DMOJ-Problems/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_c1353/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_c1353.dir/build.make CMakeFiles/cmTC_c1353.dir/build
+gmake[1]: Entering directory '/home/user/code/Leetcode-DMOJ-Problems/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_c1353.dir/testCCompiler.c.o
+/mnt/c/ProgramData/mingw64/mingw64/bin/gcc.exe   -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /home/user/miniconda3/include  -o CMakeFiles/cmTC_c1353.dir/testCCompiler.c.o -c /home/user/code/Leetcode-DMOJ-Problems/build/CMakeFiles/CMakeTmp/testCCompiler.c
+Assembler messages:
+Fatal error: can't create CMakeFiles/cmTC_c1353.dir/testCCompiler.c.o: Invalid argument
+/home/user/code/Leetcode-DMOJ-Problems/build/CMakeFiles/CMakeTmp/testCCompiler.c:11:1: fatal error: error closing -: Invalid argument
+   11 | { (void)argv; return argc-1;}
+      | ^
+compilation terminated.
+gmake[1]: *** [CMakeFiles/cmTC_c1353.dir/build.make:78: CMakeFiles/cmTC_c1353.dir/testCCompiler.c.o] Error 1
+gmake[1]: Leaving directory '/home/user/code/Leetcode-DMOJ-Problems/build/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_c1353/fast] Error 2
+
+
+
