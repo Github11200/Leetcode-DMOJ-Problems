@@ -3,9 +3,9 @@
 using namespace std;
 
 /******************************************
-  Link:
-  Runtime:
-  Memory:
+  Link: https://leetcode.com/problems/longest-palindromic-substring/description/
+  Runtime: 75.75%
+  Memory: 85.80%
 ******************************************/
 
 string longestPalindromicSubstring(string s)
