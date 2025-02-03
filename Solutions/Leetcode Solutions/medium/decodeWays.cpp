@@ -17,6 +17,8 @@ int decodeWays(string s)
   {
     if (s[i] == '0')
     {
+      next = current;
+      temp = 0;
       current = 0;
       continue;
     }
