@@ -2,76 +2,32 @@
 
 using namespace std;
 
-void iterativePostOrderTraversal(TreeNode *root)
+vector<int> nextGreaterElement1(vector<int> &nums1, vector<int> &nums2)
 {
-  stack<TreeNode *> nextNodes;
-  while (!nextNodes.empty() || root != nullptr)
+  unordered_map<int, int> nums1Hash;
+  for (int i = 0; i < nums1.size(); ++i)
+    nums1Hash[i] = i;
+
+  stack<int> descendingNums;
+  vector<int> res(nums1.size(), -1);
+  for (int i = 0; i < nums2.size(); ++i)
   {
-    if (root != nullptr)
+    while (!descendingNums.empty() && nums2[i] > descendingNums.top())
     {
-      nextNodes.push(root);
-      root = root->left;
+      res[nums1Hash[descendingNums.top()]] = nums2[i];
+      descendingNums.pop();
     }
-    else
-    {
-      TreeNode *temp = nextNodes.top()->right;
-      if (temp == nullptr)
-      {
-        temp = nextNodes.top();
-        nextNodes.pop();
-        printf("%d ", temp->val);
-        while (!nextNodes.empty() && nextNodes.top()->right == temp)
-        {
-          temp = nextNodes.top();
-          printf("%d ", temp->val);
-          nextNodes.pop();
-        }
-      }
-      else
-        root = temp;
-    }
-  }
-}
-
-void goodSamples()
-{
-  int N, M, K;
-  scanf("%d %d %d", &N, &M, &K);
-
-  vector<int> res;
-  for (int i = 0; i < N; ++i)
-  {
-    int numberRemainingAfterCurrent = N - i - 1;
-    int maxSamplesAtCurrent = min(M, K - numberRemainingAfterCurrent);
-
-    if (maxSamplesAtCurrent <= 0)
-      break;
-
-    int value = 0;
-    if (maxSamplesAtCurrent > i)
-    {
-      value = min(i + 1, M);
-      maxSamplesAtCurrent = value;
-    }
-    else
-      value = res[i - maxSamplesAtCurrent];
-
-    res.push_back(value);
-    K -= maxSamplesAtCurrent;
+    if (nums1Hash.count(nums2[i]) > 0)
+      descendingNums.push(nums2[i]);
   }
 
-  if (res.size() == N && K == 0)
-  {
-    for (int i = 0; i < res.size(); ++i)
-      printf("%d ", res[i]);
-    printf("\n");
-    return;
-  }
-  printf("-1\n");
+  return res;
 }
 
 int main()
 {
-  goodSamples();
+  vector<int> nums1({4, 1, 2});
+  vector<int> nums2({1, 3, 4, 2});
+  displayVector(nextGreaterElement1(nums1, nums2));
   return 0;
 }
