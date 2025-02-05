@@ -2,32 +2,47 @@
 
 using namespace std;
 
-vector<int> nextGreaterElement1(vector<int> &nums1, vector<int> &nums2)
+string addBinary(string a, string b)
 {
-  unordered_map<int, int> nums1Hash;
-  for (int i = 0; i < nums1.size(); ++i)
-    nums1Hash[i] = i;
+  int i = a.size() - 1;
+  int j = b.size() - 1;
+  int carry = 0;
 
-  stack<int> descendingNums;
-  vector<int> res(nums1.size(), -1);
-  for (int i = 0; i < nums2.size(); ++i)
+  string c = "";
+  while (i >= 0 || j >= 0 || carry != 0)
   {
-    while (!descendingNums.empty() && nums2[i] > descendingNums.top())
-    {
-      res[nums1Hash[descendingNums.top()]] = nums2[i];
-      descendingNums.pop();
-    }
-    if (nums1Hash.count(nums2[i]) > 0)
-      descendingNums.push(nums2[i]);
-  }
+    if (i >= 0 && a[i] == '1')
+      ++carry;
+    if (j >= 0 && b[j] == '1')
+      ++carry;
 
-  return res;
+    c = to_string(carry % 2) + c;
+    carry /= 2;
+    --i;
+    --j;
+  }
+  return c;
+}
+
+int decodeWays(string s)
+{
+  vector<int> dp(s.size() + 1, 1);
+  for (int i = s.size() - 1; i >= 0; --i)
+  {
+    if (s[i] == '0')
+    {
+      dp[i] = 0;
+      continue;
+    }
+    dp[i] = dp[i + 1];
+    if (i < s.size() - 1 && (s[i] == '1' || (s[i] == '2' && int(s[i + 1]) <= 54)))
+      dp[i] += dp[i + 2];
+  }
+  return dp[0];
 }
 
 int main()
 {
-  vector<int> nums1({4, 1, 2});
-  vector<int> nums2({1, 3, 4, 2});
-  displayVector(nextGreaterElement1(nums1, nums2));
+  cout << decodeWays("11106");
   return 0;
 }
