@@ -48,21 +48,25 @@ void the5thLaboratory()
     }
     else
     {
+      // Get the triangle distance
+      double distanceToPoint = hypot(abs(hidingSpotCoordinates.x - labCoordinates.x), abs(hidingSpotCoordinates.y - labCoordinates.y));
+
       // Go all the way down
       distance = abs(hidingSpotCoordinates.z - labCoordinates.z);
       time += distance / 4;
 
-      // Get the distance remaining
-      distance = hypot(abs(hidingSpotCoordinates.x - labCoordinates.x), abs(hidingSpotCoordinates.y - labCoordinates.y)) - (3 * time);
-
-      // Travel on flat ground
-      time += abs(distance) / 2;
+      double distanceCovered = time * 3;
+      if (distanceToPoint - distanceCovered > 0)
+      {
+        time += (distanceToPoint - distanceCovered) / 2;
+      }
     }
 
     if (minimumTime == -1)
       minimumTime = time;
     else
       minimumTime = min(minimumTime, time);
+    time = 0;
   }
 
   printf("%f\n", minimumTime);
