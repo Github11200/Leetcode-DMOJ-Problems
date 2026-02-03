@@ -1,7 +1,8 @@
 [
 {
-  "directory": "/home/user/code/Leetcode-DMOJ-Problems/build",
-  "command": "/home/user/miniconda3/bin/x86_64-conda-linux-gnu-g++   -fvisibility-inlines-hidden -fmessage-length=0 -march=nocona -mtune=haswell -ftree-vectorize -fPIC -fstack-protector-strong -fno-plt -O2 -ffunction-sections -pipe -isystem /home/user/miniconda3/include -g -std=gnu++14 -o CMakeFiles/Leetcode_DMOJ_Problems.dir/problems.cpp.o -c /home/user/code/Leetcode-DMOJ-Problems/problems.cpp",
-  "file": "/home/user/code/Leetcode-DMOJ-Problems/problems.cpp"
+  "directory": "/home/arch/code/projects/Leetcode-DMOJ-Problems/build",
+  "command": "/usr/bin/g++ -g -std=gnu++14 -o CMakeFiles/Leetcode_DMOJ_Problems.dir/problems.cpp.o -c /home/arch/code/projects/Leetcode-DMOJ-Problems/problems.cpp",
+  "file": "/home/arch/code/projects/Leetcode-DMOJ-Problems/problems.cpp",
+  "output": "/home/arch/code/projects/Leetcode-DMOJ-Problems/build/CMakeFiles/Leetcode_DMOJ_Problems.dir/problems.cpp.o"
 }
 ]

@@ -2,11 +2,12 @@
 	"configurations" : 
 	[
 		{
+			"abstractTargets" : [],
 			"directories" : 
 			[
 				{
 					"build" : ".",
-					"jsonFile" : "directory-.-Debug-f5ebdc15457944623624.json",
+					"jsonFile" : "directory-.-Debug-9ad1a58d4644cf6543fa.json",
 					"minimumCMakeVersion" : 
 					{
 						"string" : "2.8"
@@ -39,7 +40,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "Leetcode_DMOJ_Problems::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-Leetcode_DMOJ_Problems-Debug-6ad8c005a4a592ab034c.json",
+					"jsonFile" : "target-Leetcode_DMOJ_Problems-Debug-f44df69f916134735a73.json",
 					"name" : "Leetcode_DMOJ_Problems",
 					"projectIndex" : 0
 				}
@@ -49,12 +50,12 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "/home/user/code/Leetcode-DMOJ-Problems/build",
-		"source" : "/home/user/code/Leetcode-DMOJ-Problems"
+		"build" : "/home/arch/code/projects/Leetcode-DMOJ-Problems/build",
+		"source" : "/home/arch/code/projects/Leetcode-DMOJ-Problems"
 	},
 	"version" : 
 	{
 		"major" : 2,
-		"minor" : 3
+		"minor" : 9
 	}
 }

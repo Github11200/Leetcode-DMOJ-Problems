@@ -7,7 +7,7 @@ using namespace std;
   Points: Accepted
 ******************************************/
 
-void bearAndBigBrother()
+int main()
 {
   int limakWeight, bobWeight;
   scanf("%d %d", &limakWeight, &bobWeight);
@@ -21,10 +21,5 @@ void bearAndBigBrother()
   }
 
   printf("%d", year);
-}
-
-int main()
-{
-  aBearAndBigBrother();
   return 0;
 }

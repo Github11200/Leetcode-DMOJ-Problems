@@ -7,7 +7,7 @@ using namespace std;
   Points: Accepted
 ******************************************/
 
-void stonesOnTheTable()
+int main()
 {
   int n;
   scanf("%d", &n);
@@ -23,10 +23,6 @@ void stonesOnTheTable()
   }
 
   printf("%d", numberToRemove);
-}
 
-int main()
-{
-  stonesOnTheTable();
   return 0;
 }
