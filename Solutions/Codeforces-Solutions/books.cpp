@@ -1,8 +1,11 @@
-#include <algorithm>
 #include <bits/stdc++.h>
-#include <cstdlib>
 
 using namespace std;
+
+/******************************************
+  Link: https://codeforces.com/problemset/problem/279/B
+  Points: Accepted
+******************************************/
 
 int main() {
   int n, freeMinutes;
