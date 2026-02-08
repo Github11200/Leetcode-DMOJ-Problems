@@ -2,6 +2,11 @@
 
 using namespace std;
 
+/******************************************
+  Link: https://codeforces.com/problemset/problem/455/A
+  Points: Accepted
+******************************************/
+
 #define ll long long
 
 int counts[100001];
