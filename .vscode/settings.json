@@ -99,5 +99,5 @@
     "stack": "cpp"
   },
   "C_Cpp.errorSquiggles": "enabled",
-  "editor.fontSize": 18
+  "editor.fontSize": 15
 }

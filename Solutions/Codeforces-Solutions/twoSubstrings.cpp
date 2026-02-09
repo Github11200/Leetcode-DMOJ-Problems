@@ -1,51 +1,44 @@
 #include <bits/stdc++.h>
+#include <strings.h>
 
 using namespace std;
 
-// ABAXXXAB
+/******************************************
+  Link: https://codeforces.com/problemset/problem/550/A
+  Points: Accepted
+******************************************/
 
 int main() {
   string s;
   cin >> s;
 
-  vector<int> ab;
-  vector<int> ba;
+  int abFirstOccurence = s.find("AB");
+  int baFirstOccurence = s.find("BA");
 
-  for (int i = 0; i < s.size() - 1; ++i) {
+  if (abFirstOccurence == string::npos || baFirstOccurence == string::npos) {
+    cout << "NO" << endl;
+    return 0;
+  }
+
+  for (int i = abFirstOccurence + 2; i < s.size() - 1; ++i) {
     string currentString;
     currentString += s[i];
     currentString += s[i + 1];
 
-    if (currentString != "AB")
-      continue;
-
-    for (int j = i + 2; j < s.size() - 1; ++j) {
-      string newString;
-      newString += s[j];
-      newString += s[j + 1];
-      if (newString == "BA") {
-        cout << "YES" << endl;
-        return 0;
-      }
+    if (currentString == "BA") {
+      cout << "YES" << endl;
+      return 0;
     }
   }
 
-  for (int i = s.size() - 1; i > 0; --i) {
+  for (int i = baFirstOccurence + 2; i < s.size() - 1; ++i) {
     string currentString;
     currentString += s[i];
-    currentString += s[i - 1];
+    currentString += s[i + 1];
 
-    if (currentString != "AB")
-      continue;
-
-    for (int j = i - 2; j > 0; --j) {
-      string newString;
-      newString += s[j];
-      newString += s[j - 1];
-      if (newString == "BA") {
-        cout << "YES" << endl;
-        return 0;
-      }
+    if (currentString == "AB") {
+      cout << "YES" << endl;
+      return 0;
     }
   }
 
