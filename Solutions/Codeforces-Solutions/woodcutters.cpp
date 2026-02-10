@@ -2,6 +2,11 @@
 
 using namespace std;
 
+/******************************************
+  Link: https://codeforces.com/problemset/problem/545/C
+  Points: Accepted
+******************************************/
+
 #define Pair pair<int, int>
 
 int main() {
