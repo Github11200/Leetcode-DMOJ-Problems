@@ -1,49 +1,32 @@
 #include <bits/stdc++.h>
-#include <string>
 
 using namespace std;
 
-int main()
-{
+/******************************************
+  Link: https://codeforces.com/problemset/problem/1526/B
+  Points: Accepted
+******************************************/
+
+int main() {
   int t;
   cin >> t;
 
-  for (int i = 0; i < t; ++i)
-  {
+  for (int i = 0; i < t; ++i) {
     int n;
     cin >> n;
 
-    if (n % 11 == 0)
-    {
-      cout << "YES" << endl;
-      continue;
+    bool isGood = false;
+    for (int j = 0; j < 20; ++j) {
+      if (n % 11 == 0) {
+        isGood = true;
+        break;
+      }
+      n -= 111;
+      if (n < 0)
+        break;
     }
 
-    string nString = to_string(n);
-    if (nString.size() == 1 || nString.size() == 2)
-    {
-      cout << "NO" << endl;
-      continue;
-    }
-
-    int num = 0;
-    int previousDigit = -1;
-    for (int j = 0; j < nString.size() - 1; ++j)
-    {
-      int len = nString.size() - j;
-      string elevenString = "";
-      for (int k = 0; k < len; ++k)
-        elevenString += "1";
-
-      int digit = nString[j] - '0';
-      if (previousDigit != -1)
-        digit -= abs(previousDigit);
-      num += stoi(elevenString) * digit;
-
-      previousDigit = digit;
-    }
-
-    if (num == n)
+    if (isGood)
       cout << "YES" << endl;
     else
       cout << "NO" << endl;
