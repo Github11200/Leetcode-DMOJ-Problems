@@ -2,11 +2,11 @@
   {
     "label": "Debug native binary",
     "build": {
-      "command": "g++ $ZED_FILE -o $ZED_STEM && ./$ZED_STEM && rm $ZED_STEM",
+      "command": "g++ $ZED_FILE -o -j8 $ZED_STEM",
       "cwd": "$ZED_WORKTREE_ROOT",
     },
     "program": "$ZED_WORKTREE_ROOT/build/prog",
     "request": "launch",
-    "adapter": "CodeLLDB",
+    "adapter": "GDB",
   },
 ]
